@@ -7,10 +7,26 @@ module.exports = {
       warnings: true,
       errors: true
     },
-    port: 8081,
+    port: process.env.VUE_APP_PORT,
+    proxy: {
+      "/api": {
+        target: "http://localhost:8088",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/api": "/"
+        }
+      },
+      "/pro": {
+        target: "http://1.15.38.182/api",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/pro": "/"
+        }
+      }
+    }
   },
   lintOnSave: false, // 关闭js语法检查
-  publicPath: process.env.NODE_ENV === 'production' ? '/dist/' : '/',  // 公共路径
+  publicPath: process.env.VUE_APP_PUBLIC_PATH,  // 公共路径
   assetsDir: 'static', // 相对于outputDir的静态资源(js、css、img、fonts)目录
   runtimeCompiler: true, // 是否使用包含运行时编译器的 Vue 构建版本
   productionSourceMap: !IS_PROD, // 生产环境的 source map
@@ -44,4 +60,11 @@ module.exports = {
       }
     },
   },
+  chainWebpack: (config) => {
+    const imagesRule = config.module.rule("images")
+    imagesRule
+        .use('url-loader')
+        .loader('url-loader')
+        .tap(options => Object.assign(options, { limit: 6144 }))
+  }
 }
