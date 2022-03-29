@@ -1,4 +1,13 @@
-const routes = [{
+const meta = {
+  passAuth: true
+}
+
+export default [{
+  path: '*',
+  name: '404',
+  component: () => import('@/views/404'),
+  meta
+}, {
   path: "/test",
   name: "test",
   component: () => import('@/views/test')
@@ -7,5 +16,3 @@ const routes = [{
   name: "login",
   component: () => import('@/views/login/login')
 }];
-
-export default routes;
