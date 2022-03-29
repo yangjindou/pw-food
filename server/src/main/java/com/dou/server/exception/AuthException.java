@@ -8,7 +8,7 @@ package com.dou.server.exception;
 public class AuthException extends Exception {
 
     public AuthException() {
-        super("鉴权失败");
+        super("鉴权异常");
     }
 
     public AuthException(String message) {

@@ -1,11 +1,9 @@
 package com.dou.server.service.impl;
 
+import com.dou.server.exception.LogicException;
 import com.dou.server.mapper.UserMapper;
-import com.dou.server.model.ResultEntity;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
-import com.dou.server.exception.MyServerException;
-import com.dou.server.tag.ResultEnums;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RSAUtils;
 import com.dou.server.utils.RedisUtils;
@@ -44,45 +42,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultEntity verifyUser(User temp) throws Exception {
+    public User verifyUser(User temp) throws Exception {
         User selectUser = new User();
         selectUser.setName(temp.getName());
         User user = userMapper.selectOne(selectUser);
         if (null == user) {
-            return new ResultEntity(ResultEnums.E_USER_MISS);
+            throw new LogicException("用户不存在");
         }
         // 验证密码是否正确
         String passText = RSAUtils.decryptPass(user.getPassword(),user.getPublicKey());
         if (!temp.getPassword().equals(passText)) {
-            return new ResultEntity(ResultEnums.E_USER_PASSWORD_ERROR);
+            throw new LogicException("密码错误");
         }
         user.createToken();
         redisUtils.set(RedisUtils.USER_PREFIX + user.getId(),user);
         user.protectInfo();
-        return new ResultEntity(ResultEnums.CODE_SUCCESS,"验证成功",user);
+        return user;
     }
 
     @Override
-    public ResultEnums add(User temp) throws Exception {
+    public void add(User temp) throws Exception {
         System.out.println(RedisUtils.DEFAULT_EXPIRE);
         if (CommonUtils.varIsBlank(temp.getPassword())) {
-            temp.setPassword("111223456");
+            temp.setPassword("123456");
         }
         Map<String, String> map = RSAUtils.encryptPass(temp.getPassword());
         temp.setPassword(map.get("password"));
         temp.setPublicKey(map.get("publicKey"));
         temp.setCreateUser(Objects.requireNonNull(User.getRequestUser()).getId());
         temp.setCreateDate(new Date());
-        return userMapper.insert(temp) > 0 ? ResultEnums.SUCCESS : ResultEnums.ERROR;
+        if (userMapper.insert(temp) == 0) {
+            throw new LogicException("新增失败");
+        }
     }
 
     @Override
-    public ResultEnums passwordModify(String oldPwd, String newPwd) throws Exception {
+    public void passwordModify(String oldPwd, String newPwd) throws Exception {
         User requestUser = User.getRequestUser();
         assert requestUser != null;
         String passText = RSAUtils.decryptPass(requestUser.getPassword(),requestUser.getPublicKey());
         if (!oldPwd.equals(passText)) {
-            throw new MyServerException(ResultEnums.E_USER_PASSWORD_ERROR);
+            throw new LogicException("旧密码错误");
         }
         User updateUser = new User();
         updateUser.setId(requestUser.getId());
@@ -91,13 +91,15 @@ public class UserServiceImpl implements UserService {
         updateUser.setPublicKey(map.get("publicKey"));
         updateUser.setUpdateUser(requestUser.getId());
         updateUser.setUpdateDate(new Date());
-        userMapper.updateByPrimaryKeySelective(updateUser);
-        redisUtils.delete(RedisUtils.USER_PREFIX + requestUser.getId());
-        return ResultEnums.SUCCESS;
+        if (userMapper.updateByPrimaryKeySelective(updateUser) == 0) {
+            throw new LogicException("新增失败");
+        } else {
+            redisUtils.delete(RedisUtils.USER_PREFIX + requestUser.getId());
+        }
     }
 
     @Override
-    public ResultEnums update(User temp) throws Exception {
+    public void update(User temp) throws Exception {
         if (!CommonUtils.varIsBlank(temp.getPassword())) {
             Map<String, String> map = RSAUtils.encryptPass(temp.getPassword());
             temp.setPassword(map.get("password"));
@@ -105,19 +107,18 @@ public class UserServiceImpl implements UserService {
         }
         temp.setUpdateUser(Objects.requireNonNull(User.getRequestUser()).getId());
         temp.setUpdateDate(new Date());
-        return userMapper.updateByPrimaryKeySelective(temp) > 0 ? ResultEnums.SUCCESS : ResultEnums.ERROR;
+        if (userMapper.updateByPrimaryKeySelective(temp) == 0) {
+            throw new LogicException("修改失败");
+        }
     }
 
     @Override
-    public ResultEnums delete(List<Integer> ids) {
+    public void delete(List<Integer> ids) throws LogicException {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andIn("id",ids);
-        return userMapper.deleteByExample(example) > 0 ? ResultEnums.SUCCESS : ResultEnums.ERROR;
-    }
-
-    @Override
-    public UserMapper getMapper() {
-        return userMapper;
+        if (userMapper.deleteByExample(example) != ids.size()) {
+            throw new LogicException("新增失败");
+        }
     }
 }

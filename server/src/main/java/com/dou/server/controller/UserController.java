@@ -1,15 +1,14 @@
 package com.dou.server.controller;
 
-import com.dou.server.model.ResultEntity;
+import com.dou.server.exception.LogicException;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
-import com.dou.server.tag.BaseController;
 import com.dou.server.tag.PassToken;
-import com.dou.server.tag.ResultEnums;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,82 +20,85 @@ import java.util.Map;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @RestController
-public class UserController implements BaseController {
+public class UserController {
 
     private final UserService userService;
     private final RedisUtils redisUtils;
 
     @GetMapping("")
-    public ResultEntity get(@RequestParam(defaultValue = "1") Integer page,
-                            @RequestParam(defaultValue = "10") Integer limit, User user) {
-        return setPage(userService.get(page,limit,user));
+    public ResponseEntity<?> get(@RequestParam(defaultValue = "1") Integer page,
+                                 @RequestParam(defaultValue = "10") Integer limit, User user) {
+        return ResponseEntity.ok(userService.get(page,limit,user));
     }
 
     @PostMapping("")
-    public ResultEntity add(User user) throws Exception {
+    public ResponseEntity<?> add(User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getName())) {
-            return error(ResultEnums.E_PARAM_MISS);
+            throw new LogicException("缺少参数");
         }
-        return setResult(userService.add(user));
+        userService.add(user);
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("")
-    public ResultEntity update(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> update(@RequestBody User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getId())) {
-            return error(ResultEnums.E_PARAM_MISS);
+            throw new LogicException("缺少参数");
         }
-        return setResult(userService.update(user));
+        userService.update(user);
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("")
     @SuppressWarnings("unchecked")
-    public ResultEntity delete(@RequestBody Map<String, Object> params) {
+    public ResponseEntity<?> delete(@RequestBody Map<String, Object> params) throws LogicException {
         List<Integer> ids = (List<Integer>) params.get("ids");
         if (CommonUtils.varIsBlank(ids)) {
-            return error(ResultEnums.E_PARAM_MISS);
+            throw new LogicException("缺少参数");
         }
-        return setResult(userService.delete(ids));
+        userService.delete(ids);
+        return ResponseEntity.ok().build();
     }
 
     @PassToken
     @PostMapping("/login")
-    public ResultEntity login(User user) throws Exception {
+    public ResponseEntity<?> login(User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getName(),user.getPassword())) {
-            return error(ResultEnums.E_PARAM_MISS);
+            throw new LogicException("缺少参数");
         }
-        return userService.verifyUser(user);
+        return ResponseEntity.ok(userService.verifyUser(user));
     }
 
     @GetMapping("/verifyLogin")
-    public ResultEntity verifyLogin() {
+    public ResponseEntity<?> verifyLogin() {
         User requestUser = User.getRequestUser();
-        assert requestUser != null;
         requestUser.protectInfo();
-        return CommonUtils.varIsBlank(requestUser) ? error() : success(requestUser);
+        return ResponseEntity.ok(requestUser);
     }
 
     @GetMapping("/logout")
-    public ResultEntity logout(){
+    public ResponseEntity<?> logout(){
         User requestUser = User.getRequestUser();
-        assert requestUser != null;
         redisUtils.delete(RedisUtils.USER_PREFIX + requestUser.getId());
-        return success();
+        return ResponseEntity.ok().build();
     }
 
     @PassToken
     @PostMapping("register")
-    public ResultEntity register(User user) throws Exception {
+    public ResponseEntity<?> register(User user) throws Exception {
         if (StringUtils.isAnyBlank(user.getName(),user.getPassword())) {
-            return error(ResultEnums.E_PARAM_MISS);
+            throw new LogicException("缺少参数");
         }
-        return setResult(userService.add(user));
+        userService.add(user);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("passwordModify")
-    public ResultEntity passwordModify(String oldPwd, String newPwd) throws Exception {
+    public ResponseEntity<?> passwordModify(String oldPwd, String newPwd) throws Exception {
         if (CommonUtils.varIsBlank(oldPwd,newPwd)) {
-            return new ResultEntity(ResultEnums.E_PARAM_MISS);
+            throw new LogicException("缺少参数");
         }
-        return setResult(userService.passwordModify(oldPwd,newPwd));
+        userService.passwordModify(oldPwd,newPwd);
+        return ResponseEntity.ok().build();
     }
 }
