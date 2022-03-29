@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import img from "@/assets/images/t.jpg";
+import img from "@/assets/images/avatar.jpg";
 export default {
   name: "uAvatar",
   props: {
