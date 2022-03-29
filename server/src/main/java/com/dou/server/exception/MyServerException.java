@@ -1,4 +1,6 @@
-package com.dou.server.tag;
+package com.dou.server.exception;
+
+import com.dou.server.tag.ResultEnums;
 
 /**
  * 服务（当前系统业务）异常

@@ -4,17 +4,17 @@ import com.dou.server.mapper.UserMapper;
 import com.dou.server.model.ResultEntity;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
-import com.dou.server.tag.MyServerException;
+import com.dou.server.exception.MyServerException;
 import com.dou.server.tag.ResultEnums;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RSAUtils;
 import com.dou.server.utils.RedisUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.annotation.Resource;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,12 +24,11 @@ import java.util.Objects;
  * @author yangjd
  */
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Resource
-    private UserMapper userMapper;
-    @Resource
-    private RedisUtils redisUtils;
+    private final UserMapper userMapper;
+    private final RedisUtils redisUtils;
 
     @Override
     public PageInfo<User> get(Integer page, Integer limit, User temp) {

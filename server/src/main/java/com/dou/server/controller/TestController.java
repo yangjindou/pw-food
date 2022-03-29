@@ -1,6 +1,7 @@
 package com.dou.server.controller;
 
 import com.dou.server.tag.BaseController;
+import com.dou.server.exception.MyServerException;
 import com.dou.server.tag.PassToken;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -18,7 +19,7 @@ public class TestController implements BaseController {
     @PassToken
     @GetMapping("")
     @ApiOperation(value = "1236", notes = "123")
-    public void test() {
-
+    public void test() throws MyServerException {
+        throw new MyServerException("1234445");
     }
 }
