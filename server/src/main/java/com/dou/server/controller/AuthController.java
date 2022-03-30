@@ -6,10 +6,14 @@ import com.dou.server.service.UserService;
 import com.dou.server.tag.PassToken;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RedisUtils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 /**
  * @author yangjindou
@@ -18,11 +22,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 @RequiredArgsConstructor
 @RestController
+@Api(tags = "系统授权接口")
 public class AuthController {
 
     private final UserService userService;
     private final RedisUtils redisUtils;
 
+    @ApiOperation(value = "登录", notes = "账号、密码必填")
     @PassToken
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) throws Exception {
@@ -32,20 +38,15 @@ public class AuthController {
         return ResponseEntity.ok(userService.verifyUser(user));
     }
 
-    @GetMapping("/verifyLogin")
-    public ResponseEntity<?> verifyLogin() {
-        User requestUser = User.getRequestUser();
-        requestUser.protectInfo();
-        return ResponseEntity.ok(requestUser);
-    }
-
-    @GetMapping("/logout")
+    @ApiOperation(value = "退出", notes = "退出当前账号")
+    @DeleteMapping("/logout")
     public ResponseEntity<?> logout(){
         User requestUser = User.getRequestUser();
         redisUtils.delete(RedisUtils.USER_PREFIX + requestUser.getId());
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "注册", notes = "账号、密码必填")
     @PassToken
     @PostMapping("register")
     public ResponseEntity<?> register(User user) throws Exception {
@@ -56,8 +57,11 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("passwordModify")
-    public ResponseEntity<?> passwordModify(String oldPwd, String newPwd) throws Exception {
+    @ApiOperation(value = "修改密码", notes = "旧密码、新密码必填")
+    @PutMapping("passwordModify")
+    public ResponseEntity<?> passwordModify(@RequestBody Map<String, Object> params) throws Exception {
+        String oldPwd = params.get("oldPwd").toString();
+        String newPwd = params.get("newPwd").toString();
         if (CommonUtils.varIsBlank(oldPwd,newPwd)) {
             throw new LogicException("缺少参数");
         }

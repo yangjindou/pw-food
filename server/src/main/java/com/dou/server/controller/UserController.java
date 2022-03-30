@@ -5,6 +5,7 @@ import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.utils.CommonUtils;
+import io.swagger.annotations.Api;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Arrays;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 @RestController
+@Api(tags = "用户接口")
 public class UserController {
 
     private final UserService userService;

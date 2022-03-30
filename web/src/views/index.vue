@@ -36,10 +36,10 @@
         <router-view />
       </div>
     </div>
-    <a-modal v-model="passwordModalVisible" title="修改密码" @ok="handleOk">
+    <a-modal v-model="passwordModal" title="修改密码" @ok="handleOk">
       <a-form :form="form" class="modal-form">
         <a-form-item label="账号">
-          <a-input disabled v-decorator="['userName',{ rules: [{ required: true, message: '请输入账号' }] }]" placeholder="账号" />
+          <a-input disabled v-decorator="['loginName',{ rules: [{ required: true, message: '请输入账号' }] }]" placeholder="账号" />
         </a-form-item>
         <a-form-item label="旧密码">
           <a-input v-decorator="['passwordOld',{ rules: [{ required: true, message: '请输入旧密码' }] }]" type="password" placeholder="旧密码" />
@@ -60,7 +60,7 @@ export default {
   data() {
     return {
       userName: '',
-      passwordModalVisible: false,
+      passwordModal: false,
       form: this.$form.createForm(this, { name: 'password-form' }),
       menuList: []
     }
@@ -111,24 +111,31 @@ export default {
           return;
         }
         let params = {
-          oldPass: data["passwordOld"],
-          newPass: data["passwordNew"]
+          oldPwd: data["passwordOld"],
+          newPwd: data["passwordNew"]
         }
-        this.$axios.put("user/updatePassword", params).then(res => {
+        this.$axios.put("auth/passwordModify", params).then(res => {
           if (res) {
             this.$message.success("修改成功，请重新登录。");
-            this.logoutClick();
+            this.logout();
           }
         });
       });
     },
     modifyPasswordClick() {
-      this.passwordModalVisible = true;
+      this.passwordModal = true;
       this.$nextTick(()=> {
-        this.form.setFieldsValue({ userName: this.$store.state.user.userData["username"]});
+        this.form.setFieldsValue({ loginName: this.$store.state.user.userData["loginName"]});
       })
     },
     logoutClick() {
+      this.$axios.delete("auth/logout").then(res => {
+        if (res) {
+          this.logout();
+        }
+      });
+    },
+    logout() {
       this.$store.commit("user/removeUser");
       this.$router.push({ name: 'login' });
     },
