@@ -4,10 +4,10 @@
     <div class="content">
       <div class="content-middle">
         <div class="form">
-          <div class="form-text">管理系统</div>
+          <div class="form-text">欢迎使用</div>
           <a-form :form="form" class="login-form">
             <a-form-item>
-              <a-input v-decorator="['userName',{ rules: [{ required: true, message: '请输入账号' }] }]" placeholder="账号" >
+              <a-input v-decorator="['loginName',{ rules: [{ required: true, message: '请输入账号' }] }]" placeholder="账号" >
                 <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
               </a-input>
             </a-form-item>
@@ -40,20 +40,16 @@ export default {
   },
   methods: {
     loginClick() {
-      this.form.validateFields((err, values) => {
+      this.form.validateFields((err, data) => {
         if (err) {
           return;
         }
-        this.$axios.post("auth/login",{
-          username: values.userName,
-          password: values.password,
-        }).then(res => {
+        this.$axios.post("auth/login", data).then(res => {
           if (res) {
-            res.data.user["type"] = 1;
             res.data.user["token"] = res.data.token;
             this.$store.commit("user/setUser", res.data.user);
             this.$message.success('登录成功');
-            this.$router.push({ name: 'home-index' });
+            this.$router.push({ name: 'home' });
           }
         });
       });

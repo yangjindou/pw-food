@@ -5,8 +5,8 @@ import com.dou.server.mapper.UserMapper;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.utils.CommonUtils;
-import com.dou.server.utils.RSAUtils;
 import com.dou.server.utils.RedisUtils;
+import com.dou.server.utils.SecurityUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -33,8 +32,11 @@ public class UserServiceImpl implements UserService {
         PageHelper.startPage(page, limit);
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
-        if (!CommonUtils.varIsBlank(temp.getName())) {
-            criteria.andLike("name",String.format("%%%s%%",temp.getName()));
+        if (!CommonUtils.varIsBlank(temp.getLoginName())) {
+            criteria.andLike("login_name",String.format("%%%s%%",temp.getUserName()));
+        }
+        if (!CommonUtils.varIsBlank(temp.getUserName())) {
+            criteria.andLike("user_name",String.format("%%%s%%",temp.getUserName()));
         }
         List<User> userList = userMapper.selectByExample(example);
         userList.forEach(User::protectInfo);
@@ -44,14 +46,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User verifyUser(User temp) throws Exception {
         User selectUser = new User();
-        selectUser.setName(temp.getName());
+        selectUser.setUserName(temp.getLoginName());
         User user = userMapper.selectOne(selectUser);
         if (null == user) {
             throw new LogicException("用户不存在");
         }
         // 验证密码是否正确
-        String passText = RSAUtils.decryptPass(user.getPassword(),user.getPublicKey());
-        if (!temp.getPassword().equals(passText)) {
+        if (!SecurityUtils.isPasswordValid(user.getPassword(), temp.getPassword(), user.getSalt())) {
             throw new LogicException("密码错误");
         }
         user.createToken();
@@ -62,13 +63,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void add(User temp) throws Exception {
-        System.out.println(RedisUtils.DEFAULT_EXPIRE);
         if (CommonUtils.varIsBlank(temp.getPassword())) {
             temp.setPassword("123456");
         }
-        Map<String, String> map = RSAUtils.encryptPass(temp.getPassword());
-        temp.setPassword(map.get("password"));
-        temp.setPublicKey(map.get("publicKey"));
+        String salt = SecurityUtils.randomSalt(16);
+        temp.setSalt(salt);
+        temp.setPassword(SecurityUtils.encode(temp.getPassword(), salt));
         temp.setCreateUser(Objects.requireNonNull(User.getRequestUser()).getId());
         temp.setCreateDate(new Date());
         if (userMapper.insert(temp) == 0) {
@@ -79,16 +79,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public void passwordModify(String oldPwd, String newPwd) throws Exception {
         User requestUser = User.getRequestUser();
-        assert requestUser != null;
-        String passText = RSAUtils.decryptPass(requestUser.getPassword(),requestUser.getPublicKey());
-        if (!oldPwd.equals(passText)) {
+        if (!SecurityUtils.isPasswordValid(requestUser.getPassword(), oldPwd, requestUser.getSalt())) {
             throw new LogicException("旧密码错误");
         }
         User updateUser = new User();
         updateUser.setId(requestUser.getId());
-        Map<String, String> map = RSAUtils.encryptPass(newPwd);
-        updateUser.setPassword(map.get("password"));
-        updateUser.setPublicKey(map.get("publicKey"));
+        String salt = SecurityUtils.randomSalt(16);
+        updateUser.setSalt(salt);
+        updateUser.setPassword(SecurityUtils.encode(newPwd, salt));
         updateUser.setUpdateUser(requestUser.getId());
         updateUser.setUpdateDate(new Date());
         if (userMapper.updateByPrimaryKeySelective(updateUser) == 0) {
@@ -100,11 +98,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User temp) throws Exception {
-        if (!CommonUtils.varIsBlank(temp.getPassword())) {
-            Map<String, String> map = RSAUtils.encryptPass(temp.getPassword());
-            temp.setPassword(map.get("password"));
-            temp.setPublicKey(map.get("publicKey"));
-        }
+        temp.setPassword(null);
         temp.setUpdateUser(Objects.requireNonNull(User.getRequestUser()).getId());
         temp.setUpdateDate(new Date());
         if (userMapper.updateByPrimaryKeySelective(temp) == 0) {
@@ -113,7 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void delete(List<Integer> ids) throws LogicException {
+    public void delete(List<?> ids) throws LogicException {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         criteria.andIn("id",ids);

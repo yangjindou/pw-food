@@ -17,7 +17,7 @@ public class RedisUtils {
     private RedisTemplate<String, Object> redisTemplate;
 
     /**  默认过期时长，单位：秒 */
-    public final static long DEFAULT_EXPIRE = 3600;
+    public final static long DEFAULT_EXPIRE = 12 * 3600;
     /**  不设置过期时长 */
     public final static long NOT_EXPIRE = -1;
     /** 用户在redis中的前缀 **/

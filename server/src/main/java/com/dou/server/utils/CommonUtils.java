@@ -28,6 +28,10 @@ public class CommonUtils {
 		return sb.toString();
 	}
 
+	public static boolean varIsNotBlank(Object... vars) {
+		return CommonUtils.varIsBlank(vars);
+	}
+
 	public static boolean varIsBlank(Object... vars) {
 		boolean isBlank = false;
 		if (null == vars || vars.length == 0) {

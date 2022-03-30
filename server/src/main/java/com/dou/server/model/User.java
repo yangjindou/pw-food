@@ -7,6 +7,7 @@ import com.dou.server.utils.HttpContextUtils;
 import com.dou.server.utils.RedisUtils;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.time.DateUtils;
 
@@ -20,41 +21,30 @@ import java.util.Date;
 /**
  * @author yangjd
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
 @Table(name="base_user")
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 
     @Id
     @ApiModelProperty("id")
     private Integer id;
 
-    @ApiModelProperty("创建日期")
-    private Date createDate;
+    @ApiModelProperty("登录名")
+    private String loginName;
 
-    @ApiModelProperty("创建人")
-    private Integer createUser;
-
-    @ApiModelProperty("修改日期")
-    private Date updateDate;
-
-    @ApiModelProperty("修改人")
-    private Integer updateUser;
-
-    @ApiModelProperty("账号")
-    private String name;
+    @ApiModelProperty("用户名")
+    private String userName;
 
     @ApiModelProperty("密码")
     private String password;
 
-    @ApiModelProperty("公钥")
-    private String publicKey;
+    @ApiModelProperty("盐")
+    private String salt;
 
     @ApiModelProperty("角色")
     private String role;
-
-    @ApiModelProperty("部门ID")
-    private String deptId;
 
     @Transient
     @ApiModelProperty("token（返回给前端）")
@@ -74,7 +64,7 @@ public class User implements Serializable {
                 // 生成签名的有效期,小时
                 .withExpiresAt(DateUtils.addSeconds(new Date(), Math.toIntExact(RedisUtils.DEFAULT_EXPIRE)))
                 .withAudience(id.toString())
-                .withClaim("name", name)
+                .withClaim("name", getLoginName())
                 .sign(Algorithm.HMAC256(secret));
     }
 
@@ -83,13 +73,9 @@ public class User implements Serializable {
     }
 
     public static User getRequestUser() {
-        try {
-            HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-            //从header中获取user对象
-            return (User) request.getAttribute("_user");
-        } catch (Exception e) {
-            return null;
-        }
+        //从request中获取user对象
+        HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+        return (User) request.getAttribute("_user");
     }
 
     public static void main(String[] args) {
@@ -102,7 +88,7 @@ public class User implements Serializable {
     // 隐藏密码和公钥
     public void protectInfo() {
         password = null;
-        publicKey = null;
+        salt = null;
         secret = null;
     }
 }

@@ -21,5 +21,5 @@ public interface UserService {
 
     void update(User temp) throws Exception;
 
-    void delete(List<Integer> ids) throws LogicException;
+    void delete(List<?> ids) throws LogicException;
 }
