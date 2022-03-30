@@ -3,11 +3,11 @@ import Vuex from "vuex";
 
 Vue.use(Vuex);
 
-import option1 from "@/store/option1";
+import user from "./user";
 
 const store = new Vuex.Store({
   modules: {
-    option1,
+    user,
   },
 });
 
