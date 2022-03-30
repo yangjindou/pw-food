@@ -13,8 +13,6 @@ spring:
       enabled: true
       max-request-size: 100MB
       max-file-size: 20MB
-  jackson:
-    default-property-inclusion: non_null
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
