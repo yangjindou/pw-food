@@ -1,5 +1,5 @@
 <template>
-  <div id="home">
+  <div id="index">
     <div class="menu">
       <div class="menu-logo">
         <!--        <img src="@/assets/images/logo_white.png" alt="" />-->
@@ -22,8 +22,7 @@
     <div class="container">
       <div class="container-header">
         <div class="avatar">
-          <u-avatar :size="30" :src="$store.state.user.userData['avatarPath']"/>
-          <div class="user-name">{{$store.state.user.userData["username"]}}</div>
+          <div class="user-name">{{$store.state.user.userData["userName"]}}</div>
           <a-dropdown>
             <a-menu slot="overlay">
               <a-menu-item key="修改密码" @click="modifyPasswordClick">修改密码</a-menu-item>
@@ -131,7 +130,7 @@ export default {
     },
     logoutClick() {
       this.$store.commit("user/removeUser");
-      this.$router.push({ name: 'tlogin' });
+      this.$router.push({ name: 'login' });
     },
     menuClick({key}) {
       if (key) {
@@ -145,10 +144,10 @@ export default {
 </script>
 <style lang="less" scoped>
 @menu-width: 220px;
-#home {
+#index {
   width: 100%;
   height: 100%;
-  min-width: 1669px;
+  min-width: 1600px;
   position: absolute;
   display: flex;
 }

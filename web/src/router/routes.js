@@ -10,7 +10,7 @@ export default [{
 }, {
   path: "/",
   name: "index",
-  component: () => import('@/views/index/index'),
+  component: () => import('@/views/index'),
   redirect: '/home',
   children: [{
     path: "home",
@@ -24,5 +24,6 @@ export default [{
 }, {
   path: "/login",
   name: "login",
-  component: () => import('@/views/login/login')
+  component: () => import('@/views/login/login'),
+  meta
 }];

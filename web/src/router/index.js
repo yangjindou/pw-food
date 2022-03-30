@@ -20,4 +20,12 @@ const router = new VueRouter({
   routes,
 });
 
+router.beforeEach((to, from, next) => {
+  // passAuth，跳过登录验证
+  if (to.meta['passAuth']) return next();
+  let user = localStorage.getItem('user');
+  if (!user) return next({ name: "login" });
+  return next();
+});
+
 export default router;
