@@ -9,10 +9,7 @@ import com.dou.server.utils.RedisUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yangjindou
@@ -28,7 +25,7 @@ public class AuthController {
 
     @PassToken
     @PostMapping("/login")
-    public ResponseEntity<?> login(User user) throws Exception {
+    public ResponseEntity<?> login(@RequestBody User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getLoginName(), user.getPassword())) {
             throw new LogicException("缺少参数");
         }

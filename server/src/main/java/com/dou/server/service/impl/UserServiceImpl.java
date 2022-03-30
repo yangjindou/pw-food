@@ -15,7 +15,6 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @author yangjd
@@ -33,10 +32,10 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         if (!CommonUtils.varIsBlank(temp.getLoginName())) {
-            criteria.andLike("login_name",String.format("%%%s%%",temp.getUserName()));
+            criteria.andLike("login_name", String.format("%%%s%%",temp.getLoginName()));
         }
         if (!CommonUtils.varIsBlank(temp.getUserName())) {
-            criteria.andLike("user_name",String.format("%%%s%%",temp.getUserName()));
+            criteria.andLike("user_name", String.format("%%%s%%",temp.getUserName()));
         }
         List<User> userList = userMapper.selectByExample(example);
         userList.forEach(User::protectInfo);
@@ -46,12 +45,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User verifyUser(User temp) throws Exception {
         User selectUser = new User();
-        selectUser.setUserName(temp.getLoginName());
+        selectUser.setLoginName(temp.getLoginName());
         User user = userMapper.selectOne(selectUser);
         if (null == user) {
             throw new LogicException("用户不存在");
         }
-        // 验证密码是否正确
         if (!SecurityUtils.isPasswordValid(user.getPassword(), temp.getPassword(), user.getSalt())) {
             throw new LogicException("密码错误");
         }
@@ -69,7 +67,7 @@ public class UserServiceImpl implements UserService {
         String salt = SecurityUtils.randomSalt(16);
         temp.setSalt(salt);
         temp.setPassword(SecurityUtils.encode(temp.getPassword(), salt));
-        temp.setCreateUser(Objects.requireNonNull(User.getRequestUser()).getId());
+        temp.setCreateUser(User.getRequestUser().getId());
         temp.setCreateDate(new Date());
         if (userMapper.insert(temp) == 0) {
             throw new LogicException("新增失败");
@@ -99,7 +97,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User temp) throws Exception {
         temp.setPassword(null);
-        temp.setUpdateUser(Objects.requireNonNull(User.getRequestUser()).getId());
+        temp.setUpdateUser(User.getRequestUser().getId());
         temp.setUpdateDate(new Date());
         if (userMapper.updateByPrimaryKeySelective(temp) == 0) {
             throw new LogicException("修改失败");
