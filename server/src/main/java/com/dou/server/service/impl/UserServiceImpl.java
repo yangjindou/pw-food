@@ -2,6 +2,7 @@ package com.dou.server.service.impl;
 
 import com.dou.server.exception.LogicException;
 import com.dou.server.mapper.UserMapper;
+import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.utils.CommonUtils;
@@ -27,8 +28,24 @@ public class UserServiceImpl implements UserService {
     private final RedisUtils redisUtils;
 
     @Override
-    public PageInfo<User> get(Integer page, Integer limit, User temp) {
-        PageHelper.startPage(page, limit);
+    public User get(User temp) {
+        Example example = new Example(User.class);
+        Example.Criteria criteria = example.createCriteria();
+        if (!CommonUtils.varIsBlank(temp.getId())) {
+            criteria.andEqualTo("id", temp.getId());
+        }
+        if (!CommonUtils.varIsBlank(temp.getLoginName())) {
+            criteria.andLike("login_name", String.format("%%%s%%",temp.getLoginName()));
+        }
+        if (!CommonUtils.varIsBlank(temp.getUserName())) {
+            criteria.andLike("user_name", String.format("%%%s%%",temp.getUserName()));
+        }
+        return userMapper.selectOneByExample(example);
+    }
+
+    @Override
+    public PageInfo<User> getPage(Pagination pagination, User temp) {
+        PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         if (!CommonUtils.varIsBlank(temp.getLoginName())) {
@@ -44,8 +61,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User verifyUser(User temp) throws Exception {
-        User selectUser = new User();
-        selectUser.setLoginName(temp.getLoginName());
+        User selectUser = new User().setLoginName(temp.getLoginName());
         User user = userMapper.selectOne(selectUser);
         if (null == user) {
             throw new LogicException("用户不存在");
@@ -65,10 +81,8 @@ public class UserServiceImpl implements UserService {
             temp.setPassword("123456");
         }
         String salt = SecurityUtils.randomSalt(16);
-        temp.setSalt(salt);
-        temp.setPassword(SecurityUtils.encode(temp.getPassword(), salt));
-        temp.setCreateUser(User.getRequestUser().getId());
-        temp.setCreateDate(new Date());
+        temp.setSalt(salt).setPassword(SecurityUtils.encode(temp.getPassword(), salt));
+        temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
         if (userMapper.insert(temp) == 0) {
             throw new LogicException("新增失败");
         }
@@ -80,15 +94,12 @@ public class UserServiceImpl implements UserService {
         if (!SecurityUtils.isPasswordValid(requestUser.getPassword(), oldPwd, requestUser.getSalt())) {
             throw new LogicException("旧密码错误");
         }
-        User updateUser = new User();
-        updateUser.setId(requestUser.getId());
+        User updateUser = new User().setId(requestUser.getId());
         String salt = SecurityUtils.randomSalt(16);
-        updateUser.setSalt(salt);
-        updateUser.setPassword(SecurityUtils.encode(newPwd, salt));
-        updateUser.setUpdateUser(requestUser.getId());
-        updateUser.setUpdateDate(new Date());
+        updateUser.setSalt(salt).setPassword(SecurityUtils.encode(newPwd, salt));
+        updateUser.setUpdateUser(requestUser.getId()).setUpdateDate(new Date());
         if (userMapper.updateByPrimaryKeySelective(updateUser) == 0) {
-            throw new LogicException("新增失败");
+            throw new LogicException("密码修改失败");
         } else {
             redisUtils.delete(RedisUtils.USER_PREFIX + requestUser.getId());
         }
@@ -97,8 +108,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User temp) throws Exception {
         temp.setPassword(null);
-        temp.setUpdateUser(User.getRequestUser().getId());
-        temp.setUpdateDate(new Date());
+        temp.setUpdateUser(User.getRequestUser().getId()).setUpdateDate(new Date());
         if (userMapper.updateByPrimaryKeySelective(temp) == 0) {
             throw new LogicException("修改失败");
         }

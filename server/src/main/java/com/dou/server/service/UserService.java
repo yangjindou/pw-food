@@ -1,6 +1,7 @@
 package com.dou.server.service;
 
 import com.dou.server.exception.LogicException;
+import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.github.pagehelper.PageInfo;
 
@@ -11,7 +12,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    PageInfo<User> get(Integer page, Integer limit, User temp);
+    User get(User temp);
 
     User verifyUser(User temp) throws Exception;
 
@@ -22,4 +23,6 @@ public interface UserService {
     void update(User temp) throws Exception;
 
     void delete(List<?> ids) throws LogicException;
+
+    PageInfo<User> getPage(Pagination pagination, User temp);
 }

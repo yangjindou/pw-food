@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 import org.apache.commons.lang3.time.DateUtils;
 
 import javax.persistence.Id;
@@ -25,6 +26,7 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @Table(name="base_user")
+@Accessors(chain = true)
 public class User extends BaseEntity implements Serializable {
 
     @Id

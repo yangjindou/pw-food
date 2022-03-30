@@ -1,6 +1,7 @@
 package com.dou.server.controller;
 
 import com.dou.server.exception.LogicException;
+import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.utils.CommonUtils;
@@ -21,9 +22,13 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("")
-    public ResponseEntity<?> get(@RequestParam(defaultValue = "1") Integer page,
-                                 @RequestParam(defaultValue = "10") Integer limit, User user) {
-        return ResponseEntity.ok(userService.get(page,limit,user));
+    public ResponseEntity<?> get(User user) {
+        return ResponseEntity.ok(userService.get(user));
+    }
+
+    @GetMapping("list")
+    public ResponseEntity<?> getList(Pagination pagination, User user) {
+        return ResponseEntity.ok(userService.getPage(pagination, user));
     }
 
     @PostMapping("")
