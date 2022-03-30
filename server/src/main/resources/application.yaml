@@ -13,8 +13,8 @@ spring:
       enabled: true
       max-request-size: 100MB
       max-file-size: 20MB
-  jmx:
-    default-domain: devServer
+  jackson:
+    default-property-inclusion: non_null
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml
