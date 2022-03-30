@@ -1,7 +1,6 @@
 package com.dou.server.aop;
 
 import com.dou.server.model.SystemLog;
-import com.dou.server.tag.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,10 +19,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author yangjd
@@ -59,14 +55,15 @@ public class SysLogAspect {
         sysLog.setMapping(request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE).toString());
 
         // 获取请求的参数名和参数值
-        if (Constant.HTTP.PUT.name().equalsIgnoreCase(request.getMethod()) ||
-                Constant.HTTP.DELETE.name().equalsIgnoreCase(request.getMethod())) {
+        String [] filterType = {"post","put"};
+        if (Arrays.asList(filterType).contains(request.getMethod().toLowerCase(Locale.ROOT))) {
             String[] paramNames = ((CodeSignature) joinPoint.getSignature()).getParameterNames();
             Object[] paramValues = joinPoint.getArgs();
             List<Object> arguments  = new ArrayList<>();
             for (int i = 0; i < paramValues.length; i++) {
                 // 过滤一些无效参数
-                if (paramValues[i] instanceof ServletRequest || paramValues[i] instanceof ServletResponse || paramValues[i] instanceof MultipartFile) {
+                if (paramValues[i] instanceof ServletRequest || paramValues[i] instanceof ServletResponse
+                        || paramValues[i] instanceof MultipartFile) {
                     continue;
                 }
                 arguments.add(paramNames[i]+"="+paramValues[i]);
