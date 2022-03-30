@@ -46,17 +46,13 @@ export default {
         }
         this.$axios.post("auth/login", data).then(res => {
           if (res) {
-            res.data.user["token"] = res.data.token;
-            this.$store.commit("user/setUser", res.data.user);
+            this.$store.commit("user/setUser", res.data);
             this.$message.success('登录成功');
             this.$router.push({ name: 'home' });
           }
         });
       });
     },
-    test() {
-      this.bgBlur = !this.bgBlur;
-    }
   },
 }
 </script>

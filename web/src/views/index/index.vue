@@ -1,0 +1,210 @@
+<template>
+  <div id="home">
+    <div class="menu">
+      <div class="menu-logo">
+        <!--        <img src="@/assets/images/logo_white.png" alt="" />-->
+        <div class="menu-logo-text">管理系统</div>
+      </div>
+      <a-menu mode="inline" theme="dark" @click="menuClick">
+        <a-menu-item key="home-index">
+          <a-icon type="line-chart" />
+          <span>今日状况</span>
+        </a-menu-item>
+        <a-sub-menu key="data-manage">
+          <span slot="title">
+            <a-icon type="pie-chart" />
+            <span>数据管理</span>
+          </span>
+          <a-menu-item v-for="item in menuList" :key="item.key">{{item.name}}</a-menu-item>
+        </a-sub-menu>
+      </a-menu>
+    </div>
+    <div class="container">
+      <div class="container-header">
+        <div class="avatar">
+          <u-avatar :size="30" :src="$store.state.user.userData['avatarPath']"/>
+          <div class="user-name">{{$store.state.user.userData["username"]}}</div>
+          <a-dropdown>
+            <a-menu slot="overlay">
+              <a-menu-item key="修改密码" @click="modifyPasswordClick">修改密码</a-menu-item>
+              <a-menu-item key="退出" @click="logoutClick">退出</a-menu-item>
+            </a-menu>
+            <a-icon type="down" class="down" />
+          </a-dropdown>
+        </div>
+      </div>
+      <div class="container-content">
+        <router-view />
+      </div>
+    </div>
+    <a-modal v-model="passwordModalVisible" title="修改密码" @ok="handleOk">
+      <a-form :form="form" class="modal-form">
+        <a-form-item label="账号">
+          <a-input disabled v-decorator="['userName',{ rules: [{ required: true, message: '请输入账号' }] }]" placeholder="账号" />
+        </a-form-item>
+        <a-form-item label="旧密码">
+          <a-input v-decorator="['passwordOld',{ rules: [{ required: true, message: '请输入旧密码' }] }]" type="password" placeholder="旧密码" />
+        </a-form-item>
+        <a-form-item label="新密码">
+          <a-input v-decorator="['passwordNew',{ rules: [{ required: true, message: '请输入新密码' }] }]" type="password" placeholder="新密码" />
+        </a-form-item>
+        <a-form-item label="确认密码">
+          <a-input v-decorator="['passwordNew2',{ rules: [{ required: true, message: '请输入确认密码' }] }]" type="password" placeholder="确认密码" />
+        </a-form-item>
+      </a-form>
+    </a-modal>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      userName: '',
+      passwordModalVisible: false,
+      form: this.$form.createForm(this, { name: 'password-form' }),
+      menuList: []
+    }
+  },
+  mounted() {
+    this.setMenu();
+  },
+  methods: {
+    setMenu() {
+      let params = {
+        id: this.$store.state.user.userData['userId']
+      }
+      this.$axios.get("/user", {params}).then(res => {
+        res.data['token'] = this.$store.state.user.userData.token;
+        this.$store.commit('user/setUser', res.data);
+        if (res && res.data) {
+          const menuList = [{
+            key: 'home-message',
+            name: '消息管理'
+          }, {
+            key: 'home-order-manage',
+            name: '订单列表'
+          }, {
+            key: 'home-member-manage',
+            name: '会员列表'
+          }];
+          if (res.data['isAdmin']) {
+            menuList.push({
+              key: 'home-admin-manage',
+              name: '管理员列表'
+            });
+            menuList.push({
+              key: 'home-materialConfig-manage',
+              name: '材料配置列表'
+            });
+          }
+          this.menuList = menuList;
+        }
+      });
+    },
+    handleOk() {
+      this.form.validateFields((err, data) => {
+        if (err) {
+          return;
+        }
+        if (data["passwordNew"] !== data["passwordNew2"]) {
+          this.$message.error("两次密码不一致！");
+          return;
+        }
+        let params = {
+          oldPass: data["passwordOld"],
+          newPass: data["passwordNew"]
+        }
+        this.$axios.put("user/updatePassword", params).then(res => {
+          if (res) {
+            this.$message.success("修改成功，请重新登录。");
+            this.logoutClick();
+          }
+        });
+      });
+    },
+    modifyPasswordClick() {
+      this.passwordModalVisible = true;
+      this.$nextTick(()=> {
+        this.form.setFieldsValue({ userName: this.$store.state.user.userData["username"]});
+      })
+    },
+    logoutClick() {
+      this.$store.commit("user/removeUser");
+      this.$router.push({ name: 'tlogin' });
+    },
+    menuClick({key}) {
+      if (key) {
+        this.$router.push({
+          name: key
+        });
+      }
+    }
+  },
+};
+</script>
+<style lang="less" scoped>
+@menu-width: 220px;
+#home {
+  width: 100%;
+  height: 100%;
+  min-width: 1669px;
+  position: absolute;
+  display: flex;
+}
+.menu {
+  width: @menu-width;
+  height: 100%;
+  background: #001529;
+  color: white;
+
+  .menu-logo {
+    //height: 64px;
+    background: #001529;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 0;
+    .all-center();
+    img {
+      width: 170px;
+      margin-bottom: 10px;
+    }
+    .menu-logo-text {
+      color: #808080;
+    }
+  }
+}
+.container {
+  height: 100%;
+  width: calc(100% - @menu-width);
+  overflow: hidden;
+
+  .container-header {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 50px;
+    border-bottom: 2px solid #f0f2f5;
+    .avatar {
+      display: flex;
+      align-items: center;
+      .user-name {
+        margin-left: 10px;
+      }
+      .down {
+        margin-left: 10px;
+        font-size: 13px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .container-content {
+    height: calc(100% - 60px - 2px);
+    background: #f0f2f5;
+    overflow-y: auto;
+  }
+
+}
+</style>

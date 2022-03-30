@@ -8,6 +8,16 @@ export default [{
   component: () => import('@/views/404'),
   meta
 }, {
+  path: "/",
+  name: "index",
+  component: () => import('@/views/index/index'),
+  redirect: '/home',
+  children: [{
+    path: "home",
+    name: "home",
+    component: () => import('@/views/home/home')
+  }]
+}, {
   path: "/test",
   name: "test",
   component: () => import('@/views/test')
