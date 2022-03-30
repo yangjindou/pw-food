@@ -46,6 +46,14 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "验证是否登录", notes = "验证是否登录")
+    @PostMapping("/verifyLogin")
+    public ResponseEntity<?> verifyLogin() {
+        User requestUser = User.getRequestUser();
+        requestUser.protectInfo();
+        return ResponseEntity.ok(requestUser);
+    }
+
     @ApiOperation(value = "注册", notes = "账号、密码必填")
     @PassToken
     @PostMapping("register")

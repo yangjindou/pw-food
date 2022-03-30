@@ -70,10 +70,7 @@ export default {
   },
   methods: {
     setMenu() {
-      let params = {
-        id: this.$store.state.user.userData['userId']
-      }
-      this.$axios.get("/user", {params}).then(res => {
+      this.$axios.post("/auth/verifyLogin").then(res => {
         res.data['token'] = this.$store.state.user.userData.token;
         this.$store.commit('user/setUser', res.data);
         if (res && res.data) {
