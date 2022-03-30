@@ -8,10 +8,4 @@ package com.dou.server.tag;
 public class Constant {
 
 
-    public enum HTTP {
-        /// <summary>
-        /// HTTP状态
-        /// </summary>
-        GET,POST,PUT,DELETE
-    }
 }
