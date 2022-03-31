@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,6 +26,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<?> authExceptionHandler(AuthException e) {
         Map<String,Object> map = new HashMap<>();
         map.put("message", e.getMessage());
+        map.put("timestamp", new Date());
         return new ResponseEntity<>(map, HttpStatus.UNAUTHORIZED);
     }
 
@@ -33,6 +35,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<?> logicExceptionHandler(LogicException e) {
         Map<String,Object> map = new HashMap<>();
         map.put("message", e.getMessage());
+        map.put("timestamp", new Date());
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
 
@@ -47,6 +50,7 @@ public class ControllerExceptionHandler {
     public ResponseEntity<?> exceptionHandler(Exception e) {
         Map<String,Object> map = new HashMap<>();
         map.put("message", e.getMessage());
+        map.put("timestamp", new Date());
         e.printStackTrace();
         return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
     }
