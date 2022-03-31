@@ -16,6 +16,10 @@ export default [{
     path: "home",
     name: "home",
     component: () => import('@/views/home/home')
+  }, {
+    path: "user",
+    name: "user",
+    component: () => import('@/views/user/index')
   }]
 }, {
   path: "/test",

@@ -6,17 +6,10 @@
         <div class="menu-logo-text">管理系统</div>
       </div>
       <a-menu mode="inline" theme="dark" @click="menuClick">
-        <a-menu-item key="home-index">
-          <a-icon type="line-chart" />
-          <span>今日状况</span>
+        <a-menu-item v-for="item in menuList" :key="item.key">
+          <a-icon :type="item.icon" />
+          <span>{{item.name}}</span>
         </a-menu-item>
-        <a-sub-menu key="data-manage">
-          <span slot="title">
-            <a-icon type="pie-chart" />
-            <span>数据管理</span>
-          </span>
-          <a-menu-item v-for="item in menuList" :key="item.key">{{item.name}}</a-menu-item>
-        </a-sub-menu>
       </a-menu>
     </div>
     <div class="container">
@@ -75,23 +68,15 @@ export default {
         this.$store.commit('user/setUser', res.data);
         if (res && res.data) {
           const menuList = [{
-            key: 'home-message',
-            name: '消息管理'
-          }, {
-            key: 'home-order-manage',
-            name: '订单列表'
-          }, {
-            key: 'home-member-manage',
-            name: '会员列表'
+            key: 'index',
+            icon: 'line-chart',
+            name: '首页'
           }];
-          if (res.data['isAdmin']) {
+          if (res.data['role'] === '管理员') {
             menuList.push({
-              key: 'home-admin-manage',
-              name: '管理员列表'
-            });
-            menuList.push({
-              key: 'home-materialConfig-manage',
-              name: '材料配置列表'
+              key: 'user',
+              icon: 'pie-chart',
+              name: '用户管理'
             });
           }
           this.menuList = menuList;
