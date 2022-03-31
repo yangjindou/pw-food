@@ -35,10 +35,10 @@ public class UserServiceImpl implements UserService {
             criteria.andEqualTo("id", temp.getId());
         }
         if (!CommonUtils.varIsBlank(temp.getLoginName())) {
-            criteria.andLike("login_name", String.format("%%%s%%",temp.getLoginName()));
+            criteria.andLike("loginName", String.format("%%%s%%",temp.getLoginName()));
         }
         if (!CommonUtils.varIsBlank(temp.getUserName())) {
-            criteria.andLike("user_name", String.format("%%%s%%",temp.getUserName()));
+            criteria.andLike("userName", String.format("%%%s%%",temp.getUserName()));
         }
         return userMapper.selectOneByExample(example);
     }
@@ -49,10 +49,10 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(User.class);
         Example.Criteria criteria = example.createCriteria();
         if (!CommonUtils.varIsBlank(temp.getLoginName())) {
-            criteria.andLike("login_name", String.format("%%%s%%",temp.getLoginName()));
+            criteria.andLike("loginName", String.format("%%%s%%",temp.getLoginName()));
         }
         if (!CommonUtils.varIsBlank(temp.getUserName())) {
-            criteria.andLike("user_name", String.format("%%%s%%",temp.getUserName()));
+            criteria.andLike("userName", String.format("%%%s%%",temp.getUserName()));
         }
         List<User> userList = userMapper.selectByExample(example);
         userList.forEach(User::protectInfo);
