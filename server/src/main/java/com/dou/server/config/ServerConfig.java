@@ -12,6 +12,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -24,6 +25,7 @@ import java.util.List;
  * @date 2021-10-27
  */
 @Configuration
+@EnableWebMvc
 public class ServerConfig implements WebMvcConfigurer {
 
     @Resource
@@ -36,7 +38,7 @@ public class ServerConfig implements WebMvcConfigurer {
         //添加json转换
         MappingJackson2HttpMessageConverter jackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
         jackson2HttpMessageConverter.setObjectMapper(new MyJsonMapper());
-        converters.add(0, jackson2HttpMessageConverter);
+        converters.add(jackson2HttpMessageConverter);
     }
 
     /**
