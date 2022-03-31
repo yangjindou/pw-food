@@ -1,5 +1,7 @@
 package com.dou.server.utils;
 
+import com.dou.server.model.User;
+import io.lettuce.core.RedisException;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +25,12 @@ public class RedisUtils {
     /** 用户在redis中的前缀 **/
     public final static String USER_PREFIX = "user::";
 
+    public void setUser(User user) {
+        if (null != user) {
+            set(RedisUtils.USER_PREFIX + user.getId(), user);
+        }
+    }
+
     /**
      * 设置key和value
      * @param key redis的key
@@ -40,7 +48,7 @@ public class RedisUtils {
      */
     public void set(String key, Object value, long expire) {
         if (expire < -1) {
-            throw new RuntimeException("expire value is error ...");
+            throw new RedisException("expire value is error ...");
         }
         if (expire == NOT_EXPIRE){
             redisTemplate.opsForValue().set(key, value);
