@@ -52,6 +52,6 @@ public class ControllerExceptionHandler {
         map.put("message", e.getMessage());
         map.put("timestamp", new Date());
         e.printStackTrace();
-        return new ResponseEntity<>(map, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(map, HttpStatus.FORBIDDEN);
     }
 }

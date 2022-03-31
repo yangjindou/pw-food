@@ -30,7 +30,6 @@
     </div>
     <div class="table">
       <div class="table-banner">
-        <div class="table-title">管理员列表</div>
         <div class="table-btn">
           <a-button type="primary" @click="action('add')">新增</a-button>
           <a-button type="danger" @click="action('del')">删除</a-button>
@@ -49,6 +48,7 @@
         </a-table>
       </div>
     </div>
+    {{searchParams}}
     <a-modal :width="800" v-model="formModal" title="添加更多材料" @ok="modalOk">
       <a-form class="modal-form" :form="form">
         123
@@ -118,7 +118,7 @@ export default {
     },
     searchClick() {
       this.pagination.current = 1; // 搜索后跳转到第一页
-      this.form.validateFields((err, data) => {
+      this.formSearch.validateFields((err, data) => {
         this.searchParams = {...data};
         this.fetch();
       });
@@ -140,12 +140,9 @@ export default {
   background: white;
   padding: 30px 20px;
   .table-banner {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     display: flex;
     justify-content: space-between;
-    .table-title {
-      font-size: 16px;
-    }
     .table-btn {
       button {
         margin: 0 5px;
