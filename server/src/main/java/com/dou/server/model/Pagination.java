@@ -10,19 +10,19 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class Pagination {
+public class    Pagination {
 
     @ApiModelProperty("状态码")
-    private int pageNum;
+    private Integer pageNum;
 
     @ApiModelProperty("状态码")
-    private int pageSize;
+    private Integer pageSize;
 
-    public int getPageNum() {
-        return pageNum == 0 ? 1 : pageNum;
+    public Integer getPageNum() {
+        return pageNum == null ? 1 : pageNum;
     }
 
-    public int getPageSize() {
-        return pageSize == 0 ? 10 :pageSize;
+    public Integer getPageSize() {
+        return pageSize == null ? 10 :pageSize;
     }
 }

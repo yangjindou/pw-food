@@ -6,6 +6,7 @@ import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.utils.CommonUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,12 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("")
-    public ResponseEntity<?> get(User user) {
-        return ResponseEntity.ok(userService.get(user));
+    @GetMapping("/id/{id}")
+    public ResponseEntity<?> getById(@ApiParam("用户id") @PathVariable Integer id) throws Exception {
+        if (CommonUtils.varIsBlank(id)) {
+            throw new LogicException("缺少参数");
+        }
+        return ResponseEntity.ok(userService.getById(id));
     }
 
     @GetMapping("list")

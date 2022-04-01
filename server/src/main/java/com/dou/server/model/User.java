@@ -88,9 +88,10 @@ public class User extends BaseEntity implements Serializable {
     }
 
     // 隐藏密码和公钥
-    public void protectInfo() {
+    public User protectInfo() {
         password = null;
         salt = null;
         secret = null;
+        return this;
     }
 }

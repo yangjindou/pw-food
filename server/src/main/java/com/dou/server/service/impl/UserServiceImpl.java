@@ -5,6 +5,7 @@ import com.dou.server.mapper.UserMapper;
 import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
+import com.dou.server.sql.ICriteria;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RedisUtils;
 import com.dou.server.utils.SecurityUtils;
@@ -28,32 +29,20 @@ public class UserServiceImpl implements UserService {
     private final RedisUtils redisUtils;
 
     @Override
-    public User get(User temp) {
+    public User getById(Integer id) {
         Example example = new Example(User.class);
-        Example.Criteria criteria = example.createCriteria();
-        if (!CommonUtils.varIsBlank(temp.getId())) {
-            criteria.andEqualTo("id", temp.getId());
-        }
-        if (!CommonUtils.varIsBlank(temp.getLoginName())) {
-            criteria.andLike("loginName", String.format("%%%s%%",temp.getLoginName()));
-        }
-        if (!CommonUtils.varIsBlank(temp.getUserName())) {
-            criteria.andLike("userName", String.format("%%%s%%",temp.getUserName()));
-        }
-        return userMapper.selectOneByExample(example);
+        ICriteria criteria = new ICriteria(example);
+        criteria.andEqualTo("id", id);
+        return userMapper.selectOneByExample(example).protectInfo();
     }
 
     @Override
     public PageInfo<User> getPage(Pagination pagination, User temp) {
         PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
         Example example = new Example(User.class);
-        Example.Criteria criteria = example.createCriteria();
-        if (!CommonUtils.varIsBlank(temp.getLoginName())) {
-            criteria.andLike("loginName", String.format("%%%s%%",temp.getLoginName()));
-        }
-        if (!CommonUtils.varIsBlank(temp.getUserName())) {
-            criteria.andLike("userName", String.format("%%%s%%",temp.getUserName()));
-        }
+        ICriteria criteria = new ICriteria(example);
+        criteria.andLike("loginName", temp.getLoginName())
+                .andLike("userName", temp.getUserName());
         List<User> userList = userMapper.selectByExample(example);
         userList.forEach(User::protectInfo);
         return new PageInfo<>(userList);

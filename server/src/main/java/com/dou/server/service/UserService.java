@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface UserService {
 
-    User get(User temp);
+    User getById(Integer id);
 
     User verifyUser(User temp) throws Exception;
 
