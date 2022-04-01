@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['用户管理','用户列表']" title="订单列表" />
+    <breadcrumb :items="['用户管理','用户列表']" title="用户列表" />
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -31,8 +31,8 @@
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="action('add')">新增</a-button>
-          <a-button type="danger" @click="action('del')">删除</a-button>
+          <a-button type="primary" @click="add">新增</a-button>
+          <a-button type="danger" @click="del">删除</a-button>
         </div>
       </div>
       <div class="table-content">
@@ -41,17 +41,28 @@
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
-            <a @click="action('info', row)">详情</a>
-            <span>&nbsp;|&nbsp;</span>
-            <a @click="action('update', row)">修改</a>
+<!--            <a @click="info(row)">详情</a>-->
+<!--            <span>&nbsp;|&nbsp;</span>-->
+            <a @click="update(row)">修改</a>
           </template>
         </a-table>
       </div>
     </div>
-    {{searchParams}}
-    <a-modal :width="800" v-model="formModal" title="添加更多材料" @ok="modalOk">
+    <a-modal v-model="formModal" :title="formState === 'update' ? '修改':'新增'" @ok="modalOk">
       <a-form class="modal-form" :form="form">
-        123
+        <a-form-item label="id" hidden>
+          <a-input v-decorator="['id']" placeholder="id" />
+        </a-form-item>
+        <a-form-item label="账号">
+          <a-input :disabled="formState === 'update'" v-decorator="['loginName',{rules}]" placeholder="账号" />
+        </a-form-item>
+        <a-form-item label="用户名">
+          <a-input v-decorator="['userName',{rules}]" placeholder="用户名" />
+        </a-form-item>
+        <a-form-item label="角色">
+          <a-input disabled v-decorator="['role',{rules}]" placeholder="角色" />
+        </a-form-item>
+        <div class="text-grey text-right">初始密码为123456</div>
       </a-form>
     </a-modal>
   </div>
@@ -69,7 +80,11 @@ export default {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       form: this.$form.createForm(this, { name: 'form_user' }),
       searchParams: {},
-      ...table.data
+      rules: [{
+        required: true,
+        message: '必填项',
+      }],
+      ...table.data,
     };
   },
   mounted() {
@@ -77,42 +92,78 @@ export default {
   },
   methods: {
     modalOk() {
-
-    },
-    action(state, row) {
-      this.formState = state;
-      if (state === 'add') {
-        this.formModal = true;
-      } else if (state === 'add') {
-        this.formModal = true;
-      } else if (state === 'del') {
-        if (this.selectedRowKeys.length === 0) {
-          this.$message.error("请选择数据!");
-          return;
+      this.form.validateFields((error, data) => {
+        if (error) return;
+        if (this.formState === 'add') {
+          this.$axios.post("/user", data).then(res => {
+            if (res) {
+              this.$message.success("添加成功");
+              this.formModal = false;
+              this.fetch();
+            }
+          });
+        } else {
+          this.$axios.put("/user", data).then(res => {
+            if (res) {
+              this.$message.success("修改成功");
+              this.formModal = false;
+              this.fetch();
+            }
+          });
         }
-        const _this = this;
-        this.$confirm({
-          title: '确定删除这些数据?',
-          okText: '确定',
-          okType: 'danger',
-          cancelText: '取消',
-          onOk() {
-            let params = {
-              ids: _this.selectedRowKeys.join(',')
-            };
-            _this.$axios.delete("user", {params}).then(res => {
-              if (res) {
-                _this.$message.success("删除成功");
-                _this.fetch();
-                _this.selectedRowKeys = [];
-              }
-            });
-          },
-        });
-      }
+      });
     },
-    searchReset() {
+    add() {
+      this.formState = "add";
+      this.formModal = true;
       this.form.resetFields();
+      this.$nextTick(() => {
+        this.form.setFieldsValue({role: '监管仓管理员'});
+      });
+    },
+    del() {
+      if (this.selectedRowKeys.length === 0) {
+        this.$message.error("请选择数据!");
+        return;
+      }
+      const _this = this;
+      this.$confirm({
+        title: '确定删除这些数据?',
+        okText: '确定',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk() {
+          let params = {
+            ids: _this.selectedRowKeys.join(',')
+          };
+          _this.$axios.delete("user", {params}).then(res => {
+            if (res) {
+              _this.$message.success("删除成功");
+              _this.fetch();
+              _this.selectedRowKeys = [];
+            }
+          });
+        },
+      });
+    },
+    update(row) {
+      this.formState = "update";
+      this.formModal = true;
+      this.$nextTick(() => {
+        this.form.setFieldsValue({
+          id: row['id'],
+          loginName: row['loginName'],
+          userName: row['userName'],
+          role: row['role'],
+        });
+      });
+    },
+    // info() {
+    //   this.formState = "info";
+    //   this.formModal = true;
+    // },
+    searchReset() {
+      this.formSearch.resetFields();
       this.searchParams = {};
       this.fetch();
     },

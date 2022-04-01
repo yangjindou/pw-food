@@ -8,7 +8,7 @@ export default {
       {title: '用户名', dataIndex: 'userName'},
       {title: '角色', dataIndex: 'role'},
       {title: '创建时间', width: 230,dataIndex: 'createDate'},
-      {title: '操作', width: 110, scopedSlots: {customRender: 'operation'},fixed: 'right'}
+      // {title: '操作', width: 110, scopedSlots: {customRender: 'operation'},fixed: 'right'}
     ],
   },
   methods: {
