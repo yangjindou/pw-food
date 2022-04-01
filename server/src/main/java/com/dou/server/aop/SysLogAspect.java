@@ -83,7 +83,10 @@ public class SysLogAspect {
                 String value = request.getParameter(name);
                 params.add(name + "=" +value);
             }
+            Map<?,?> map = (Map<?,?>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+            map.forEach((name, value) -> params.add(name + "=" +value));
             sysLog.setParams(params.toString());
+
         }
         log.info("mapping ——> {}",sysLog.getMapping());
         log.info("method  ——> {}()",sysLog.getMethod());
