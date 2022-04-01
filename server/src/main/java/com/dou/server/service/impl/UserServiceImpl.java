@@ -106,10 +106,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public void delete(List<?> ids) throws LogicException {
         Example example = new Example(User.class);
-        Example.Criteria criteria = example.createCriteria();
+        ICriteria criteria = new ICriteria(example);
         criteria.andIn("id",ids);
         if (userMapper.deleteByExample(example) != ids.size()) {
-            throw new LogicException("新增失败");
+            throw new LogicException("删除失败");
         }
     }
 }

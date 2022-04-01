@@ -3,6 +3,8 @@ package com.dou.server.sql;
 import com.dou.server.utils.CommonUtils;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.Collection;
+
 /**
  * @author yangjindou
  * @date 2022-04-01
@@ -24,19 +26,22 @@ public class ICriteria {
 
     public ICriteria andLike(String property, Object value) {
         if (!CommonUtils.varIsBlank(value)) {
-            criteria.andEqualTo(property, SqlUtils.concatLike(value, SqlLike.DEFAULT));
+            this.andLike(property, value, SqlLike.DEFAULT);
         }
         return this;
     }
 
     public ICriteria andLike(String property, Object value, SqlLike type) {
         if (!CommonUtils.varIsBlank(value)) {
-            criteria.andEqualTo(property, SqlUtils.concatLike(value, type));
+            criteria.andLike(property, SqlUtils.concatLike(value, type));
         }
         return this;
     }
 
-    public Example.Criteria getCriteria() {
-        return criteria;
+    public ICriteria andIn(String property, Collection<?> values) {
+        if (!CommonUtils.varIsBlank(values)) {
+            criteria.andIn(property, values);
+        }
+        return this;
     }
 }
