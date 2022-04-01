@@ -25,7 +25,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@Table(name="base_user")
+@Table(name="sys_user")
 @Accessors(chain = true)
 public class User extends BaseEntity implements Serializable {
 
