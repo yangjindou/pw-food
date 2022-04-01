@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from './routes';
+import store from "../store";
 
 // 下方代码解决重复路由时，控制台报错的问题
 const originalPush = VueRouter.prototype.push;
@@ -21,6 +22,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+  store.commit('menu/set', to.name);
   // passAuth，跳过登录验证
   if (to.meta['passAuth']) return next();
   let user = localStorage.getItem('user');

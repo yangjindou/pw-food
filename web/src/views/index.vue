@@ -5,7 +5,8 @@
         <!--        <img src="@/assets/images/logo_white.png" alt="" />-->
         <div class="menu-logo-text">管理系统</div>
       </div>
-      <a-menu mode="inline" theme="dark" @click="menuClick">
+      <a-menu mode="inline" theme="dark" @click="menuClick"
+              :selectedKeys="$store.state.menu.selectedKeys">
         <a-menu-item v-for="item in menuList" :key="item.key">
           <a-icon :type="item.icon" />
           <span>{{item.name}}</span>
@@ -68,7 +69,7 @@ export default {
         this.$store.commit('user/setUser', res.data);
         if (res && res.data) {
           const menuList = [{
-            key: 'index',
+            key: 'home',
             icon: 'line-chart',
             name: '首页'
           }];
