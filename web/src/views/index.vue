@@ -79,6 +79,11 @@ export default {
               icon: 'pie-chart',
               name: '用户管理'
             });
+            menuList.push({
+              key: 'dict',
+              icon: 'pie-chart',
+              name: '数据字典'
+            });
           }
           this.menuList = menuList;
         }

@@ -8,6 +8,15 @@ export default [{
   component: () => import('@/views/404'),
   meta
 }, {
+  path: "/test",
+  name: "test",
+  component: () => import('@/views/test')
+}, {
+  path: "/login",
+  name: "login",
+  component: () => import('@/views/login/login'),
+  meta
+}, {
   path: "/",
   name: "index",
   component: () => import('@/views/index'),
@@ -20,14 +29,9 @@ export default [{
     path: "user",
     name: "user",
     component: () => import('@/views/user/index')
+  }, {
+    path: "dict",
+    name: "dict",
+    component: () => import('@/views/dict/index')
   }]
-}, {
-  path: "/test",
-  name: "test",
-  component: () => import('@/views/test')
-}, {
-  path: "/login",
-  name: "login",
-  component: () => import('@/views/login/login'),
-  meta
 }];
