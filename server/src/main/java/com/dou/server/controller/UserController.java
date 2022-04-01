@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> add(User user) throws Exception {
+    public ResponseEntity<?> add(@RequestBody User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getLoginName())) {
             throw new LogicException("缺少参数");
         }
