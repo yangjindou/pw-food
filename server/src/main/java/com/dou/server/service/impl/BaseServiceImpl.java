@@ -5,10 +5,10 @@ import com.dou.server.model.BaseEntity;
 import com.dou.server.service.BaseService;
 import com.dou.server.sql.ICriteria;
 import com.dou.server.tag.MyMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
+import javax.annotation.Resource;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -19,7 +19,7 @@ import java.util.List;
 @Service
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
-    @Autowired
+    @Resource
     private MyMapper<T> mapper;
 
     @Override
