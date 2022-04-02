@@ -2,7 +2,9 @@ package com.dou.server.controller;
 
 import com.dou.server.exception.LogicException;
 import com.dou.server.model.Dict;
+import com.dou.server.model.DictData;
 import com.dou.server.model.Pagination;
+import com.dou.server.service.DictDataService;
 import com.dou.server.service.DictService;
 import com.dou.server.utils.CommonUtils;
 import io.swagger.annotations.Api;
@@ -22,6 +24,7 @@ import java.util.Arrays;
 public class DictController {
 
     private final DictService dictService;
+    private final DictDataService dictDataService;
 
     @GetMapping("list")
     public ResponseEntity<?> getList(Pagination pagination, Dict dict) {
@@ -56,25 +59,25 @@ public class DictController {
     }
 
     @GetMapping("/data/list")
-    public ResponseEntity<?> getDataList(Pagination pagination, Dict dict) {
-        return ResponseEntity.ok(dictService.getPage(pagination, dict));
+    public ResponseEntity<?> getDataList(Pagination pagination, DictData dictData) {
+        return ResponseEntity.ok(dictDataService.getPage(pagination, dictData));
     }
 
     @PostMapping("/data")
-    public ResponseEntity<?> dataAdd(@RequestBody Dict dict) throws Exception {
-        if (CommonUtils.varIsBlank(dict.getName(), dict.getSign())) {
+    public ResponseEntity<?> dataAdd(@RequestBody DictData dictData) throws Exception {
+        if (CommonUtils.varIsBlank(dictData.getPid(), dictData.getName(), dictData.getValue())) {
             throw new LogicException("缺少参数");
         }
-        dictService.add(dict);
+        dictDataService.add(dictData);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/data")
-    public ResponseEntity<?> dataUpdate(@RequestBody Dict dict) throws Exception {
-        if (CommonUtils.varIsBlank(dict.getId())) {
+    public ResponseEntity<?> dataUpdate(@RequestBody DictData dictData) throws Exception {
+        if (CommonUtils.varIsBlank(dictData.getId())) {
             throw new LogicException("缺少参数");
         }
-        dictService.update(dict);
+        dictDataService.update(dictData);
         return ResponseEntity.ok().build();
     }
 
@@ -83,7 +86,7 @@ public class DictController {
         if (CommonUtils.varIsBlank(ids)) {
             throw new LogicException("缺少参数");
         }
-        dictService.delete(Arrays.asList(ids.split(",")));
+        dictDataService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
     }
 }
