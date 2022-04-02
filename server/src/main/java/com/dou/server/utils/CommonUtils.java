@@ -29,7 +29,7 @@ public class CommonUtils {
 	}
 
 	public static boolean varIsNotBlank(Object... vars) {
-		return CommonUtils.varIsBlank(vars);
+		return !CommonUtils.varIsBlank(vars);
 	}
 
 	public static boolean varIsBlank(Object... vars) {

@@ -17,22 +17,29 @@ public class ICriteria {
         criteria  = example.createCriteria();
     }
 
+    public ICriteria andNotEqualTo(String property, Object value) {
+        if (CommonUtils.varIsNotBlank(value)) {
+            criteria.andNotEqualTo(property, value);
+        }
+        return this;
+    }
+
     public ICriteria andEqualTo(String property, Object value) {
-        if (!CommonUtils.varIsBlank(value)) {
+        if (CommonUtils.varIsNotBlank(value)) {
             criteria.andEqualTo(property, value);
         }
         return this;
     }
 
     public ICriteria andLike(String property, Object value) {
-        if (!CommonUtils.varIsBlank(value)) {
+        if (CommonUtils.varIsNotBlank(value)) {
             this.andLike(property, value, SqlLike.DEFAULT);
         }
         return this;
     }
 
     public ICriteria andLike(String property, Object value, SqlLike type) {
-        if (!CommonUtils.varIsBlank(value)) {
+        if (CommonUtils.varIsNotBlank(value)) {
             criteria.andLike(property, SqlUtils.concatLike(value, type));
         }
         return this;

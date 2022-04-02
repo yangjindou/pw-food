@@ -5,13 +5,13 @@
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
           <a-col :span="6" >
-            <a-form-item label="账号">
-              <a-input v-decorator="[`loginName`]" placeholder="请输入" />
+            <a-form-item label="名称">
+              <a-input v-decorator="[`name`]" placeholder="请输入" />
             </a-form-item>
           </a-col>
           <a-col :span="6" >
-            <a-form-item label="用户名">
-              <a-input v-decorator="[`userName`]" placeholder="请输入" />
+            <a-form-item label="标识">
+              <a-input v-decorator="[`sign`]" placeholder="请输入" />
             </a-form-item>
           </a-col>
           <a-col :span="6" ></a-col>
@@ -51,16 +51,15 @@
         <a-form-item label="id" hidden>
           <a-input v-decorator="['id']" placeholder="id" />
         </a-form-item>
-        <a-form-item label="账号">
-          <a-input :disabled="formState === 'update'" v-decorator="['loginName',{rules}]" placeholder="账号" />
+        <a-form-item label="名称">
+          <a-input v-decorator="['name',{rules}]" placeholder="名称" />
         </a-form-item>
-        <a-form-item label="用户名">
-          <a-input v-decorator="['userName',{rules}]" placeholder="用户名" />
+        <a-form-item label="标识">
+          <a-input v-decorator="['sign',{rules}]" placeholder="标识" />
         </a-form-item>
-        <a-form-item label="角色">
-          <a-input disabled v-decorator="['role',{rules}]" placeholder="角色" />
+        <a-form-item label="备注">
+          <a-input v-decorator="['remark']" placeholder="备注" />
         </a-form-item>
-        <div class="text-grey text-right">初始密码为123456</div>
       </a-form>
     </a-modal>
   </div>
@@ -93,7 +92,7 @@ export default {
       this.form.validateFields((error, data) => {
         if (error) return;
         if (this.formState === 'add') {
-          this.$axios.post("/user", data).then(res => {
+          this.$axios.post("/dict", data).then(res => {
             if (res) {
               this.$message.success("添加成功");
               this.formModal = false;
@@ -101,7 +100,7 @@ export default {
             }
           });
         } else {
-          this.$axios.put("/user", data).then(res => {
+          this.$axios.put("/dict", data).then(res => {
             if (res) {
               this.$message.success("修改成功");
               this.formModal = false;
@@ -115,9 +114,6 @@ export default {
       this.formState = "add";
       this.formModal = true;
       this.form.resetFields();
-      this.$nextTick(() => {
-        this.form.setFieldsValue({role: '监管仓管理员'});
-      });
     },
     del() {
       if (this.selectedRowKeys.length === 0) {
@@ -134,7 +130,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("user", {params}).then(res => {
+          _this.$axios.delete("/dict", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();

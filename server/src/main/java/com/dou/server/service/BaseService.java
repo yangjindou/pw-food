@@ -13,6 +13,9 @@ import java.util.List;
 public interface BaseService <T extends BaseEntity> {
 
     @Transactional(rollbackFor = Exception.class)
+    void add(T temp) throws Exception;
+
+    @Transactional(rollbackFor = Exception.class)
     void update(T temp) throws Exception;
 
     @Transactional(rollbackFor = Exception.class)

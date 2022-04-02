@@ -1,6 +1,5 @@
 package com.dou.server.service.impl;
 
-import com.dou.server.exception.LogicException;
 import com.dou.server.mapper.DictMapper;
 import com.dou.server.mapper.UserMapper;
 import com.dou.server.model.Dict;
@@ -15,7 +14,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,16 +33,8 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictServic
         Example example = new Example(User.class);
         ICriteria criteria = new ICriteria(example);
         criteria.andLike("name", temp.getName())
-                .andLike("key", temp.getKey());
+                .andLike("sign", temp.getSign());
         List<Dict> dicts = dictMapper.selectByExample(example);
         return new PageInfo<>(dicts);
-    }
-
-    @Override
-    public void add(Dict temp) throws Exception {
-        temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
-        if (dictMapper.insert(temp) == 0) {
-            throw new LogicException("新增失败");
-        }
     }
 }

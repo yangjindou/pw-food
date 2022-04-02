@@ -42,7 +42,8 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         Example example = new Example(User.class);
         ICriteria criteria = new ICriteria(example);
         criteria.andLike("loginName", temp.getLoginName())
-                .andLike("userName", temp.getUserName());
+                .andLike("userName", temp.getUserName())
+                .andNotEqualTo("role", "管理员");
         List<User> userList = userMapper.selectByExample(example);
         userList.forEach(User::protectInfo);
         return new PageInfo<>(userList);

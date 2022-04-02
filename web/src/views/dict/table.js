@@ -4,10 +4,9 @@ export default {
     ...data,
     selectedRowKeys: [],
     columns: [
-      {title: '登录名', dataIndex: 'loginName', width: '25%'},
-      {title: '用户名', dataIndex: 'userName'},
-      {title: '角色', dataIndex: 'role'},
-      {title: '创建时间', width: 230,dataIndex: 'createDate'},
+      {title: '名称', dataIndex: 'name', width: '25%'},
+      {title: '标识', dataIndex: 'sign'},
+      {title: '备注', dataIndex: 'remark'},
       {title: '操作', width: 110, scopedSlots: {customRender: 'operation'},fixed: 'right'}
     ],
   },
@@ -18,7 +17,7 @@ export default {
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
-      this.$axios.get("user/list", {params}).then(res => {
+      this.$axios.get("dict/list", {params}).then(res => {
         if (res) {
           this.tableData = res.data.list;
           this.pagination.total = res.data.total;

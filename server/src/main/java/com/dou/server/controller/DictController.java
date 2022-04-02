@@ -30,7 +30,7 @@ public class DictController {
 
     @PostMapping("")
     public ResponseEntity<?> add(@RequestBody Dict dict) throws Exception {
-        if (CommonUtils.varIsBlank(dict.getName(), dict.getKey())) {
+        if (CommonUtils.varIsBlank(dict.getName(), dict.getSign())) {
             throw new LogicException("缺少参数");
         }
         dictService.add(dict);

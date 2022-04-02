@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.time.DateUtils;
 
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
+import javax.persistence.*;
 import javax.servlet.http.HttpServletRequest;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +28,7 @@ import java.util.Date;
 public class User extends BaseEntity implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @ApiModelProperty("id")
     private Integer id;
 

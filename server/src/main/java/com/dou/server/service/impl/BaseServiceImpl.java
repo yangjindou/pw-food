@@ -26,6 +26,14 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     private MyMapper<T> mapper;
 
     @Override
+    public void add(T temp) throws Exception {
+        temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
+        if (mapper.insert(temp) == 0) {
+            throw new LogicException("新增失败");
+        }
+    }
+
+    @Override
     public void update(T temp) throws Exception {
         temp.setUpdateUser(User.getRequestUser().getId()).setUpdateDate(new Date());
         if (mapper.updateByPrimaryKeySelective(temp) == 0) {
