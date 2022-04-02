@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class DictServiceImpl implements DictService {
+public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictService {
 
     private final DictMapper dictMapper;
 
