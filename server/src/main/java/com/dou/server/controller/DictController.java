@@ -54,4 +54,36 @@ public class DictController {
         dictService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/data/list")
+    public ResponseEntity<?> getDataList(Pagination pagination, Dict dict) {
+        return ResponseEntity.ok(dictService.getPage(pagination, dict));
+    }
+
+    @PostMapping("/data")
+    public ResponseEntity<?> dataAdd(@RequestBody Dict dict) throws Exception {
+        if (CommonUtils.varIsBlank(dict.getName(), dict.getSign())) {
+            throw new LogicException("缺少参数");
+        }
+        dictService.add(dict);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/data")
+    public ResponseEntity<?> dataUpdate(@RequestBody Dict dict) throws Exception {
+        if (CommonUtils.varIsBlank(dict.getId())) {
+            throw new LogicException("缺少参数");
+        }
+        dictService.update(dict);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/data")
+    public ResponseEntity<?> dataDelete(String ids) throws LogicException {
+        if (CommonUtils.varIsBlank(ids)) {
+            throw new LogicException("缺少参数");
+        }
+        dictService.delete(Arrays.asList(ids.split(",")));
+        return ResponseEntity.ok().build();
+    }
 }
