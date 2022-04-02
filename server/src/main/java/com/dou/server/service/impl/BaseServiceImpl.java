@@ -2,14 +2,16 @@ package com.dou.server.service.impl;
 
 import com.dou.server.exception.LogicException;
 import com.dou.server.model.BaseEntity;
+import com.dou.server.model.User;
 import com.dou.server.service.BaseService;
 import com.dou.server.sql.ICriteria;
 import com.dou.server.tag.MyMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.annotation.Resource;
 import java.lang.reflect.ParameterizedType;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,15 +21,28 @@ import java.util.List;
 @Service
 public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseService<T> {
 
-    @Resource
+    // 必须用@Autowired，不然载入不了
+    @Autowired
     private MyMapper<T> mapper;
+
+    @Override
+    public void update(T temp) throws Exception {
+        temp.setUpdateUser(User.getRequestUser().getId()).setUpdateDate(new Date());
+        if (mapper.updateByPrimaryKeySelective(temp) == 0) {
+            throw new LogicException("修改失败");
+        }
+    }
 
     @Override
     public void delete(List<?> ids) throws LogicException {
         Class<T> tClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Example example = new Example(tClass);
         ICriteria criteria = new ICriteria(example);
-        criteria.andIn("id",ids);
+        if (ids.size() == 1) {
+            criteria.andEqualTo("id",ids.get(0));
+        } else {
+            criteria.andIn("id",ids);
+        }
         if (mapper.deleteByExample(example) != ids.size()) {
             throw new LogicException("删除失败");
         }

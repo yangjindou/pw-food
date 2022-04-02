@@ -23,7 +23,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
 
     private final UserMapper userMapper;
     private final RedisUtils redisUtils;
@@ -97,19 +97,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void update(User temp) throws Exception {
         temp.setPassword(null);
-        temp.setUpdateUser(User.getRequestUser().getId()).setUpdateDate(new Date());
-        if (userMapper.updateByPrimaryKeySelective(temp) == 0) {
-            throw new LogicException("修改失败");
-        }
-    }
-
-    @Override
-    public void delete(List<?> ids) throws LogicException {
-        Example example = new Example(User.class);
-        ICriteria criteria = new ICriteria(example);
-        criteria.andIn("id",ids);
-        if (userMapper.deleteByExample(example) != ids.size()) {
-            throw new LogicException("删除失败");
-        }
+        super.update(temp);
     }
 }

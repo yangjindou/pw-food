@@ -2,10 +2,12 @@ package com.dou.server.service.impl;
 
 import com.dou.server.exception.LogicException;
 import com.dou.server.mapper.DictMapper;
+import com.dou.server.mapper.UserMapper;
 import com.dou.server.model.Dict;
 import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.DictService;
+import com.dou.server.service.UserService;
 import com.dou.server.sql.ICriteria;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +26,8 @@ import java.util.List;
 public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictService {
 
     private final DictMapper dictMapper;
+    private final UserMapper userMapper;
+    private final UserService userService;
 
     @Override
     public PageInfo<Dict> getPage(Pagination pagination, Dict temp) {
@@ -41,24 +45,6 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictServic
         temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
         if (dictMapper.insert(temp) == 0) {
             throw new LogicException("新增失败");
-        }
-    }
-
-    @Override
-    public void update(Dict temp) throws Exception {
-        temp.setUpdateUser(User.getRequestUser().getId()).setUpdateDate(new Date());
-        if (dictMapper.updateByPrimaryKeySelective(temp) == 0) {
-            throw new LogicException("修改失败");
-        }
-    }
-
-    @Override
-    public void delete(List<?> ids) throws LogicException {
-        Example example = new Example(User.class);
-        ICriteria criteria = new ICriteria(example);
-        criteria.andIn("id",ids);
-        if (dictMapper.deleteByExample(example) != ids.size()) {
-            throw new LogicException("删除失败");
         }
     }
 }

@@ -1,17 +1,14 @@
 package com.dou.server.service;
 
-import com.dou.server.exception.LogicException;
 import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.github.pagehelper.PageInfo;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 /**
  * @author yangjd
  */
-public interface UserService {
+public interface UserService extends BaseService<User> {
 
     User getById(Integer id);
 
@@ -25,9 +22,6 @@ public interface UserService {
 
     @Transactional(rollbackFor = Exception.class)
     void update(User temp) throws Exception;
-
-    @Transactional(rollbackFor = Exception.class)
-    void delete(List<?> ids) throws LogicException;
 
     PageInfo<User> getPage(Pagination pagination, User temp);
 }
