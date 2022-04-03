@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface BaseService <T extends BaseEntity> {
 
+    List<T> getList(T temp);
+
     @Transactional(rollbackFor = Exception.class)
     void add(T temp) throws Exception;
 

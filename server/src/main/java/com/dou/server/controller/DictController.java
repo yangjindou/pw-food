@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author yangjd
@@ -64,29 +65,13 @@ public class DictController {
     }
 
     @PostMapping("/data")
-    public ResponseEntity<?> dataAdd(@RequestBody DictData dictData) throws Exception {
-        if (CommonUtils.varIsBlank(dictData.getPid(), dictData.getName(), dictData.getValue())) {
-            throw new LogicException("缺少参数");
+    public ResponseEntity<?> dataAdd(@RequestBody List<DictData> dictDatas) throws Exception {
+        for (DictData dictData : dictDatas) {
+            if (CommonUtils.varIsBlank(dictData.getPid(), dictData.getName(), dictData.getValue())) {
+                throw new LogicException("缺少参数");
+            }
         }
-        dictDataService.add(dictData);
-        return ResponseEntity.ok().build();
-    }
-
-    @PutMapping("/data")
-    public ResponseEntity<?> dataUpdate(@RequestBody DictData dictData) throws Exception {
-        if (CommonUtils.varIsBlank(dictData.getId())) {
-            throw new LogicException("缺少参数");
-        }
-        dictDataService.update(dictData);
-        return ResponseEntity.ok().build();
-    }
-
-    @DeleteMapping("/data")
-    public ResponseEntity<?> dataDelete(String ids) throws LogicException {
-        if (CommonUtils.varIsBlank(ids)) {
-            throw new LogicException("缺少参数");
-        }
-        dictDataService.delete(Arrays.asList(ids.split(",")));
+        dictDataService.add(dictDatas);
         return ResponseEntity.ok().build();
     }
 }

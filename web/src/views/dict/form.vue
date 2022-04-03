@@ -19,11 +19,10 @@
 
 <script>
 import objUtils from "@/utils/objUtils";
-
 export default {
   data() {
     return {
-      form: this.$form.createForm(this, { name: 'form_user' }),
+      form: this.$form.createForm(this, { name: 'form' }),
       formState: '',
       formModal: false,
       rules: [{

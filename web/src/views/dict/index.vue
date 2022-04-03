@@ -42,18 +42,14 @@
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <a @click="join(row)">关联</a>
-            <span>&nbsp;|&nbsp;</span>
+            <span>&nbsp;&nbsp;&nbsp;</span>
             <a @click="update(row)">修改</a>
           </template>
         </a-table>
       </div>
     </div>
     <t-form ref="form" />
-<!--    <a-modal v-model="dataFormModal" title="" @ok="modalOk">-->
-<!--      <a-form class="modal-form" :form="form">-->
-<!--        <data-form />-->
-<!--      </a-form>-->
-<!--    </a-modal>-->
+    <data-form  ref="dataForm"/>
   </div>
 </template>
 
@@ -66,9 +62,7 @@ export default {
   components: {Breadcrumb, tForm, dataForm},
   data() {
     return {
-      dataFormModal: false,
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
-      form: this.$form.createForm(this, { name: 'form_user' }),
       searchParams: {},
       ...table.data,
     };
@@ -77,8 +71,8 @@ export default {
     this.fetch();
   },
   methods: {
-    join() {
-      this.dataFormModal = true;
+    join(row) {
+      this.$refs.dataForm.open(row);
     },
     add() {
       this.$refs.form.add();

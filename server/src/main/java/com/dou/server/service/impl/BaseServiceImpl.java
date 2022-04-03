@@ -12,7 +12,9 @@ import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author yangjindou
@@ -24,6 +26,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     // 必须用@Autowired，不然载入不了
     @Autowired
     private MyMapper<T> mapper;
+
+    @Override
+    public List<T> getList(T temp) {
+        return mapper.select(temp);
+    }
 
     @Override
     public void add(T temp) throws Exception {
@@ -43,6 +50,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Override
     public void delete(List<?> ids) throws LogicException {
+        Set<Object> objects = new HashSet<>();
         Class<T> tClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Example example = new Example(tClass);
         ICriteria criteria = new ICriteria(example);
