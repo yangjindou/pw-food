@@ -41,6 +41,8 @@
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
+            <a @click="join(row)">关联</a>
+            <span>&nbsp;|&nbsp;</span>
             <a @click="update(row)">修改</a>
           </template>
         </a-table>
@@ -48,39 +50,33 @@
     </div>
     <a-modal v-model="formModal" :title="formState === 'update' ? '修改':'新增'" @ok="modalOk">
       <a-form class="modal-form" :form="form">
-        <a-form-item label="id" hidden>
-          <a-input v-decorator="['id']" placeholder="id" />
-        </a-form-item>
-        <a-form-item label="名称">
-          <a-input v-decorator="['name',{rules}]" placeholder="名称" />
-        </a-form-item>
-        <a-form-item label="标识">
-          <a-input v-decorator="['sign',{rules}]" placeholder="标识" />
-        </a-form-item>
-        <a-form-item label="备注">
-          <a-input v-decorator="['remark']" placeholder="备注" />
-        </a-form-item>
+        <t-form />
+      </a-form>
+    </a-modal>
+    <a-modal v-model="dataFormModal" title="" @ok="modalOk">
+      <a-form class="modal-form" :form="form">
+        <data-form />
       </a-form>
     </a-modal>
   </div>
 </template>
 
 <script>
+import dataForm from "./data";
+import tForm from "./form";
 import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
+import objUtils from "@/utils/objUtils";
 export default {
-  components: {Breadcrumb},
+  components: {Breadcrumb, tForm, dataForm},
   data() {
     return {
       formState: '',
       formModal: false,
+      dataFormModal: false,
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       form: this.$form.createForm(this, { name: 'form_user' }),
       searchParams: {},
-      rules: [{
-        required: true,
-        message: '必填项',
-      }],
       ...table.data,
     };
   },
@@ -88,6 +84,9 @@ export default {
     this.fetch();
   },
   methods: {
+    join() {
+      this.dataFormModal = true;
+    },
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
@@ -144,18 +143,9 @@ export default {
       this.formState = "update";
       this.formModal = true;
       this.$nextTick(() => {
-        this.form.setFieldsValue({
-          id: row['id'],
-          loginName: row['loginName'],
-          userName: row['userName'],
-          role: row['role'],
-        });
+        this.form.setFieldsValue(objUtils.getObjectByKey(row, "id", "name", "sign", "remark"));
       });
     },
-    // info() {
-    //   this.formState = "info";
-    //   this.formModal = true;
-    // },
     searchReset() {
       this.formSearch.resetFields();
       this.searchParams = {};
