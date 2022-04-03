@@ -40,6 +40,9 @@
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
+          <template slot="enable" slot-scope="item">
+            <a-switch @change="enabledChange($event,item)" checked-children="开" un-checked-children="关" :checked="!item.enable" />
+          </template>
           <template slot="operation" slot-scope="row">
 <!--            <a @click="info(row)">详情</a>-->
 <!--            <span>&nbsp;|&nbsp;</span>-->
@@ -91,6 +94,18 @@ export default {
     this.fetch();
   },
   methods: {
+    enabledChange(event, {id}) {
+      debugger
+      let params = {
+        enable: event ? 0:1,
+        id
+      };
+      this.$axios.put("/user", params).then(res => {
+        if (res) {
+          this.fetch();
+        }
+      });
+    },
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
