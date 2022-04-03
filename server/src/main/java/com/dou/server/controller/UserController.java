@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> delete(String ids) throws LogicException {
+    public ResponseEntity<?> delete(String ids) throws Exception {
         if (CommonUtils.varIsBlank(ids)) {
             throw new LogicException("缺少参数");
         }

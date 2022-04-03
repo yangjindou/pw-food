@@ -95,7 +95,6 @@ export default {
   },
   methods: {
     enabledChange(event, {id}) {
-      debugger
       let params = {
         enable: event ? 0:1,
         id

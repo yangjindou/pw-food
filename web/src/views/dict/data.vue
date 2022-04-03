@@ -91,6 +91,10 @@ export default {
       this.form.validateFields((error, data) => {
         if (error) return;
         const formData = [];
+        if (this.keys.length === 0) {
+          this.$message.error('请新增数据字典');
+          return;
+        }
         data.name.forEach((e,index) => {
           formData.push({
             id: data.id[index],

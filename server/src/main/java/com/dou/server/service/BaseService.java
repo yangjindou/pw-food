@@ -1,6 +1,5 @@
 package com.dou.server.service;
 
-import com.dou.server.exception.LogicException;
 import com.dou.server.model.BaseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,5 +21,5 @@ public interface BaseService <T extends BaseEntity> {
     void update(T temp) throws Exception;
 
     @Transactional(rollbackFor = Exception.class)
-    void delete(Collection<?> ids) throws LogicException;
+    void delete(Collection<?> ids) throws Exception;
 }

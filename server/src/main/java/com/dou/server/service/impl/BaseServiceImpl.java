@@ -46,7 +46,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public void delete(Collection<?> ids) throws LogicException {
+    public void delete(Collection<?> ids) throws Exception {
         Class<T> tClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Example example = new Example(tClass);
         ICriteria criteria = new ICriteria(example);

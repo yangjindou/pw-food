@@ -3,7 +3,9 @@ package com.dou.server.service.impl;
 import com.dou.server.exception.LogicException;
 import com.dou.server.mapper.DictMapper;
 import com.dou.server.model.Dict;
+import com.dou.server.model.DictData;
 import com.dou.server.model.Pagination;
+import com.dou.server.service.DictDataService;
 import com.dou.server.service.DictService;
 import com.dou.server.sql.ICriteria;
 import com.github.pagehelper.PageHelper;
@@ -13,7 +15,10 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author yangjd
@@ -23,6 +28,7 @@ import java.util.List;
 public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictService {
 
     private final DictMapper dictMapper;
+    private final DictDataService dictDataService;
 
     @Override
     public PageInfo<Dict> getPage(Pagination pagination, Dict temp) {
@@ -58,7 +64,16 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictServic
     }
 
     @Override
-    public void delete(Collection<?> ids) throws LogicException {
+    public void delete(Collection<?> ids) throws Exception {
+        Set<Integer> sonIds = new HashSet<>();
+        ids.forEach(id -> {
+            List<DictData> list = dictDataService.getList(new DictData().setPid(Integer.parseInt(id.toString())));
+            Set<Integer> listIds = list.stream().map(DictData::getId).collect(Collectors.toSet());
+            sonIds.addAll(listIds);
+        });
+        if (sonIds.size() != 0) {
+            dictDataService.delete(sonIds);
+        }
         super.delete(ids);
     }
 }
