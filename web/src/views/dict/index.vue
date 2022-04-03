@@ -48,16 +48,12 @@
         </a-table>
       </div>
     </div>
-    <a-modal v-model="formModal" :title="formState === 'update' ? '修改':'新增'" @ok="modalOk">
-      <a-form class="modal-form" :form="form">
-        <t-form />
-      </a-form>
-    </a-modal>
-    <a-modal v-model="dataFormModal" title="" @ok="modalOk">
-      <a-form class="modal-form" :form="form">
-        <data-form />
-      </a-form>
-    </a-modal>
+    <t-form ref="form" />
+<!--    <a-modal v-model="dataFormModal" title="" @ok="modalOk">-->
+<!--      <a-form class="modal-form" :form="form">-->
+<!--        <data-form />-->
+<!--      </a-form>-->
+<!--    </a-modal>-->
   </div>
 </template>
 
@@ -66,13 +62,10 @@ import dataForm from "./data";
 import tForm from "./form";
 import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
-import objUtils from "@/utils/objUtils";
 export default {
   components: {Breadcrumb, tForm, dataForm},
   data() {
     return {
-      formState: '',
-      formModal: false,
       dataFormModal: false,
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       form: this.$form.createForm(this, { name: 'form_user' }),
@@ -87,32 +80,11 @@ export default {
     join() {
       this.dataFormModal = true;
     },
-    modalOk() {
-      this.form.validateFields((error, data) => {
-        if (error) return;
-        if (this.formState === 'add') {
-          this.$axios.post("/dict", data).then(res => {
-            if (res) {
-              this.$message.success("添加成功");
-              this.formModal = false;
-              this.fetch();
-            }
-          });
-        } else {
-          this.$axios.put("/dict", data).then(res => {
-            if (res) {
-              this.$message.success("修改成功");
-              this.formModal = false;
-              this.fetch();
-            }
-          });
-        }
-      });
-    },
     add() {
-      this.formState = "add";
-      this.formModal = true;
-      this.form.resetFields();
+      this.$refs.form.add();
+    },
+    update(row) {
+      this.$refs.form.update(row);
     },
     del() {
       if (this.selectedRowKeys.length === 0) {
@@ -137,13 +109,6 @@ export default {
             }
           });
         },
-      });
-    },
-    update(row) {
-      this.formState = "update";
-      this.formModal = true;
-      this.$nextTick(() => {
-        this.form.setFieldsValue(objUtils.getObjectByKey(row, "id", "name", "sign", "remark"));
       });
     },
     searchReset() {
