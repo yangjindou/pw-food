@@ -60,7 +60,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
             throw new LogicException("密码错误");
         }
         user.createToken();
-        redisUtils.set(RedisUtils.USER_PREFIX + user.getId(),user);
+        redisUtils.set(RedisUtils.USER_PREFIX + user.getId(), user, RedisUtils.USER_EXPIRE);
         user.protectInfo();
         return user;
     }

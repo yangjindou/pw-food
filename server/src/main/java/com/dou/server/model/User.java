@@ -63,7 +63,7 @@ public class User extends BaseEntity implements Serializable {
                 // 生成签名的时间
                 .withIssuedAt(new Date())
                 // 生成签名的有效期,小时
-                .withExpiresAt(DateUtils.addSeconds(new Date(), Math.toIntExact(RedisUtils.DEFAULT_EXPIRE)))
+                .withExpiresAt(DateUtils.addSeconds(new Date(), Math.toIntExact(RedisUtils.USER_EXPIRE)))
                 .withAudience(id.toString())
                 .withClaim("name", getLoginName())
                 .sign(Algorithm.HMAC256(secret));
