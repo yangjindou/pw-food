@@ -67,6 +67,10 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 
     @Override
     public void add(User temp) throws Exception {
+        // 判断账号是否存在过
+        if (userMapper.selectCount(new User().setLoginName(temp.getLoginName())) > 0) {
+            throw new LogicException("账号已存在");
+        }
         if (CommonUtils.varIsBlank(temp.getPassword())) {
             temp.setPassword("123456");
         }

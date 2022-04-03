@@ -47,6 +47,9 @@ public class User extends BaseEntity implements Serializable {
     @ApiModelProperty("角色")
     private String role;
 
+    @ApiModelProperty("是否启用（1为禁用，否则为启用）")
+    private Integer enable;
+
     @Transient
     @ApiModelProperty("token（返回给前端）")
     private String token;
