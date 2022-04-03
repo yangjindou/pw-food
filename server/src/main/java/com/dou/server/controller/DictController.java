@@ -43,7 +43,7 @@ public class DictController {
 
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody Dict dict) throws Exception {
-        if (CommonUtils.varIsBlank(dict.getId())) {
+        if (CommonUtils.varIsBlank(dict.getId(), dict.getSign())) {
             throw new LogicException("缺少参数");
         }
         dictService.update(dict);
@@ -66,6 +66,9 @@ public class DictController {
 
     @PostMapping("/data")
     public ResponseEntity<?> dataAdd(@RequestBody List<DictData> dictDatas) throws Exception {
+        if (dictDatas.size() == 0) {
+            throw new LogicException("没有数据");
+        }
         for (DictData dictData : dictDatas) {
             if (CommonUtils.varIsBlank(dictData.getPid(), dictData.getName(), dictData.getValue())) {
                 throw new LogicException("缺少参数");

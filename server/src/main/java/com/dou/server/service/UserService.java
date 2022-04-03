@@ -15,13 +15,7 @@ public interface UserService extends BaseService<User> {
     User verifyUser(User temp) throws Exception;
 
     @Transactional(rollbackFor = Exception.class)
-    void add(User temp) throws Exception;
-
-    @Transactional(rollbackFor = Exception.class)
     void passwordModify(String oldPwd, String newPwd) throws Exception;
-
-    @Transactional(rollbackFor = Exception.class)
-    void update(User temp) throws Exception;
 
     PageInfo<User> getPage(Pagination pagination, User temp);
 }

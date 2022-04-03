@@ -11,10 +11,7 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
 
 import java.lang.reflect.ParameterizedType;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author yangjindou
@@ -49,16 +46,11 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public void delete(List<?> ids) throws LogicException {
-        Set<Object> objects = new HashSet<>();
+    public void delete(Collection<?> ids) throws LogicException {
         Class<T> tClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Example example = new Example(tClass);
         ICriteria criteria = new ICriteria(example);
-        if (ids.size() == 1) {
-            criteria.andEqualTo("id",ids.get(0));
-        } else {
-            criteria.andIn("id",ids);
-        }
+        criteria.andIn("id",ids);
         if (mapper.deleteByExample(example) != ids.size()) {
             throw new LogicException("删除失败");
         }

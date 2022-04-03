@@ -31,6 +31,7 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictData> implements Di
         Example example = new Example(DictData.class);
         ICriteria criteria = new ICriteria(example);
         criteria.andEqualTo("pid", temp.getPid());
+        example.orderBy("sort").asc();
         List<DictData> dictDatas = dictDataMapper.selectByExample(example);
         return new PageInfo<>(dictDatas);
     }

@@ -54,10 +54,13 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         User selectUser = new User().setLoginName(temp.getLoginName());
         User user = userMapper.selectOne(selectUser);
         if (null == user) {
-            throw new LogicException("用户不存在");
+            throw new LogicException("账号不存在");
         }
         if (!SecurityUtils.isPasswordValid(user.getPassword(), temp.getPassword(), user.getSalt())) {
             throw new LogicException("密码错误");
+        }
+        if (null != user.getEnable() && user.getEnable() == 1) {
+            throw new LogicException("账号已被禁用");
         }
         user.createToken();
         redisUtils.set(RedisUtils.USER_PREFIX + user.getId(), user, RedisUtils.USER_EXPIRE);
@@ -76,10 +79,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         }
         String salt = SecurityUtils.randomSalt(16);
         temp.setSalt(salt).setPassword(SecurityUtils.encode(temp.getPassword(), salt));
-        temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
-        if (userMapper.insert(temp) == 0) {
-            throw new LogicException("新增失败");
-        }
+        super.add(temp);
     }
 
     @Override
