@@ -47,7 +47,7 @@ public class RequestInterceptor implements HandlerInterceptor {
         // 如果没有token请求头，则返回错误信息
         String token = request.getHeader("token");
         if (CommonUtils.varIsBlank(token)) {
-            throw new AuthException("缺少参数");
+            throw new AuthException(Constant.REQUEST_MISS_PARAMS);
         }
         try {
             // 通过token解析获取userId，从redis中获取user对象，并且验证密码是否正确

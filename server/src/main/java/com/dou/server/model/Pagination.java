@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @AllArgsConstructor
-public class    Pagination {
+public class Pagination {
 
     @ApiModelProperty("状态码")
     private Integer pageNum;

@@ -4,6 +4,7 @@ import com.dou.server.exception.LogicException;
 import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
+import com.dou.server.tag.Constant;
 import com.dou.server.utils.CommonUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
@@ -27,7 +28,7 @@ public class UserController {
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getById(@ApiParam("用户id") @PathVariable Integer id) throws Exception {
         if (CommonUtils.varIsBlank(id)) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         return ResponseEntity.ok(userService.getById(id));
     }
@@ -40,7 +41,7 @@ public class UserController {
     @PostMapping("")
     public ResponseEntity<?> add(@RequestBody User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getLoginName())) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.add(user);
         return ResponseEntity.ok().build();
@@ -49,7 +50,7 @@ public class UserController {
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getId())) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.update(user);
         return ResponseEntity.ok().build();
@@ -58,7 +59,7 @@ public class UserController {
     @DeleteMapping("")
     public ResponseEntity<?> delete(String ids) throws Exception {
         if (CommonUtils.varIsBlank(ids)) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();

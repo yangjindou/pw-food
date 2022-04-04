@@ -142,7 +142,7 @@ export default {
 #index {
   width: 100%;
   height: 100%;
-  min-width: 1600px;
+  min-width: 1400px;
   position: absolute;
   display: flex;
 }

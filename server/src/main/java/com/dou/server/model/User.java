@@ -50,6 +50,27 @@ public class User extends BaseEntity implements Serializable {
     @ApiModelProperty("是否启用（1为禁用，否则为启用）")
     private Integer enable;
 
+    @ApiModelProperty("属地")
+    private String area;
+
+    @ApiModelProperty("联系电话")
+    private String phone;
+
+    @ApiModelProperty("企业名称")
+    private String enterpriseName;
+
+    @ApiModelProperty("社会统一信用代码")
+    private String enterpriseCode;
+
+    @ApiModelProperty("法人")
+    private String enterpriseOwner;
+
+    @ApiModelProperty("营业执照注册地址")
+    private String enterpriseLicenseAddress;
+
+    @ApiModelProperty("营业执照照片")
+    private String enterpriseLicenseImg;
+
     @Transient
     @ApiModelProperty("token（返回给前端）")
     private String token;
@@ -80,13 +101,6 @@ public class User extends BaseEntity implements Serializable {
         //从request中获取user对象
         HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
         return (User) request.getAttribute("_user");
-    }
-
-    public static void main(String[] args) {
-        User user = new User();
-        user.setId(1);
-        user.createToken();
-        System.out.println(user.getToken());
     }
 
     // 隐藏密码和公钥

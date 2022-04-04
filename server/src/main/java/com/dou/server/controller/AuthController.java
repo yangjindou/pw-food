@@ -3,6 +3,7 @@ package com.dou.server.controller;
 import com.dou.server.exception.LogicException;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
+import com.dou.server.tag.Constant;
 import com.dou.server.tag.PassToken;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RedisUtils;
@@ -33,7 +34,7 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) throws Exception {
         if (CommonUtils.varIsBlank(user.getLoginName(), user.getPassword())) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         return ResponseEntity.ok(userService.verifyUser(user));
     }
@@ -59,7 +60,7 @@ public class AuthController {
     @PostMapping("register")
     public ResponseEntity<?> register(User user) throws Exception {
         if (StringUtils.isAnyBlank(user.getLoginName(), user.getPassword())) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.add(user);
         return ResponseEntity.ok().build();
@@ -71,7 +72,7 @@ public class AuthController {
         String oldPwd = params.get("oldPwd").toString();
         String newPwd = params.get("newPwd").toString();
         if (CommonUtils.varIsBlank(oldPwd,newPwd)) {
-            throw new LogicException("缺少参数");
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.passwordModify(oldPwd,newPwd);
         return ResponseEntity.ok().build();

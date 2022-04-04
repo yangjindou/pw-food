@@ -41,7 +41,7 @@
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
-            <a @click="join(row)">关联</a>
+            <a @click="join(row)">关联字典</a>
             <span>&nbsp;&nbsp;&nbsp;</span>
             <a @click="update(row)">修改</a>
           </template>

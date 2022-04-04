@@ -53,4 +53,9 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictData> implements Di
             }
         }
     }
+
+    @Override
+    public List<DictData> getListByCode(String sign) {
+        return dictDataMapper.getListByCode(sign);
+    }
 }

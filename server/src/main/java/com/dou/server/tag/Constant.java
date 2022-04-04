@@ -7,5 +7,5 @@ package com.dou.server.tag;
  */
 public class Constant {
 
-
+    public static final String REQUEST_MISS_PARAMS = "缺少参数";
 }
