@@ -5,7 +5,7 @@ package com.dou.server.exception;
  * @author yangjd
  * @date 2022-03-29
  */
-public class LogicException extends Exception {
+public class LogicException extends RuntimeException {
 
     public LogicException() {
         super("业务错误");

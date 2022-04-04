@@ -42,7 +42,7 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictServic
     }
 
     @Override
-    public void add(Dict temp) throws Exception {
+    public void add(Dict temp) {
         if (dictMapper.selectCount(new Dict().setSign(temp.getSign())) > 0) {
             throw new LogicException("标识已存在");
         }
@@ -50,7 +50,7 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictServic
     }
 
     @Override
-    public void update(Dict temp) throws Exception {
+    public void update(Dict temp) {
         Dict dict = dictMapper.selectOne(new Dict().setId(temp.getId()));
         if (dict == null) {
             throw new LogicException("没有数据");
@@ -64,7 +64,7 @@ public class DictServiceImpl extends BaseServiceImpl<Dict> implements DictServic
     }
 
     @Override
-    public void delete(Collection<?> ids) throws Exception {
+    public void delete(Collection<?> ids) {
         Set<Integer> sonIds = new HashSet<>();
         ids.forEach(id -> {
             List<DictData> list = dictDataService.getList(new DictData().setPid(Integer.parseInt(id.toString())));

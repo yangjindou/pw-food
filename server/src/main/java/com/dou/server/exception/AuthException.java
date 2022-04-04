@@ -5,7 +5,7 @@ package com.dou.server.exception;
  * @author yangjd
  * @date 2022-03-29
  */
-public class AuthException extends Exception {
+public class AuthException extends RuntimeException {
 
     public AuthException() {
         super("鉴权异常");

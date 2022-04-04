@@ -32,7 +32,7 @@ public class AuthController {
     @ApiOperation(value = "登录", notes = "账号、密码必填")
     @PassToken
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> login(@RequestBody User user) {
         if (CommonUtils.varIsBlank(user.getLoginName(), user.getPassword())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -58,17 +58,17 @@ public class AuthController {
     @ApiOperation(value = "注册", notes = "账号、密码必填")
     @PassToken
     @PostMapping("register")
-    public ResponseEntity<?> register(User user) throws Exception {
+    public ResponseEntity<?> register(User user) {
         if (StringUtils.isAnyBlank(user.getLoginName(), user.getPassword())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
-        userService.add(user);
+        userService.register(user);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "修改密码", notes = "旧密码、新密码必填")
     @PutMapping("passwordModify")
-    public ResponseEntity<?> passwordModify(@RequestBody Map<String, Object> params) throws Exception {
+    public ResponseEntity<?> passwordModify(@RequestBody Map<String, Object> params) {
         String oldPwd = params.get("oldPwd").toString();
         String newPwd = params.get("newPwd").toString();
         if (CommonUtils.varIsBlank(oldPwd,newPwd)) {

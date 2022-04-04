@@ -13,7 +13,7 @@
         </a-select>
       </a-form-item>
       <a-form-item label="联系电话">
-        <a-input v-decorator="['phone',{rules}]" placeholder="联系电话" />
+        <a-input v-decorator="['phone',{ rules: [{ required: true,pattern: /^1[3|4|5|7|8][0-9]\d{8}$/, message: '请输入正确的联系电话' }]}]" placeholder="联系电话" />
       </a-form-item>
       <a-form-item label="企业名称">
         <a-input v-decorator="['enterpriseName',{rules}]" placeholder="企业名称" />
@@ -28,6 +28,16 @@
         <a-input v-decorator="['enterpriseLicenseAddress',{rules}]" placeholder="营业执照注册地址" />
       </a-form-item>
       <a-form-item label="营业执照照片">
+        <div class="img-upload">
+          <div v-if="enterpriseLicenseImg" class="img-box">
+            <img :src="enterpriseLicenseImg" alt=""/>
+          </div>
+          <u-upload :allow-type="['jpg','jpeg','png']" @change="uploadChange">
+            <a-button>{{avatar ? '更换': '上传'}}</a-button>
+          </u-upload>
+        </div>
+      </a-form-item>
+      <a-form-item label="营业执照照片">
         <a-input v-decorator="['enterpriseLicenseImg',{rules}]" placeholder="营业执照照片" />
       </a-form-item>
     </a-form>
@@ -39,6 +49,7 @@ import apiUtils from "@/utils/apiUtils";
 export default {
   data() {
     return {
+      enterpriseLicenseImg: '',
       form: this.$form.createForm(this, { name: 'form' }),
       formModal: false,
       rules: [{
@@ -54,11 +65,15 @@ export default {
     this.getSelectList();
   },
   methods: {
+    uploadChange({path}) {
+      this.avatar = path;
+    },
     getSelectList() {
       apiUtils.getDictData(this.selectList.area, 'register_area');
     },
     open() {
       this.formModal = true;
+      this.enterpriseLicenseImg = '';
       this.form.resetFields();
     },
     modalOk() {

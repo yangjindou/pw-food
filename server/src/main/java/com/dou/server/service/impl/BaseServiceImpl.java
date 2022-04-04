@@ -30,7 +30,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public void add(T temp) throws Exception {
+    public void add(T temp) {
         temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
         if (mapper.insert(temp) == 0) {
             throw new LogicException("新增失败");
@@ -38,7 +38,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public void update(T temp) throws Exception {
+    public void update(T temp) {
         temp.setUpdateUser(User.getRequestUser().getId()).setUpdateDate(new Date());
         if (mapper.updateByPrimaryKeySelective(temp) == 0) {
             throw new LogicException("修改失败");
@@ -46,7 +46,7 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
     }
 
     @Override
-    public void delete(Collection<?> ids) throws Exception {
+    public void delete(Collection<?> ids) {
         Class<T> tClass = (Class<T>)((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         Example example = new Example(tClass);
         ICriteria criteria = new ICriteria(example);

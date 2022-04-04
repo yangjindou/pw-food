@@ -36,7 +36,7 @@ public class DictController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> add(@RequestBody Dict dict) throws Exception {
+    public ResponseEntity<?> add(@RequestBody Dict dict) {
         if (CommonUtils.varIsBlank(dict.getName(), dict.getSign())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -45,7 +45,7 @@ public class DictController {
     }
 
     @PutMapping("")
-    public ResponseEntity<?> update(@RequestBody Dict dict) throws Exception {
+    public ResponseEntity<?> update(@RequestBody Dict dict) {
         if (CommonUtils.varIsBlank(dict.getId(), dict.getSign())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -54,7 +54,7 @@ public class DictController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> delete(String ids) throws Exception {
+    public ResponseEntity<?> delete(String ids) {
         if (CommonUtils.varIsBlank(ids)) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -75,7 +75,7 @@ public class DictController {
     }
 
     @PostMapping("/data")
-    public ResponseEntity<?> dataAdd(@RequestBody List<DictData> dictDatas) throws Exception {
+    public ResponseEntity<?> dataAdd(@RequestBody List<DictData> dictDatas) {
         if (dictDatas.size() == 0) {
             throw new LogicException("没有数据");
         }

@@ -15,11 +15,11 @@ public interface BaseService <T extends BaseEntity> {
     List<T> getList(T temp);
 
     @Transactional(rollbackFor = Exception.class)
-    void add(T temp) throws Exception;
+    void add(T temp);
 
     @Transactional(rollbackFor = Exception.class)
-    void update(T temp) throws Exception;
+    void update(T temp);
 
     @Transactional(rollbackFor = Exception.class)
-    void delete(Collection<?> ids) throws Exception;
+    void delete(Collection<?> ids);
 }

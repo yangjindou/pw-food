@@ -37,7 +37,7 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictData> implements Di
     }
 
     @Override
-    public void add(List<DictData> dictDatas) throws Exception {
+    public void add(List<DictData> dictDatas) {
         // 先删除多余的
         List<DictData> list = super.getList(new DictData().setPid(dictDatas.get(0).getPid()));
         Set<Integer> formSet = dictDatas.stream().map(DictData::getId).filter(Objects::nonNull).collect(Collectors.toSet());

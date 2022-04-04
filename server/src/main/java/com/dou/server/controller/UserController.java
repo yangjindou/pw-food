@@ -26,7 +26,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/id/{id}")
-    public ResponseEntity<?> getById(@ApiParam("用户id") @PathVariable Integer id) throws Exception {
+    public ResponseEntity<?> getById(@ApiParam("用户id") @PathVariable Integer id) {
         if (CommonUtils.varIsBlank(id)) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -39,7 +39,7 @@ public class UserController {
     }
 
     @PostMapping("")
-    public ResponseEntity<?> add(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> add(@RequestBody User user) {
         if (CommonUtils.varIsBlank(user.getLoginName())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -48,7 +48,7 @@ public class UserController {
     }
 
     @PutMapping("")
-    public ResponseEntity<?> update(@RequestBody User user) throws Exception {
+    public ResponseEntity<?> update(@RequestBody User user) {
         if (CommonUtils.varIsBlank(user.getId())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
@@ -57,7 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("")
-    public ResponseEntity<?> delete(String ids) throws Exception {
+    public ResponseEntity<?> delete(String ids) {
         if (CommonUtils.varIsBlank(ids)) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }

@@ -50,7 +50,16 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public User verifyUser(User temp) throws Exception {
+    public void register(User temp) {
+        temp.setRole("企业用户");
+        if (userMapper.selectCount(new User().setPhone(temp.getPhone())) > 0) {
+            throw new LogicException("联系电话已注册");
+        }
+        add(temp);
+    }
+
+    @Override
+    public User verifyUser(User temp) {
         User selectUser = new User().setLoginName(temp.getLoginName());
         User user = userMapper.selectOne(selectUser);
         if (null == user) {
@@ -69,7 +78,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public void add(User temp) throws Exception {
+    public void add(User temp) {
         // 判断账号是否存在过
         if (userMapper.selectCount(new User().setLoginName(temp.getLoginName())) > 0) {
             throw new LogicException("账号已存在");
@@ -83,7 +92,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public void passwordModify(String oldPwd, String newPwd) throws Exception {
+    public void passwordModify(String oldPwd, String newPwd) {
         User requestUser = User.getRequestUser();
         if (!SecurityUtils.isPasswordValid(requestUser.getPassword(), oldPwd, requestUser.getSalt())) {
             throw new LogicException("旧密码错误");
@@ -100,7 +109,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public void update(User temp) throws Exception {
+    public void update(User temp) {
         temp.setPassword(null);
         super.update(temp);
     }

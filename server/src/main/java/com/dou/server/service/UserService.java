@@ -12,10 +12,13 @@ public interface UserService extends BaseService<User> {
 
     User getById(Integer id);
 
-    User verifyUser(User temp) throws Exception;
+    User verifyUser(User temp);
 
     @Transactional(rollbackFor = Exception.class)
-    void passwordModify(String oldPwd, String newPwd) throws Exception;
+    void passwordModify(String oldPwd, String newPwd);
 
     PageInfo<User> getPage(Pagination pagination, User temp);
+
+    @Transactional(rollbackFor = Exception.class)
+    void register(User temp);
 }
