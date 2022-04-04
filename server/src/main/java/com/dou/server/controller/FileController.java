@@ -30,7 +30,7 @@ public class FileController {
 
     @PassToken
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadImg(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
         String fileNewName = UUID.randomUUID().toString();
         File newFile = FileUtils.upload(file, uploadPath, fileNewName);
         SysFile sysFile = new SysFile().setName(newFile.getName()).setRealName(file.getOriginalFilename()).setPath(newFile.getPath());
