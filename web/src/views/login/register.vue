@@ -30,7 +30,7 @@
       <a-form-item label="营业执照照片">
         <div class="img-upload">
           <div v-if="enterpriseLicenseImg" class="img-box">
-            <img :src="enterpriseLicenseImg" alt=""/>
+            <img :src="fileUrl + enterpriseLicenseImg" alt=""/>
           </div>
           <u-upload :allow-type="['jpg','jpeg','png']" @change="uploadChange">
             <a-button>{{enterpriseLicenseImg ? '更换': '上传'}}</a-button>
@@ -49,6 +49,7 @@ import apiUtils from "@/utils/apiUtils";
 export default {
   data() {
     return {
+      fileUrl: process.env.VUE_APP_FILE_URL,
       enterpriseLicenseImg: '',
       form: this.$form.createForm(this, { name: 'form' }),
       formModal: false,
@@ -65,8 +66,8 @@ export default {
     this.getSelectList();
   },
   methods: {
-    uploadChange({path}) {
-      this.enterpriseLicenseImg = path;
+    uploadChange({name}) {
+      this.enterpriseLicenseImg = name;
     },
     getSelectList() {
       apiUtils.getDictData(this.selectList.area, 'register_area');
@@ -79,6 +80,11 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
+        if (!this.enterpriseLicenseImg) {
+          this.$message.error('请上传营业执照');
+          return;
+        }
+        data['enterpriseLicenseImg'] = this.enterpriseLicenseImg;
         this.$axios.post("/auth/register", data).then(res => {
           if (res) {
             this.$message.success("注册成功");
@@ -90,7 +96,21 @@ export default {
   }
 }
 </script>
+<style lang="less" scoped>
+.img-upload {
+  display: flex;
+  flex-direction: column;
 
+  .img-box {
+    border: 2px dashed #d9d9d9;
+    padding: 5px;
+    width: 200px;
+    img {
+      width: 100%;
+    }
+  }
+}
+</style>
 <style lang="less">
 #register {
   .ant-form-item {
