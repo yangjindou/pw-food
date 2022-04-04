@@ -6,6 +6,8 @@ import com.dou.server.model.Pagination;
 import com.dou.server.service.NoticeService;
 import com.dou.server.tag.Constant;
 import com.dou.server.utils.CommonUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,12 @@ public class NoticeController {
     @ApiOperation(value = "公告列表", notes = "")
     @GetMapping("list")
     public ResponseEntity<?> getList(Pagination pagination, Notice notice) {
-        return ResponseEntity.ok(noticeService.getPage(pagination, notice));
+        if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
+            PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+            return ResponseEntity.ok(new PageInfo<>(noticeService.getList(notice)));
+        } else {
+            return ResponseEntity.ok(noticeService.getList(notice));
+        }
     }
 
     @ApiOperation(value = "公告新增", notes = "名称、标识必填")

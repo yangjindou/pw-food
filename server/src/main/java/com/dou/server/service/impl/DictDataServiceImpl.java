@@ -2,11 +2,8 @@ package com.dou.server.service.impl;
 
 import com.dou.server.mapper.DictDataMapper;
 import com.dou.server.model.DictData;
-import com.dou.server.model.Pagination;
 import com.dou.server.service.DictDataService;
 import com.dou.server.sql.ICriteria;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -26,14 +23,12 @@ public class DictDataServiceImpl extends BaseServiceImpl<DictData> implements Di
     private final DictDataMapper dictDataMapper;
 
     @Override
-    public PageInfo<DictData> getPage(Pagination pagination, DictData temp) {
-        PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+    public List<DictData> getList(DictData temp) {
         Example example = new Example(DictData.class);
         ICriteria criteria = new ICriteria(example);
         criteria.andEqualTo("pid", temp.getPid());
         example.orderBy("sort").asc();
-        List<DictData> dictDatas = dictDataMapper.selectByExample(example);
-        return new PageInfo<>(dictDatas);
+        return dictDataMapper.selectByExample(example);
     }
 
     @Override

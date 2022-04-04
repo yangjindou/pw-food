@@ -9,6 +9,8 @@ import com.dou.server.service.DictService;
 import com.dou.server.tag.Constant;
 import com.dou.server.tag.PassToken;
 import com.dou.server.utils.CommonUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -34,7 +36,12 @@ public class DictController {
     @ApiOperation(value = "数据字典列表", notes = "")
     @GetMapping("list")
     public ResponseEntity<?> getList(Pagination pagination, Dict dict) {
-        return ResponseEntity.ok(dictService.getPage(pagination, dict));
+        if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
+            PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+            return ResponseEntity.ok(new PageInfo<>(dictService.getList(dict)));
+        } else {
+            return ResponseEntity.ok(dictService.getList(dict));
+        }
     }
 
     @ApiOperation(value = "数据字典新增", notes = "名称、标识必填")
@@ -78,7 +85,12 @@ public class DictController {
     @ApiOperation(value = "获取数据字典数据列表", notes = "")
     @GetMapping("/data/list")
     public ResponseEntity<?> getDataList(Pagination pagination, DictData dictData) {
-        return ResponseEntity.ok(dictDataService.getPage(pagination, dictData));
+        if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
+            PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+            return ResponseEntity.ok(new PageInfo<>(dictDataService.getList(dictData)));
+        } else {
+            return ResponseEntity.ok(dictDataService.getList(dictData));
+        }
     }
 
     @ApiOperation(value = "数据字典修改或删除", notes = "pid、名称、值必填")

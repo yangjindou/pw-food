@@ -67,8 +67,8 @@ export default {
         pageSize: 50
       }
       this.$axios.get("dict/data/list", {params}).then(res => {
-        if (res && res.data && res.data.list) {
-          const list = res.data.list;
+        if (res && res.data) {
+          const list = res.data;
           const formData = {};
           this.count = list.length;
           list.forEach((e,index) => {

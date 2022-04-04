@@ -6,6 +6,8 @@ import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.tag.Constant;
 import com.dou.server.utils.CommonUtils;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -38,7 +40,12 @@ public class UserController {
     @ApiOperation(value = "获取用户列表", notes = "")
     @GetMapping("list")
     public ResponseEntity<?> getList(Pagination pagination, User user) {
-        return ResponseEntity.ok(userService.getPage(pagination, user));
+        if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
+            PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+            return ResponseEntity.ok(new PageInfo<>(userService.getList(user)));
+        } else {
+            return ResponseEntity.ok(userService.getList(user));
+        }
     }
 
     @ApiOperation(value = "用户新增", notes = "账号、用户名必填")

@@ -2,15 +2,12 @@ package com.dou.server.service.impl;
 
 import com.dou.server.exception.LogicException;
 import com.dou.server.mapper.UserMapper;
-import com.dou.server.model.Pagination;
 import com.dou.server.model.User;
 import com.dou.server.service.UserService;
 import com.dou.server.sql.ICriteria;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.RedisUtils;
 import com.dou.server.utils.SecurityUtils;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Example;
@@ -37,16 +34,15 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
     }
 
     @Override
-    public PageInfo<User> getPage(Pagination pagination, User temp) {
-        PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+    public List<User> getList(User temp) {
         Example example = new Example(User.class);
         ICriteria criteria = new ICriteria(example);
         criteria.andLike("loginName", temp.getLoginName())
-                .andLike("userName", temp.getUserName())
-                .andNotEqualTo("role", "管理员");
+            .andLike("userName", temp.getUserName())
+            .andNotEqualTo("role", "管理员");
         List<User> userList = userMapper.selectByExample(example);
         userList.forEach(User::protectInfo);
-        return new PageInfo<>(userList);
+        return userList;
     }
 
     @Override

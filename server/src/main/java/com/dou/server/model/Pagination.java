@@ -17,12 +17,4 @@ public class Pagination {
 
     @ApiModelProperty("状态码")
     private Integer pageSize;
-
-    public Integer getPageNum() {
-        return pageNum == null ? 1 : pageNum;
-    }
-
-    public Integer getPageSize() {
-        return pageSize == null ? 10 :pageSize;
-    }
 }
