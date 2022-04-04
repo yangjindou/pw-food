@@ -8,7 +8,4 @@ public enum SqlLike {
     LEFT,
     RIGHT,
     DEFAULT;
-
-    private SqlLike() {
-    }
 }
