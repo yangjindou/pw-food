@@ -7,6 +7,7 @@ import com.dou.server.service.UserService;
 import com.dou.server.tag.Constant;
 import com.dou.server.utils.CommonUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class UserController {
 
     private final UserService userService;
 
+    @ApiOperation(value = "通过id查询用户信息", notes = "id必填")
     @GetMapping("/id/{id}")
     public ResponseEntity<?> getById(@ApiParam("用户id") @PathVariable Integer id) {
         if (CommonUtils.varIsBlank(id)) {
@@ -33,20 +35,23 @@ public class UserController {
         return ResponseEntity.ok(userService.getById(id));
     }
 
+    @ApiOperation(value = "获取用户列表", notes = "")
     @GetMapping("list")
     public ResponseEntity<?> getList(Pagination pagination, User user) {
         return ResponseEntity.ok(userService.getPage(pagination, user));
     }
 
+    @ApiOperation(value = "用户新增", notes = "账号、用户名必填")
     @PostMapping("")
     public ResponseEntity<?> add(@RequestBody User user) {
-        if (CommonUtils.varIsBlank(user.getLoginName())) {
+        if (CommonUtils.varIsBlank(user.getLoginName(), user.getUserName())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.add(user);
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "用户修改", notes = "id必填")
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody User user) {
         if (CommonUtils.varIsBlank(user.getId())) {
@@ -56,6 +61,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @ApiOperation(value = "用户删除", notes = "id必填")
     @DeleteMapping("")
     public ResponseEntity<?> delete(String ids) {
         if (CommonUtils.varIsBlank(ids)) {

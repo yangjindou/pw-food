@@ -5,6 +5,7 @@ import com.dou.server.service.FileService;
 import com.dou.server.tag.PassToken;
 import com.dou.server.utils.FileUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class FileController {
     private String uploadPath;
 
     @PassToken
+    @ApiOperation(value = "上传文件", notes = "返回文件信息")
     @PostMapping("/upload")
     public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
         String fileNewName = UUID.randomUUID().toString();
