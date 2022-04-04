@@ -33,5 +33,9 @@ export default [{
     path: "dict",
     name: "dict",
     component: () => import('@/views/dict/index')
+  }, {
+    path: "notice",
+    name: "notice",
+    component: () => import('@/views/notice/index')
   }]
 }];
