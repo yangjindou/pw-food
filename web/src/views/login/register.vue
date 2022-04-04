@@ -33,7 +33,7 @@
             <img :src="enterpriseLicenseImg" alt=""/>
           </div>
           <u-upload :allow-type="['jpg','jpeg','png']" @change="uploadChange">
-            <a-button>{{avatar ? '更换': '上传'}}</a-button>
+            <a-button>{{enterpriseLicenseImg ? '更换': '上传'}}</a-button>
           </u-upload>
         </div>
       </a-form-item>
@@ -66,7 +66,7 @@ export default {
   },
   methods: {
     uploadChange({path}) {
-      this.avatar = path;
+      this.enterpriseLicenseImg = path;
     },
     getSelectList() {
       apiUtils.getDictData(this.selectList.area, 'register_area');
@@ -79,9 +79,9 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        this.$axios.post("/dict", data).then(res => {
+        this.$axios.post("/auth/register", data).then(res => {
           if (res) {
-            this.$message.success("添加成功");
+            this.$message.success("注册成功");
             this.formModal = false;
           }
         });

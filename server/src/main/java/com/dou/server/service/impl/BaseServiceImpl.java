@@ -31,7 +31,10 @@ public abstract class BaseServiceImpl<T extends BaseEntity> implements BaseServi
 
     @Override
     public void add(T temp) {
-        temp.setCreateUser(User.getRequestUser().getId()).setCreateDate(new Date());
+        temp.setCreateDate(new Date());
+        if (User.getRequestUser() != null) {
+            temp.setCreateUser(User.getRequestUser().getId());
+        }
         if (mapper.insert(temp) == 0) {
             throw new LogicException("新增失败");
         }

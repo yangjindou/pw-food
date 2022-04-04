@@ -10,7 +10,6 @@ import com.dou.server.utils.RedisUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -58,8 +57,8 @@ public class AuthController {
     @ApiOperation(value = "注册", notes = "账号、密码必填")
     @PassToken
     @PostMapping("register")
-    public ResponseEntity<?> register(User user) {
-        if (StringUtils.isAnyBlank(user.getLoginName(), user.getPassword())) {
+    public ResponseEntity<?> register(@RequestBody User user) {
+        if (CommonUtils.varIsBlank(user.getLoginName())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         userService.register(user);
