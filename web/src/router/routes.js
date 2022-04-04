@@ -37,5 +37,9 @@ export default [{
     path: "notice",
     name: "notice",
     component: () => import('@/views/notice/index')
+  }, {
+    path: "device",
+    name: "device",
+    component: () => import('@/views/device/index')
   }]
 }];

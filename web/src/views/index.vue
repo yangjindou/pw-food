@@ -89,6 +89,11 @@ export default {
               icon: 'pie-chart',
               name: '公告管理'
             });
+            menuList.push({
+              key: 'device',
+              icon: 'pie-chart',
+              name: '设备管理'
+            });
           }
           this.menuList = menuList;
         }

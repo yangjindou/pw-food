@@ -8,7 +8,7 @@
         left join sys_user u on u.id = notice.create_user
         where 1 = 1
         <if test="title !=null and title!=''">
-            and notice.title = #{temp.title}
+            and notice.title like CONCAT("%",#{title},"%")
         </if>
     </select>
 </mapper>
