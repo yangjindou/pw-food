@@ -1,12 +1,12 @@
 package com.dou.server.utils;
 
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 /**
@@ -19,17 +19,13 @@ public class HttpContextUtils {
 	 * excel请求头
 	 * @param fileName 文件名
 	 * @return
-	 * @throws UnsupportedEncodingException
 	 */
-	public static HttpHeaders excelHeaders(String fileName) throws UnsupportedEncodingException {
+	public static HttpHeaders excelHeaders(String fileName) {
 		HttpHeaders headers = new HttpHeaders();
-		fileName = URLEncoder.encode(fileName, "utf-8");
-		fileName = fileName.replace("+", "%20");
-		headers.add("Cache-Control", "no-cache, no-store, must-revalidate");
-		headers.add("Pragma", "no-cache");
-		headers.add("Expires", "0");
-		headers.add("charset", "utf-8");
-		headers.add("Content-Disposition", "attachment;filename=\"" + fileName + "\"");
+		//将数据表这几个中文的字转码 防止导出后乱码
+		headers.setContentDispositionFormData("attachment",
+			new String(fileName.getBytes(StandardCharsets.UTF_8), StandardCharsets.ISO_8859_1));
+		headers.setContentType(MediaType.parseMediaType("application/x-msdownload"));
 		return headers;
 	}
 

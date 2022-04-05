@@ -28,6 +28,7 @@
         <div class="table-btn">
           <a-button type="primary" @click="add">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
+          <a-button type="danger" @click="exp">导出</a-button>
         </div>
       </div>
       <div class="table-content">
@@ -62,6 +63,20 @@ export default {
     this.fetch();
   },
   methods: {
+    exp() {
+      this.formSearch.validateFields((err, data) => {
+        if (data['inspectionDate']) {
+          data['inspectionDate'] = data['inspectionDate'].format('YYYY-MM-DD');
+        }
+        let params = [];
+        for (let key in data) {
+          if (data[key]) {
+            params.push(`${key}=${data[key]}`);
+          }
+        }
+        window.open(`${process.env.VUE_APP_API_BASE_URL}/device/export?${params.join("&")}`)
+      });
+    },
     add() {
       this.$refs.form.add();
     },
