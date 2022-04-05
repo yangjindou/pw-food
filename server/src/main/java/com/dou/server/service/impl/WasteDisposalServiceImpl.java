@@ -3,6 +3,7 @@ package com.dou.server.service.impl;
 import com.dou.server.mapper.WasteDisposalMapper;
 import com.dou.server.model.WasteDisposal;
 import com.dou.server.service.WasteDisposalService;
+import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.DateUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -41,7 +42,7 @@ public class WasteDisposalServiceImpl extends BaseServiceImpl<WasteDisposal> imp
         defaultCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
         defaultCellStyle.setFont(defaultFont);
         HSSFSheet sheet = workbook.createSheet("列表");
-        if (list != null && !list.isEmpty()) {
+        if (CommonUtils.varIsNotBlank(list)) {
             Row rowFirst = sheet.createRow(0);
             rowFirst.createCell(0).setCellValue("物品名称");
             rowFirst.createCell(1).setCellValue("物品数量");
