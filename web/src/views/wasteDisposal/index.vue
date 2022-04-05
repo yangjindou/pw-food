@@ -28,7 +28,7 @@
         <div class="table-btn">
           <a-button type="primary" @click="add">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
-          <a-button type="danger" @click="exp">导出</a-button>
+          <a-button type="primary" @click="exp">导出</a-button>
         </div>
       </div>
       <div class="table-content">
@@ -50,6 +50,7 @@
 import tForm from "./form";
 import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
+import apiUtils from "@/utils/apiUtils";
 export default {
   components: {Breadcrumb, tForm},
   data() {
@@ -68,13 +69,8 @@ export default {
         if (data['createDate']) {
           data['createDate'] = data['createDate'].format('YYYY-MM-DD');
         }
-        let params = [];
-        for (let key in data) {
-          if (data[key]) {
-            params.push(`${key}=${data[key]}`);
-          }
-        }
-        window.open(`${process.env.VUE_APP_API_BASE_URL}/wasteDisposal/export?${params.join("&")}`)
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/wasteDisposal/export`, data);
+        window.open(url);
       });
     },
     add() {
@@ -85,7 +81,7 @@ export default {
     },
     del() {
       if (this.selectedRowKeys.length === 0) {
-        this.$message.error("请选择数据!");
+        this.$message.error("请选择数据！");
         return;
       }
       const _this = this;

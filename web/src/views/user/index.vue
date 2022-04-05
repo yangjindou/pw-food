@@ -137,7 +137,7 @@ export default {
     },
     del() {
       if (this.selectedRowKeys.length === 0) {
-        this.$message.error("请选择数据!");
+        this.$message.error("请选择数据！");
         return;
       }
       const _this = this;
