@@ -45,5 +45,9 @@ export default [{
     path: "wasteDisposal",
     name: "wasteDisposal",
     component: () => import('@/views/wasteDisposal/index')
+  }, {
+    path: "supervisionWarehouse",
+    name: "supervisionWarehouse",
+    component: () => import('@/views/supervisionWarehouse/index')
   }]
 }];
