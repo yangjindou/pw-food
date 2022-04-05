@@ -157,7 +157,7 @@ public class DateUtils {
      * 日期字符串按照格式转换对象
      * @date: 2019/9/3
      */
-    public static Date dateStrToDate(String dateStr, String DateFormat){
+    public static Date strToDate(String dateStr, String DateFormat){
         try {
             return new SimpleDateFormat(DateFormat).parse(dateStr);
         } catch (ParseException e) {

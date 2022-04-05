@@ -123,32 +123,6 @@
     <appender-ref ref="errorAppender"/>
   </logger>
 
-  <!-- logstash -->
-  <appender name="logstash" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
-    <destination>192.168.1.100:4560</destination>
-    <!-- 日志输出编码 -->
-    <encoder charset="UTF-8"
-             class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
-      <providers>
-        <timestamp>
-          <timeZone>UTC</timeZone>
-        </timestamp>
-        <pattern>
-          <pattern>
-            {
-            "level": "%level",
-            "service": "${appName:-}",
-            "pid": "${PID:-}",
-            "thread": "%thread",
-            "class": "%logger{40}",
-            "rest": "%message"
-            }
-          </pattern>
-        </pattern>
-      </providers>
-    </encoder>
-  </appender>
-
   <!-- 也是一种<logger>,是所有<logger>的父级 -->
   <!-- 不设置additivity属性，或者设置additivity = true的<logger>,会继承root的子标签<appender-ref ref="console" />的设置，
       将它自己设置的level属性级别及以上的日志打印到控制台 -->
