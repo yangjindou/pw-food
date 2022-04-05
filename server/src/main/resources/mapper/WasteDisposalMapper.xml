@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dou.server.mapper.WasteDisposalMapper">
+
+    <select id="getList" resultType="com.dou.server.model.WasteDisposal">
+        SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,u.user_name createUserName,
+        t.item_name,t.item_amount,t.save_place,t.is_save48hour,t.remark FROM t_waste_disposal t
+        left join sys_user u on u.id = t.create_user
+        where 1 = 1
+        <if test="createDate !=null">
+            and date_format(t.create_date, '%Y-%m-%d') = date_format(#{createDate},'%Y-%m-%d')
+        </if>
+    </select>
+</mapper>

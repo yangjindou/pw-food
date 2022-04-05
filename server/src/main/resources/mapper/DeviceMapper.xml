@@ -9,7 +9,7 @@
         left join sys_user u on u.id = device.create_user
         where 1 = 1
         <if test="inspectionDate !=null">
-            and device.inspection_date = str_to_date(#{inspectionDate},'%Y-%m-%d')
+            and device.inspection_date = date_format(#{inspectionDate},'%Y-%m-%d')
         </if>
     </select>
 </mapper>

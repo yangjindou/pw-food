@@ -41,5 +41,9 @@ export default [{
     path: "device",
     name: "device",
     component: () => import('@/views/device/index')
+  }, {
+    path: "wasteDisposal",
+    name: "wasteDisposal",
+    component: () => import('@/views/wasteDisposal/index')
   }]
 }];

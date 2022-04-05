@@ -94,6 +94,11 @@ export default {
               icon: 'pie-chart',
               name: '设备管理'
             });
+            menuList.push({
+              key: 'wasteDisposal',
+              icon: 'pie-chart',
+              name: '废物处理'
+            });
           }
           this.menuList = menuList;
         }
