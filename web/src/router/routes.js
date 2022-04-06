@@ -5,7 +5,7 @@ const meta = {
 export default [{
   path: '*',
   name: '404',
-  component: () => import('@/views/404'),
+  component: () => import('@/views/error/404'),
   meta
 }, {
   path: "/test",
