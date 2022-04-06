@@ -26,7 +26,7 @@
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="add">新增</a-button>
+          <a-button type="primary" @click="formOpen('新增')">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
         </div>
       </div>
@@ -36,7 +36,10 @@
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
-            <a @click="update(row)">修改</a>
+            <div class="operation-btn">
+              <a @click="formOpen('详情', row)">详情</a>
+              <a @click="formOpen('修改', row)">修改</a>
+            </div>
           </template>
         </a-table>
       </div>
@@ -62,11 +65,8 @@ export default {
     this.fetch();
   },
   methods: {
-    add() {
-      this.$refs.form.add();
-    },
-    update(row) {
-      this.$refs.form.update(row);
+    formOpen(state, row) {
+      this.$refs.form.open(state, row);
     },
     del() {
       if (this.selectedRowKeys.length === 0) {
@@ -131,5 +131,11 @@ export default {
       }
     }
   }
+  .operation-btn {
+    & > * {
+      margin-right: 15px;
+    }
+  }
+
 }
 </style>
