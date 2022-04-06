@@ -14,6 +14,6 @@ public interface DictDataMapper extends MyMapper<DictData> {
 
     @Select("SELECT dictData.id,dictData.name,dictData.value FROM sys_dict_data dictData " +
         "left join sys_dict dict on dict.id = dictData.pid " +
-        "where dict.sign = #{sign} order by dictData.sort")
+        "where dict.sign = #{sign} order by dictData.sort,dictData.create_date")
     List<DictData> getListByCode(@Param("sign") String sign);
 }
