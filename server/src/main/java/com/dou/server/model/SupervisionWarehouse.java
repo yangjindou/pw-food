@@ -75,6 +75,6 @@ public class SupervisionWarehouse extends BaseEntity implements Serializable {
     private String latitude;
 
     @ApiModelProperty("监管仓状态（正常、闭仓、废弃）")
-    private String state;
+    private Integer state;
 
 }
