@@ -32,22 +32,22 @@ export default [{
   }, {
     path: "dict",
     name: "dict",
-    component: () => import('@/views/dict/index')
+    component: () => import('@/views/business/dict/index')
   }, {
     path: "notice",
     name: "notice",
-    component: () => import('@/views/notice/index')
+    component: () => import('@/views/business/notice/index')
   }, {
     path: "device",
     name: "device",
-    component: () => import('@/views/device/index')
+    component: () => import('@/views/business/device/index')
   }, {
     path: "wasteDisposal",
     name: "wasteDisposal",
-    component: () => import('@/views/wasteDisposal/index')
+    component: () => import('@/views/business/wasteDisposal/index')
   }, {
     path: "supervisionWarehouse",
     name: "supervisionWarehouse",
-    component: () => import('@/views/supervisionWarehouse/index')
+    component: () => import('@/views/business/supervisionWarehouse/index')
   }]
 }];
