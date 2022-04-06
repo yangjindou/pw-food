@@ -36,7 +36,7 @@ public class SupervisionWarehouse extends BaseEntity implements Serializable {
     @ApiModelProperty("监管仓编码")
     private String code;
 
-    @ApiModelProperty("监管仓编码")
+    @ApiModelProperty("监管仓名称")
     private String name;
 
     @ApiModelProperty("集中监管仓分类")
@@ -74,7 +74,7 @@ public class SupervisionWarehouse extends BaseEntity implements Serializable {
     @ApiModelProperty("集中监管仓纬度")
     private String latitude;
 
-    @ApiModelProperty("状态（正常、闭仓、废弃）")
+    @ApiModelProperty("监管仓状态（正常、闭仓、废弃）")
     private String state;
 
 }

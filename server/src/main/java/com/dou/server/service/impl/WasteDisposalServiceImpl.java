@@ -5,10 +5,10 @@ import com.dou.server.model.WasteDisposal;
 import com.dou.server.service.WasteDisposalService;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.DateUtils;
+import com.dou.server.utils.ExcelTemplateUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Row;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -33,15 +33,8 @@ public class WasteDisposalServiceImpl extends BaseServiceImpl<WasteDisposal> imp
     public ByteArrayOutputStream export(WasteDisposal temp) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         List<WasteDisposal> list = this.getList(temp);
-        HSSFWorkbook workbook = new HSSFWorkbook();
-        CellStyle defaultCellStyle = workbook.createCellStyle();
-        Font defaultFont = workbook.createFont();
-        defaultFont.setBold(false);
-        defaultFont.setFontHeightInPoints((short) 12);
-        defaultCellStyle.setAlignment(HorizontalAlignment.CENTER);
-        defaultCellStyle.setVerticalAlignment(VerticalAlignment.CENTER);
-        defaultCellStyle.setFont(defaultFont);
-        HSSFSheet sheet = workbook.createSheet("列表");
+        ExcelTemplateUtils etUtils = new ExcelTemplateUtils();
+        HSSFSheet sheet = etUtils.getSheet();
         if (CommonUtils.varIsNotBlank(list)) {
             Row rowFirst = sheet.createRow(0);
             rowFirst.createCell(0).setCellValue("物品名称");
@@ -63,7 +56,8 @@ public class WasteDisposalServiceImpl extends BaseServiceImpl<WasteDisposal> imp
                 row.createCell(6).setCellValue(data.getRemark());
             }
         }
-        workbook.write(outputStream);
+        etUtils.setAutoColumnWidth();
+        etUtils.getWorkbook().write(outputStream);
         return outputStream;
     }
 }
