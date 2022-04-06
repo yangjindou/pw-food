@@ -4,10 +4,10 @@ export default {
     ...data,
     selectedRowKeys: [],
     columns: [
-      {title: '名称', dataIndex: 'name', width: '25%'},
+      {title: '名称', dataIndex: 'name'},
       {title: '标识', dataIndex: 'sign'},
       {title: '备注', dataIndex: 'remark'},
-      {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
+      {title: '操作', width: 200, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
     ],
   },
   methods: {
