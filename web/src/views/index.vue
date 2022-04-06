@@ -30,7 +30,7 @@
         <router-view />
       </div>
     </div>
-    <a-modal v-model="passwordModal" title="修改密码" @ok="handleOk">
+    <a-modal v-model="passwordModal" title="修改密码" @ok="handleOk" :maskClosable="false">
       <a-form :form="form" class="modal-form">
         <a-form-item label="账号">
           <a-input disabled v-decorator="['loginName',{ rules: [{ required: true, message: '请输入账号' }] }]" placeholder="账号" />

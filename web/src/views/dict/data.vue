@@ -1,5 +1,5 @@
 <template>
-  <a-modal :width="800" v-model="formModal" title="数据字典关联" @ok="modalOk">
+  <a-modal :width="800" v-model="formModal" title="数据字典关联" @ok="modalOk" :maskClosable="false">
     <a-form class="form" :form="form">
       <a-row :gutter="24" class="col-name">
         <a-col :span="7">名称</a-col>

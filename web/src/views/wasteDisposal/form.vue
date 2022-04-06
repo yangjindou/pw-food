@@ -1,5 +1,5 @@
 <template>
-  <a-modal v-model="formModal" :title="formState" @ok="modalOk">
+  <a-modal v-model="formModal" :title="formState" @ok="modalOk" :maskClosable="false">
     <a-form id="wasteDisposal-form" class="modal-form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />

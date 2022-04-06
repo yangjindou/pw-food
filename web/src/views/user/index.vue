@@ -51,7 +51,7 @@
         </a-table>
       </div>
     </div>
-    <a-modal v-model="formModal" :title="formState === 'update' ? '修改':'新增'" @ok="modalOk">
+    <a-modal v-model="formModal" :title="formState === 'update' ? '修改':'新增'" @ok="modalOk" :maskClosable="false">
       <a-form class="modal-form" :form="form">
         <a-form-item label="id" hidden>
           <a-input v-decorator="['id']" placeholder="id" />
