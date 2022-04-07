@@ -32,7 +32,7 @@ export default [{
   }, {
     path: "dict",
     name: "dict",
-    component: () => import('@/views/business/dict/index')
+    component: () => import('@/views/dict/index')
   }, {
     path: "notice",
     name: "notice",
