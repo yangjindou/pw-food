@@ -1,6 +1,5 @@
 package com.dou.server.utils;
 
-import lombok.Data;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -20,12 +19,11 @@ import java.nio.charset.StandardCharsets;
  * @author yangjindou
  * @date 2021-10-12
  */
-@Data
 public class ExcelUtils {
 
-    final HSSFSheet sheet;
-    final CellStyle defaultCellStyle;
-    final HSSFWorkbook workbook;
+    private final HSSFSheet sheet;
+    private final CellStyle defaultCellStyle;
+    private final HSSFWorkbook workbook;
 
     public ExcelUtils(String fileUrl) throws IOException {
         Resource resource = new ClassPathResource(fileUrl);
@@ -55,10 +53,16 @@ public class ExcelUtils {
         defaultCellStyle.setFont(defaultFont);
     }
 
-    /**
-     * poi设置自适应列宽
-     */
-    public void setColumnAutoWidth() {
+    public HSSFWorkbook getWorkbook() {
+        return workbook;
+    }
+
+    public HSSFSheet getSheet() {
+        return sheet;
+    }
+
+    //poi设置自适应列宽
+    public void setAutoColumnWidth() {
         //sheet的索引从0开始,获取sheet列数
         int maxColumn = sheet.getRow(0).getPhysicalNumberOfCells();
         for (int columnNum = 0; columnNum <= maxColumn; columnNum++) {

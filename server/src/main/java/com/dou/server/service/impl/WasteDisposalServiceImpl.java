@@ -5,7 +5,7 @@ import com.dou.server.model.WasteDisposal;
 import com.dou.server.service.WasteDisposalService;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.DateUtils;
-import com.dou.server.utils.ExcelTemplateUtils;
+import com.dou.server.utils.ExcelUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.ss.usermodel.Row;
@@ -33,7 +33,7 @@ public class WasteDisposalServiceImpl extends BaseServiceImpl<WasteDisposal> imp
     public ByteArrayOutputStream export(WasteDisposal temp) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         List<WasteDisposal> list = this.getList(temp);
-        ExcelTemplateUtils etUtils = new ExcelTemplateUtils();
+        ExcelUtils etUtils = new ExcelUtils();
         HSSFSheet sheet = etUtils.getSheet();
         if (CommonUtils.varIsNotBlank(list)) {
             Row rowFirst = sheet.createRow(0);
