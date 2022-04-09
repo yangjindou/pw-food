@@ -23,7 +23,8 @@
         <a-input v-decorator="['v',{rules}]" placeholder="容量（千克）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="监管仓所在省（市、区）">
-        <a-input v-decorator="['area',{rules}]" placeholder="监管仓所在省（市、区）" :disabled="disabled" />
+        <AreaCascader v-decorator="['area',{rules}]" v-model="area" />
+<!--        <a-input v-decorator="['area',{rules}]" placeholder="监管仓所在省（市、区）" :disabled="disabled" />-->
       </a-form-item>
       <a-form-item label="详细地址">
         <a-input v-decorator="['address',{rules}]" placeholder="详细地址" :disabled="disabled" />
@@ -60,9 +61,11 @@
 </template>
 
 <script>
+import AreaCascader from '@/components/areaCascader/index'
 import objUtils from "@/utils/objUtils";
 import apiUtils from "@/utils/apiUtils";
 export default {
+  components: {AreaCascader},
   data() {
     return {
       form: this.$form.createForm(this, { name: 'form' }),
@@ -75,7 +78,12 @@ export default {
       selectList: {
         state: []
       },
-      disabled: false
+      disabled: false,
+      area: [
+        "10000001",
+        "10000002",
+        "10001533"
+      ]
     }
   },
   mounted() {
@@ -92,12 +100,14 @@ export default {
     },
     setFormData(row) {
       this.formModal = true;
+      this.area = [];
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "recordNumber", "code", "name", "type",
               "s", "v", "area", "address", "enableDate", "enterpriseName", "enterpriseCode", "phone",
               "longitude", "latitude", "state");
+          data['area'] = "10007362";
           if (data['enableDate']) {
             data['enableDate'] = this.$moment(data['enableDate'])
           }
@@ -108,6 +118,11 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
+        // if (this.area.length === 0) {
+        //   this.$message.error('请选择监管仓所在省（市、区）');
+        //   return;
+        // }
+        // console.log(this.area);
         if (data['enableDate']) {
           data['enableDate'] = data['enableDate'].format('YYYY-MM-DD');
         }

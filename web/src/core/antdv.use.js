@@ -3,8 +3,9 @@ import 'ant-design-vue/dist/antd.less';
 import {
   Button, message, Avatar, Dropdown, Icon, ConfigProvider, Form, Row, Col, Select, Input,
   Upload, Menu, Checkbox, Breadcrumb, Table, DatePicker, Empty, Modal, Switch, Radio,
-  Result, Layout, Tooltip
+  Result, Layout, Tooltip, Cascader
 } from 'ant-design-vue';
+Vue.use(Cascader);
 Vue.use(Button);
 Vue.use(Avatar);
 Vue.use(Dropdown);
