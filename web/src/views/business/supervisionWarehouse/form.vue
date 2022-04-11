@@ -22,9 +22,8 @@
       <a-form-item label="容量（千克）">
         <a-input v-decorator="['v',{rules}]" placeholder="容量（千克）" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="监管仓所在省（市、区）">
-        <AreaCascader v-decorator="['area',{rules}]" v-model="area" />
-<!--        <a-input v-decorator="['area',{rules}]" placeholder="监管仓所在省（市、区）" :disabled="disabled" />-->
+      <a-form-item label="监管仓所在省（市、区）" >
+        <AreaCascader v-decorator="['area',{rules}]" placeholder="监管仓所在省（市、区）" :disabled="disabled"/>
       </a-form-item>
       <a-form-item label="详细地址">
         <a-input v-decorator="['address',{rules}]" placeholder="详细地址" :disabled="disabled" />
@@ -68,6 +67,45 @@ export default {
   components: {AreaCascader},
   data() {
     return {
+      values:[
+        "jiangsu",
+        "nanjing",
+        "zhonghuamen"
+      ],
+      options: [
+        {
+          value: 'zhejiang',
+          label: 'Zhejiang',
+          children: [
+            {
+              value: 'hangzhou',
+              label: 'Hangzhou',
+              children: [
+                {
+                  value: 'xihu',
+                  label: 'West Lake',
+                },
+              ],
+            },
+          ],
+        },
+        {
+          value: 'jiangsu',
+          label: 'Jiangsu',
+          children: [
+            {
+              value: 'nanjing',
+              label: 'Nanjing',
+              children: [
+                {
+                  value: 'zhonghuamen',
+                  label: 'Zhong Hua Men',
+                },
+              ],
+            },
+          ],
+        },
+      ],
       form: this.$form.createForm(this, { name: 'form' }),
       formState: '',
       formModal: false,
@@ -79,11 +117,6 @@ export default {
         state: []
       },
       disabled: false,
-      area: [
-        "10000001",
-        "10000002",
-        "10001533"
-      ]
     }
   },
   mounted() {
@@ -105,9 +138,9 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "recordNumber", "code", "name", "type",
-              "s", "v", "area", "address", "enableDate", "enterpriseName", "enterpriseCode", "phone",
+              "s", "v", "address", "enableDate", "enterpriseName", "enterpriseCode", "phone",
               "longitude", "latitude", "state");
-          data['area'] = "10007362";
+          data['area'] = ["10115224"];
           if (data['enableDate']) {
             data['enableDate'] = this.$moment(data['enableDate'])
           }
