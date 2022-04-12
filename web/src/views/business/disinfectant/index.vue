@@ -1,7 +1,7 @@
 <template>
   <div>
     <breadcrumb :items="['消毒液管理','消毒液列表']" title="消毒液列表" />
-    <div class="search">
+    <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
           <a-col :span="6" >
@@ -118,14 +118,14 @@ export default {
 </script>
 <style scoped lang="less">
 .search {
-  padding: 20px;
+  margin: 20px 20px 0 20px;
   .search-form {
     padding: 24px;
     background: white;
   }
 }
 .table {
-  margin: 0 20px 20px 20px;
+  margin: 20px;
   background: white;
   padding: 30px 20px;
   .table-banner {
