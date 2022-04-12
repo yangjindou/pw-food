@@ -5,7 +5,9 @@
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
       <a-form-item label="监管仓">
-        <a-input v-decorator="['supervisionWarehouse',{rules}]" placeholder="监管仓" :disabled="disabled" />
+        <a-select placeholder="监管仓" v-decorator="[`supervisionWarehouse`,{rules}]" :disabled="disabled">
+          <a-select-option v-for="item in selectList.supervisionWarehouse" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
+        </a-select>
       </a-form-item>
       <a-form-item label="消杀区域">
         <a-input v-decorator="['area',{rules}]" placeholder="消杀区域" :disabled="disabled" />
@@ -17,7 +19,9 @@
         <a-input v-decorator="['phone',{rules}]" placeholder="电话号码" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="消毒液配比">
-        <a-input v-decorator="['disinfectantRatio',{rules}]" placeholder="消毒液配比" :disabled="disabled" />
+        <a-select placeholder="消毒液配比" v-decorator="[`disinfectantRatio`,{rules}]" :disabled="disabled">
+          <a-select-option v-for="item in selectList.disinfectant" :key="item.ratio" :value="item.ratio">{{item.ratio}}</a-select-option>
+        </a-select>
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -40,11 +44,28 @@ export default {
         message: '必填项',
       }],
       disabled: false,
+      selectList: {
+        supervisionWarehouse: [],
+        disinfectant: [],
+      }
     }
   },
   mounted() {
+    this.getSelectList();
   },
   methods: {
+    getSelectList() {
+      this.$axios.get(`/supervisionWarehouse/list`).then(res => {
+        if (res) {
+          res.data.forEach(item => this.selectList.supervisionWarehouse.push(item));
+        }
+      });
+      this.$axios.get(`/disinfectant/list`).then(res => {
+        if (res) {
+          res.data.forEach(item => this.selectList.disinfectant.push(item));
+        }
+      });
+    },
     open(state, row) {
       this.formState = state;
       this.setFormData(row);
@@ -97,14 +118,4 @@ export default {
 
 <style lang="less" scoped>
 
-</style>
-<style lang="less">
-#disinfectionRecord-form {
-  .ant-form-item {
-    .ant-form-item-label {
-      width: 195px;
-      text-align: right;
-    }
-  }
-}
 </style>

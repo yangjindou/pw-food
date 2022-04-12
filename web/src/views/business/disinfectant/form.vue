@@ -102,13 +102,3 @@ export default {
 <style lang="less" scoped>
 
 </style>
-<style lang="less">
-#disinfectant-form {
-  .ant-form-item {
-    .ant-form-item-label {
-      width: 195px;
-      text-align: right;
-    }
-  }
-}
-</style>

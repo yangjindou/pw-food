@@ -49,7 +49,7 @@ public class DisinfectantServiceImpl extends BaseServiceImpl<Disinfectant> imple
                 Disinfectant data = list.get(i);
                 row.createCell(0).setCellValue(data.getName());
                 row.createCell(1).setCellValue(data.getRatio());
-                row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getCreateDate() ,"yyyy-MM-dd HH:mm:ss"));
+                row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getDeploymentDate() ,"yyyy-MM-dd HH:mm:ss"));
                 row.createCell(3).setCellValue(data.getDeploymentUser());
                 row.createCell(4).setCellValue(data.getConcentration());
                 row.createCell(5).setCellValue(data.getAssessment());
