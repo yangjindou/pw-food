@@ -109,6 +109,11 @@ export default {
               icon: 'pie-chart',
               name: '消毒液管理'
             });
+            menuList.push({
+              key: 'disinfectantRecord',
+              icon: 'pie-chart',
+              name: '环境消杀记录'
+            });
           }
           this.menuList = menuList;
         }
