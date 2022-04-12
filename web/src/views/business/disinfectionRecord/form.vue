@@ -4,23 +4,20 @@
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
-      <a-form-item label="消毒液名称">
-        <a-input v-decorator="['name',{rules}]" placeholder="消毒液名称" :disabled="disabled" />
+      <a-form-item label="监管仓">
+        <a-input v-decorator="['supervisionWarehouse',{rules}]" placeholder="监管仓" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="消毒液配比比例">
-        <a-input v-decorator="['ratio',{rules}]" placeholder="消毒液配比比例" :disabled="disabled" />
+      <a-form-item label="消杀区域">
+        <a-input v-decorator="['area',{rules}]" placeholder="消杀区域" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="调配时间">
-        <a-date-picker v-decorator="[`deploymentDate`,{rules}]" placeholder="调配时间" :disabled="disabled" />
+      <a-form-item label="消杀时间">
+        <a-date-picker v-decorator="[`date`,{rules}]" placeholder="消杀时间" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="调配人">
-        <a-input v-decorator="['deploymentUser',{rules}]" placeholder="调配人" :disabled="disabled" />
+      <a-form-item label="电话号码">
+        <a-input v-decorator="['phone',{rules}]" placeholder="电话号码" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="消毒液浓度">
-        <a-input v-decorator="['concentration',{rules}]" placeholder="消毒液浓度" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="消杀评估">
-        <a-input v-decorator="['assessment',{rules}]" placeholder="消杀评估" :disabled="disabled" />
+      <a-form-item label="消毒液配比">
+        <a-input v-decorator="['disinfectantRatio',{rules}]" placeholder="消毒液配比" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -58,10 +55,9 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "name", "ratio", "deploymentDate", "deploymentUser",
-              "concentration", "assessment");
-          if (data['deploymentDate']) {
-            data['deploymentDate'] = this.$moment(data['deploymentDate']);
+          let data = objUtils.getObjectByKey(row, "id", "supervisionWarehouse", "area", "date", "phone", "disinfectantRatio");
+          if (data['date']) {
+            data['date'] = this.$moment(data['date']);
           }
           this.form.setFieldsValue(data);
         });
@@ -70,8 +66,8 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        if (data['deploymentDate']) {
-          data['deploymentDate'] = data['deploymentDate'].format('YYYY-MM-DD');
+        if (data['date']) {
+          data['date'] = data['date'].format('YYYY-MM-DD');
         }
         if (this.formState === '新增') {
           this.$axios.post("/disinfectionRecord", data).then(res => {

@@ -4,13 +4,11 @@ let tableMixin = {
     return {
       ...data,
       columns: [
-        {title: '消毒液名称', dataIndex: 'name'},
-        {title: '消毒液配比比例', dataIndex: 'ratio'},
-        {title: '调配时间', dataIndex: 'deploymentDate'},
-        {title: '调配人', dataIndex: 'deploymentUser'},
-        {title: '消毒液浓度', dataIndex: 'concentration'},
-        {title: '消杀评估', dataIndex: 'assessment'},
-        {title: '录入人', dataIndex: 'createUserName'},
+        {title: '监管仓', dataIndex: 'supervisionWarehouseName'},
+        {title: '消杀区域', dataIndex: 'area'},
+        {title: '消杀时间', dataIndex: 'date'},
+        {title: '电话号码', dataIndex: 'phone'},
+        {title: '消毒液配比', dataIndex: 'disinfectantRatio'},
         {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }

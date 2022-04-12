@@ -23,10 +23,10 @@ public class DisinfectionRecordServiceImpl extends BaseServiceImpl<DisinfectionR
 
     private final DisinfectionRecordMapper disinfectionRecordMapper;
 
-//    @Override
-//    public List<DisinfectionRecord> getList(DisinfectionRecord temp) {
-//        return disinfectionRecordMapper.getList(temp);
-//    }
+    @Override
+    public List<DisinfectionRecord> getList(DisinfectionRecord temp) {
+        return disinfectionRecordMapper.getList(temp);
+    }
 
     @Override
     public ByteArrayOutputStream export(DisinfectionRecord temp) throws IOException {

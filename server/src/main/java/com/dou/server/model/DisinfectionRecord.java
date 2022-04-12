@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -44,5 +41,9 @@ public class DisinfectionRecord extends BaseEntity implements Serializable {
 
     @ApiModelProperty("消毒液配比")
     private String disinfectantRatio;
+
+    @Transient
+    @ApiModelProperty("监管仓名称")
+    private String supervisionWarehouseName;
 
 }

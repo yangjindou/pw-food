@@ -54,8 +54,8 @@ export default [{
     name: "disinfectant",
     component: () => import('@/views/business/disinfectant/index')
   }, {
-    path: "disinfectantRecord",
-    name: "disinfectantRecord",
-    component: () => import('@/views/business/disinfectantRecord/index')
+    path: "disinfectionRecord",
+    name: "disinfectionRecord",
+    component: () => import('@/views/business/disinfectionRecord/index')
   }]
 }];

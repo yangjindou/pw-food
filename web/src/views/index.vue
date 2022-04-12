@@ -110,7 +110,7 @@ export default {
               name: '消毒液管理'
             });
             menuList.push({
-              key: 'disinfectantRecord',
+              key: 'disinfectionRecord',
               icon: 'pie-chart',
               name: '环境消杀记录'
             });
