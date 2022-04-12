@@ -35,13 +35,13 @@ public class DeviceServiceImpl extends BaseServiceImpl<Device> implements Device
         List<Device> list = deviceMapper.getList(temp);
         ExcelUtils etUtils = new ExcelUtils();
         HSSFSheet sheet = etUtils.getSheet();
+        Row rowFirst = sheet.createRow(0);
+        rowFirst.createCell(0).setCellValue("检验计量器");
+        rowFirst.createCell(1).setCellValue("是否定期校验");
+        rowFirst.createCell(2).setCellValue("校验日期");
+        rowFirst.createCell(3).setCellValue("检测废弃物是否按规定存放");
+        rowFirst.createCell(4).setCellValue("录入人");
         if (CommonUtils.varIsNotBlank(list)) {
-            Row rowFirst = sheet.createRow(0);
-            rowFirst.createCell(0).setCellValue("检验计量器");
-            rowFirst.createCell(1).setCellValue("是否定期校验");
-            rowFirst.createCell(2).setCellValue("校验日期");
-            rowFirst.createCell(3).setCellValue("检测废弃物是否按规定存放");
-            rowFirst.createCell(4).setCellValue("录入人");
             for (int i = 0; i < list.size(); i++) {
                 Row row = sheet.createRow(i + 1);
                 Device data = list.get(i);

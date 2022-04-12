@@ -3,18 +3,26 @@ package com.dou.server.controller;
 import com.dou.server.exception.LogicException;
 import com.dou.server.model.Disinfectant;
 import com.dou.server.model.Pagination;
+import com.dou.server.model.WasteDisposal;
 import com.dou.server.service.DisinfectantService;
 import com.dou.server.tag.Constant;
+import com.dou.server.tag.PassToken;
 import com.dou.server.utils.CommonUtils;
+import com.dou.server.utils.DateUtils;
+import com.dou.server.utils.HttpContextUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author yangjd
@@ -66,5 +74,14 @@ public class DisinfectantController {
         }
         disinfectantService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
+    }
+
+    @PassToken
+    @ApiOperation(value = "消毒液管理导出", notes = "")
+    @GetMapping("/export")
+    public ResponseEntity<?> exportList(Disinfectant disinfectant) throws IOException {
+        ByteArrayOutputStream os = disinfectantService.export(disinfectant);
+        String fileName = String.format("消毒液管理%s.xls", DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
+        return new ResponseEntity<>(os.toByteArray(), HttpContextUtils.excelHeaders(fileName), HttpStatus.OK);
     }
 }

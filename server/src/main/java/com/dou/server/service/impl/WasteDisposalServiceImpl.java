@@ -35,15 +35,15 @@ public class WasteDisposalServiceImpl extends BaseServiceImpl<WasteDisposal> imp
         List<WasteDisposal> list = this.getList(temp);
         ExcelUtils etUtils = new ExcelUtils();
         HSSFSheet sheet = etUtils.getSheet();
+        Row rowFirst = sheet.createRow(0);
+        rowFirst.createCell(0).setCellValue("物品名称");
+        rowFirst.createCell(1).setCellValue("物品数量");
+        rowFirst.createCell(2).setCellValue("存放地方");
+        rowFirst.createCell(3).setCellValue("是否存放48小时");
+        rowFirst.createCell(4).setCellValue("录入时间");
+        rowFirst.createCell(5).setCellValue("操作人");
+        rowFirst.createCell(6).setCellValue("备注");
         if (CommonUtils.varIsNotBlank(list)) {
-            Row rowFirst = sheet.createRow(0);
-            rowFirst.createCell(0).setCellValue("物品名称");
-            rowFirst.createCell(1).setCellValue("物品数量");
-            rowFirst.createCell(2).setCellValue("存放地方");
-            rowFirst.createCell(3).setCellValue("是否存放48小时");
-            rowFirst.createCell(4).setCellValue("录入时间");
-            rowFirst.createCell(5).setCellValue("操作人");
-            rowFirst.createCell(6).setCellValue("备注");
             for (int i = 0; i < list.size(); i++) {
                 Row row = sheet.createRow(i + 1);
                 WasteDisposal data = list.get(i);

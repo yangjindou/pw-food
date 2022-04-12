@@ -28,6 +28,7 @@
         <div class="table-btn">
           <a-button type="primary" @click="formOpen('新增')">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
+          <a-button type="primary" @click="exp">导出</a-button>
         </div>
       </div>
       <div class="table-content">
@@ -52,6 +53,7 @@
 import tForm from "./form";
 import Breadcrumb from "@/components/breadcrumb";
 import tableMixin from './table';
+import apiUtils from "@/utils/apiUtils";
 export default {
   components: {Breadcrumb, tForm},
   mixins:[tableMixin],
@@ -65,6 +67,12 @@ export default {
     this.fetch();
   },
   methods: {
+    exp() {
+      this.formSearch.validateFields((err, data) => {
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/disinfectant/export`, data);
+        window.open(url);
+      });
+    },
     formOpen(state, row) {
       this.$refs.form.open(state, row);
     },
