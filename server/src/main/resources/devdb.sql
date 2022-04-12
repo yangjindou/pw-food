@@ -11,7 +11,7 @@
  Target Server Version : 100419
  File Encoding         : 65001
 
- Date: 06/04/2022 17:08:12
+ Date: 12/04/2022 18:16:08
 */
 
 SET NAMES utf8mb4;
@@ -130,7 +130,6 @@ CREATE TABLE `sys_user`  (
 INSERT INTO `sys_user` VALUES (1, '2022-03-30 11:35:02', NULL, '2022-04-01 08:47:38', 1, 'a', '系统管理员333', 'ca2@!1cf@aa!23b5b#6f4@adc0560adg#6@2d!6664c5@3d4c35@df413d6*223a', 'M07KjwZBHfVWO93I', '管理员', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (79, '2022-04-02 08:56:57', 1, '2022-04-03 15:06:19', 1, '测试', '1', 'c40a!b#cdac*0d*206cgbfaaab#6da1c64c15f*16*!f0g5#c13c0d6gd33d554b', 'at5rJapu0Phouq7a', '监管仓管理员', 1, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (80, '2022-04-03 13:40:00', 1, '2022-04-03 15:05:42', 1, '测试2', '1', 'd#d0d0@22F3gc45c0*b5*111464613222b24!cd6cca##f3dbgcc#c2a6#!a13a3', 'kp2OBULU5jZcFUra', '监管仓管理员', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (82, '2022-04-04 04:09:31', NULL, NULL, NULL, '1', '2', '#a0f16a@3F#56#@b36#bb0ada02!40#1!g#Fd5#Fa3@!dc64@d430#56204f5c00', 'OA4Zo229Ra4txiQr', '企业用户', NULL, '87', '13333333333', '4', '5', '6', '7', '8');
 INSERT INTO `sys_user` VALUES (83, '2022-04-04 05:41:43', NULL, NULL, NULL, 'a1', '2', '5d6@0*#caa5g0##gcfa!136b1ddd5d5#aF165b0@@4*33*10612c3*60006533!f', 'lFritdhcbOwvEGMq', '企业用户', NULL, '88', '13333333334', '5', '6', '1', '1', '9743e539-624d-4505-a45a-ed0f0563e48a.png');
 
 -- ----------------------------
@@ -156,6 +155,30 @@ CREATE TABLE `t_device`  (
 INSERT INTO `t_device` VALUES (108, '2022-04-04 19:48:21', 1, '2022-04-04 20:56:50', 1, '22', '是', '2022-04-05', '否');
 INSERT INTO `t_device` VALUES (111, '2022-04-04 20:50:17', 1, '2022-04-04 20:55:51', 1, '2', '否', '2022-04-04', '否');
 INSERT INTO `t_device` VALUES (112, '2022-04-04 20:57:14', 1, '2022-04-04 20:57:50', 1, '1', '是', '2022-04-23', '否');
+
+-- ----------------------------
+-- Table structure for t_disinfectant
+-- ----------------------------
+DROP TABLE IF EXISTS `t_disinfectant`;
+CREATE TABLE `t_disinfectant`  (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `create_date` datetime NOT NULL,
+  `create_user` int NULL DEFAULT NULL COMMENT '操作人',
+  `update_date` datetime NULL DEFAULT NULL,
+  `update_user` int NULL DEFAULT NULL,
+  `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液名称',
+  `ratio` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液配比比例',
+  `deployment_date` date NULL DEFAULT NULL COMMENT '调配时间',
+  `deployment_user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '调配人',
+  `concentration` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液浓度',
+  `assessment` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消杀评估',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 111 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of t_disinfectant
+-- ----------------------------
+INSERT INTO `t_disinfectant` VALUES (110, '2022-04-12 16:22:36', 1, '2022-04-12 16:36:46', 1, '1', '2', '2022-04-07', '2', '3', '4');
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -210,7 +233,7 @@ CREATE TABLE `t_supervision_warehouse`  (
 -- ----------------------------
 -- Records of t_supervision_warehouse
 -- ----------------------------
-INSERT INTO `t_supervision_warehouse` VALUES (109, '2022-04-06 11:28:20', 1, NULL, NULL, '1', '2', '3', '4', '5', '6', '7', '8', '2022-04-06 00:00:00', '1', '2', '3', '4', '5', 90);
+INSERT INTO `t_supervision_warehouse` VALUES (109, '2022-04-06 11:28:20', 1, '2022-04-12 09:46:11', 1, '1', '2', '3', '4', '5', '6', '江苏省/徐州市/云龙区', '8', '2022-04-06 00:00:00', '1', '2', '3', '4', '5', 90);
 
 -- ----------------------------
 -- Table structure for t_waste_disposal
@@ -233,7 +256,6 @@ CREATE TABLE `t_waste_disposal`  (
 -- ----------------------------
 -- Records of t_waste_disposal
 -- ----------------------------
-INSERT INTO `t_waste_disposal` VALUES (114, '2022-04-04 12:05:36', 1, NULL, NULL, '33', '45', '6', '是', NULL);
 INSERT INTO `t_waste_disposal` VALUES (115, '2022-04-05 12:29:46', 1, NULL, NULL, '1', '2', '3', '是', '55');
 
 SET FOREIGN_KEY_CHECKS = 1;
