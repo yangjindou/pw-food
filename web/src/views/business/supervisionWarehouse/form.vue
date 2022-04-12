@@ -23,7 +23,11 @@
         <a-input v-decorator="['v',{rules}]" placeholder="容量（千克）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="监管仓所在省（市、区）" >
-        <AreaCascader v-decorator="['area',{rules}]" placeholder="监管仓所在省（市、区）" :disabled="disabled"/>
+        <AreaCascader :field-names="{
+          label: 'name',
+          value: 'name',
+          children: 'children'
+        }" v-decorator="['area',{rules}]" placeholder="监管仓所在省（市、区）" :disabled="disabled"/>
       </a-form-item>
       <a-form-item label="详细地址">
         <a-input v-decorator="['address',{rules}]" placeholder="详细地址" :disabled="disabled" />
@@ -67,45 +71,6 @@ export default {
   components: {AreaCascader},
   data() {
     return {
-      values:[
-        "jiangsu",
-        "nanjing",
-        "zhonghuamen"
-      ],
-      options: [
-        {
-          value: 'zhejiang',
-          label: 'Zhejiang',
-          children: [
-            {
-              value: 'hangzhou',
-              label: 'Hangzhou',
-              children: [
-                {
-                  value: 'xihu',
-                  label: 'West Lake',
-                },
-              ],
-            },
-          ],
-        },
-        {
-          value: 'jiangsu',
-          label: 'Jiangsu',
-          children: [
-            {
-              value: 'nanjing',
-              label: 'Nanjing',
-              children: [
-                {
-                  value: 'zhonghuamen',
-                  label: 'Zhong Hua Men',
-                },
-              ],
-            },
-          ],
-        },
-      ],
       form: this.$form.createForm(this, { name: 'form' }),
       formState: '',
       formModal: false,
@@ -133,16 +98,17 @@ export default {
     },
     setFormData(row) {
       this.formModal = true;
-      this.area = [];
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "recordNumber", "code", "name", "type",
-              "s", "v", "address", "enableDate", "enterpriseName", "enterpriseCode", "phone",
+              "s", "v", "area", "address", "enableDate", "enterpriseName", "enterpriseCode", "phone",
               "longitude", "latitude", "state");
-          data['area'] = ["10115224"];
+          if (data['area']) {
+            data['area'] = data['area'].split('/');
+          }
           if (data['enableDate']) {
-            data['enableDate'] = this.$moment(data['enableDate'])
+            data['enableDate'] = this.$moment(data['enableDate']);
           }
           this.form.setFieldsValue(data);
         });
@@ -151,11 +117,9 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        // if (this.area.length === 0) {
-        //   this.$message.error('请选择监管仓所在省（市、区）');
-        //   return;
-        // }
-        // console.log(this.area);
+        if (data['area']) {
+          data['area'] = data['area'].join("/");
+        }
         if (data['enableDate']) {
           data['enableDate'] = data['enableDate'].format('YYYY-MM-DD');
         }
