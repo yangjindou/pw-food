@@ -2,7 +2,6 @@ import { data, methods } from '@/utils/tableUtils';
 export default {
   data: {
     ...data,
-    selectedRowKeys: [],
     columns: [
       {title: '公告标题', dataIndex: 'title', width: '25%'},
       {title: '公告人', dataIndex: 'createUserName'},

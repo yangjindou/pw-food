@@ -1,6 +1,7 @@
 export const data = {
   tableData: [],
   loading: false,
+  selectedRowKeys: [],
   pagination: {
     "show-size-changer": true,
     "show-quick-jumper": true,

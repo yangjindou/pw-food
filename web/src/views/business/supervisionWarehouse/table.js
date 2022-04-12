@@ -2,7 +2,6 @@ import { data, methods } from '@/utils/tableUtils';
 export default {
   data: {
     ...data,
-    selectedRowKeys: [],
     columns: [
       {title: '监管仓编码', dataIndex: 'code'},
       {title: '监管仓名称', dataIndex: 'name'},

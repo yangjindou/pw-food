@@ -2,7 +2,6 @@ import { data, methods } from '@/utils/tableUtils';
 export default {
   data: {
     ...data,
-    selectedRowKeys: [],
     columns: [
       {title: '检验计量器', dataIndex: 'inspectionMeter'},
       {title: '是否定期校验', dataIndex: 'isPeriodicInspection'},
