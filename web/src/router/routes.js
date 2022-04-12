@@ -49,5 +49,9 @@ export default [{
     path: "supervisionWarehouse",
     name: "supervisionWarehouse",
     component: () => import('@/views/business/supervisionWarehouse/index')
+  }, {
+    path: "disinfectant",
+    name: "disinfectant",
+    component: () => import('@/views/business/disinfectant/index')
   }]
 }];

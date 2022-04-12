@@ -4,12 +4,13 @@ let tableMixin = {
     return {
       ...data,
       columns: [
-        {title: '监管仓编码', dataIndex: 'code'},
-        {title: '监管仓名称', dataIndex: 'name'},
-        {title: '集中监管仓分类', dataIndex: 'type'},
-        {title: '启用日期', dataIndex: 'enableDate'},
-        {title: '运营企业名称', dataIndex: 'enterpriseName'},
-        {title: '状态', dataIndex: 'state'},
+        {title: '消毒液名称', dataIndex: 'name'},
+        {title: '消毒液配比比例', dataIndex: 'ratio'},
+        {title: '调配时间', dataIndex: 'deploymentDate'},
+        {title: '调配人', dataIndex: 'deploymentUser'},
+        {title: '消毒液浓度', dataIndex: 'concentration'},
+        {title: '消杀评估', dataIndex: 'assessment'},
+        {title: '录入人', dataIndex: 'createUserName'},
         {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }
@@ -21,7 +22,7 @@ let tableMixin = {
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
-      this.$axios.get("/supervisionWarehouse/list", {params}).then(res => {
+      this.$axios.get("/disinfectant/list", {params}).then(res => {
         if (res) {
           this.tableData = res.data.list;
           this.pagination.total = res.data.total;

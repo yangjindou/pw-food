@@ -1,12 +1,12 @@
 <template>
   <div>
-    <breadcrumb :items="['监管仓管理','监管仓列表']" title="监管仓列表" />
+    <breadcrumb :items="['消毒液管理','消毒液列表']" title="消毒液列表" />
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
           <a-col :span="6" >
-            <a-form-item label="监管仓名称">
-              <a-input v-decorator="[`title`]" placeholder="请输入" />
+            <a-form-item label="消毒液名称">
+              <a-input v-decorator="[`name`]" placeholder="请输入" />
             </a-form-item>
           </a-col>
           <a-col :span="12"></a-col>
@@ -83,7 +83,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("/supervisionWarehouse", {params}).then(res => {
+          _this.$axios.delete("/disinfectant", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();

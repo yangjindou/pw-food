@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dou.server.mapper.DisinfectantMapper">
+
+    <select id="getList" resultType="com.dou.server.model.Disinfectant">
+        SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,u.user_name createUserName,
+        t.name,t.ratio,t.deployment_date,t.deployment_user,t.concentration,t.assessment FROM t_disinfectant t
+        left join sys_user u on u.id = t.create_user
+        where 1 = 1
+        <if test="name !=null and name !=''">
+            and t.name like CONCAT("%",#{name},"%")
+        </if>
+    </select>
+</mapper>

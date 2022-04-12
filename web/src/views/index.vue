@@ -104,6 +104,11 @@ export default {
               icon: 'pie-chart',
               name: '监管仓管理'
             });
+            menuList.push({
+              key: 'disinfectant',
+              icon: 'pie-chart',
+              name: '消毒液管理'
+            });
           }
           this.menuList = menuList;
         }
