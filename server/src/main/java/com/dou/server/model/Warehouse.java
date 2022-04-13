@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -76,5 +73,9 @@ public class Warehouse extends BaseEntity implements Serializable {
 
     @ApiModelProperty("监管仓状态（正常、闭仓、废弃）")
     private Integer state;
+
+    @Transient
+    @ApiModelProperty("监管仓状态（正常、闭仓、废弃）")
+    private String stateName;
 
 }

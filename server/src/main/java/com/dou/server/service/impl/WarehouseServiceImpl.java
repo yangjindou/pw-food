@@ -6,6 +6,8 @@ import com.dou.server.service.WarehouseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author yangjd
  */
@@ -15,4 +17,8 @@ public class WarehouseServiceImpl extends BaseServiceImpl<Warehouse> implements 
 
     private final WarehouseMapper warehouseMapper;
 
+    @Override
+    public List<Warehouse> getList(Warehouse temp) {
+        return warehouseMapper.getList(temp);
+    }
 }

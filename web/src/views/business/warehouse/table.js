@@ -6,6 +6,7 @@ let tableMixin = {
       columns: [
         {title: '监管仓编码', dataIndex: 'code'},
         {title: '监管仓名称', dataIndex: 'name'},
+        {title: '监管仓状态', dataIndex: 'stateName'},
         {title: '集中监管仓分类', dataIndex: 'type'},
         {title: '启用日期', dataIndex: 'enableDate'},
         {title: '运营企业名称', dataIndex: 'enterpriseName'},

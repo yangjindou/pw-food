@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dou.server.mapper.WarehouseMapper">
+
+    <select id="getList" resultType="com.dou.server.model.Warehouse">
+        SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,dd.name state_name,
+        t.record_number,t.code,t.name,t.type,t.s,t.v,t.area,t.address,t.enable_date,t.enterprise_name,
+        t.enterprise_code,t.phone,t.longitude,t.latitude,t.state
+        FROM t_warehouse t
+        left join sys_dict_data dd on dd.id = t.state
+        where 1 = 1
+        <if test="id !=null">
+            and t.id = #{id}
+        </if>
+    </select>
+</mapper>
