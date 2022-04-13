@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['公告管理','公告列表']" title="公告列表" />
+    <u-breadcrumb :items="['公告管理','公告列表']" title="公告列表" />
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -47,10 +47,9 @@
 
 <script>
 import tForm from "./form";
-import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
 export default {
-  components: {Breadcrumb, tForm},
+  components: {tForm},
   data() {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),

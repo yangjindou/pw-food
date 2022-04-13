@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['用户管理','用户列表']" title="用户列表" />
+    <u-breadcrumb :items="['用户管理','用户列表']" title="用户列表" />
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -72,10 +72,9 @@
 </template>
 
 <script>
-import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
 export default {
-  components: {Breadcrumb},
+  components: {},
   data() {
     return {
       formState: '',

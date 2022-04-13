@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['废物处理','废物处理列表']" title="废物处理列表" />
+    <u-breadcrumb :items="['废物处理','废物处理列表']" title="废物处理列表" />
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -48,11 +48,10 @@
 
 <script>
 import tForm from "./form";
-import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {Breadcrumb, tForm},
+  components: {tForm},
   data() {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),

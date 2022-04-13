@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['监管仓人员','监管仓人员列表']" title="监管仓人员列表" />
+    <u-breadcrumb :items="['监管仓人员','监管仓人员列表']" title="监管仓人员列表" />
     <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -38,6 +38,9 @@
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
+              <a @click="check(row)">核酸检测</a>
+              <a @click="formOpen('详情', row)">日常健康记录</a>
+              <a @click="formOpen('详情', row)">应急处理</a>
               <a @click="formOpen('详情', row)">详情</a>
               <a @click="formOpen('修改', row)">修改</a>
             </div>
@@ -51,11 +54,10 @@
 
 <script>
 import tForm from "./form";
-import Breadcrumb from "@/components/breadcrumb";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {Breadcrumb, tForm},
+  components: {tForm},
   mixins:[tableMixin],
   data() {
     return {
@@ -67,12 +69,16 @@ export default {
     this.fetch();
   },
   methods: {
+    check(row) {
+      this.$router.push({name: 'warehouseUser-check', query: {id: row['id']}});
+    },
     exp() {
       this.formSearch.validateFields((err, data) => {
         let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/export`, data);
         window.open(url);
       });
     },
+
     formOpen(state, row) {
       this.$refs.form.open(state, row);
     },

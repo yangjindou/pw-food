@@ -1,6 +1,6 @@
 <template>
   <div>
-    <u-breadcrumb :items="['环境消杀记录','环境消杀记录列表']" title="环境消杀记录列表" />
+    <u-breadcrumb :items="['监管仓人员','核酸检测列表']" title="核酸检测列表-XXX" back-btn />
     <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -28,7 +28,7 @@
         <div class="table-btn">
           <a-button type="primary" @click="formOpen('新增')">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
-          <a-button type="primary" @click="exp">导出</a-button>
+<!--          <a-button type="primary" @click="exp">导出</a-button>-->
         </div>
       </div>
       <div class="table-content">
@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import tForm from "./form";
-import tableMixin from './table';
+import tForm from "./checkForm";
+import tableMixin from './checkTable';
 import apiUtils from "@/utils/apiUtils";
 export default {
   components: {tForm},
@@ -63,12 +63,15 @@ export default {
     };
   },
   mounted() {
-    this.fetch();
+    const id = this.$route.query;
+    if (id) {
+      this.fetch();
+    }
   },
   methods: {
     exp() {
       this.formSearch.validateFields((err, data) => {
-        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/disinfectionRecord/export`, data);
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/export`, data);
         window.open(url);
       });
     },
@@ -90,7 +93,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("/disinfectionRecord", {params}).then(res => {
+          _this.$axios.delete("/warehouseUser", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();

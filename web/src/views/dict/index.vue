@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['数据字典','字典列表']" title="字典列表" />
+    <u-breadcrumb :items="['数据字典','字典列表']" title="字典列表" />
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -56,10 +56,9 @@
 <script>
 import dataForm from "./data";
 import tForm from "./form";
-import Breadcrumb from "@/components/breadcrumb";
 import table from './table';
 export default {
-  components: {Breadcrumb, tForm, dataForm},
+  components: {tForm, dataForm},
   data() {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),

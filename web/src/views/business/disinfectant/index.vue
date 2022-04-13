@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['消毒液管理','消毒液列表']" title="消毒液列表" />
+    <u-breadcrumb :items="['消毒液管理','消毒液列表']" title="消毒液列表" />
     <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -51,11 +51,10 @@
 
 <script>
 import tForm from "./form";
-import Breadcrumb from "@/components/breadcrumb";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {Breadcrumb, tForm},
+  components: {tForm},
   mixins:[tableMixin],
   data() {
     return {

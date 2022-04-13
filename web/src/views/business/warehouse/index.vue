@@ -1,6 +1,6 @@
 <template>
   <div>
-    <breadcrumb :items="['监管仓管理','监管仓列表']" title="监管仓列表" />
+    <u-breadcrumb :items="['监管仓管理','监管仓列表']" title="监管仓列表" />
     <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -50,10 +50,9 @@
 
 <script>
 import tForm from "./form";
-import Breadcrumb from "@/components/breadcrumb";
 import tableMixin from './table';
 export default {
-  components: {Breadcrumb, tForm},
+  components: {tForm},
   mixins:[tableMixin],
   data() {
     return {

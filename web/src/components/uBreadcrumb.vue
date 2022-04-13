@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "breadcrumb",
+  name: "uBreadcrumb",
   props: {
     items: {
       type: Array
