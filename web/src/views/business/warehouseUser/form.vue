@@ -8,10 +8,7 @@
         <a-input v-decorator="['name',{rules}]" placeholder="姓名" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="性别">
-        <a-select placeholder="性别" v-decorator="[`gender`,{rules}]" :disabled="disabled">
-          <a-select-option value="男">男</a-select-option>
-          <a-select-option value="女">女</a-select-option>
-        </a-select>
+        <a-radio-group v-decorator="['gender',{rules}]" :options="['男','女']" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="年龄">
         <a-input v-decorator="['age',{rules}]" placeholder="年龄" :disabled="disabled" />

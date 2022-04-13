@@ -39,7 +39,7 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="check(row)">核酸检测</a>
-              <a @click="isolate(row)">日常健康记录</a>
+              <a @click="healthy(row)">日常健康记录</a>
               <a @click="isolate(row)">隔离记录</a>
               <a @click="emergency(row)">应急处理</a>
             </div>
@@ -54,15 +54,17 @@
       </div>
     </div>
     <t-form ref="form" />
+    <healthy ref="healthy" />
   </div>
 </template>
 
 <script>
+import healthy from "./healthy";
 import tForm from "./form";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {tForm},
+  components: {tForm, healthy},
   mixins:[tableMixin],
   data() {
     return {
@@ -89,7 +91,9 @@ export default {
         window.open(url);
       });
     },
-
+    healthy(row) {
+      this.$refs.healthy.open('修改', row);
+    },
     formOpen(state, row) {
       this.$refs.form.open(state, row);
     },

@@ -4,7 +4,8 @@
 
     <select id="getList" resultType="com.dou.server.model.WarehouseUser">
         SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,w.name warehouse_name,
-        t.name,t.gender,t.age,t.phone,t.work_type,t.warehouse,t.is_inoculate,t.inoculate_count,t.inoculate_date
+        t.name,t.gender,t.age,t.phone,t.work_type,t.warehouse,t.is_inoculate,t.inoculate_count,t.inoculate_date,
+        t.option1,t.option2,t.option3,t.option4,t.option5,t.option6,t.option7,t.option8,t.option9,t.option10
         FROM t_warehouse_user t
         left join t_warehouse w on w.id = t.warehouse
         where 1 = 1

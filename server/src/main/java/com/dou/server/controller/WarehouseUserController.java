@@ -56,7 +56,7 @@ public class WarehouseUserController {
     @ApiOperation(value = "监管仓用户修改", notes = "id、标识必填")
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody WarehouseUser warehouseUser) {
-        if (CommonUtils.varIsBlank(warehouseUser.getId(), warehouseUser.getName())) {
+        if (CommonUtils.varIsBlank(warehouseUser.getId())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         warehouseUserService.update(warehouseUser);
