@@ -13,7 +13,8 @@ let tableMixin = {
         {title: '是否接种疫苗', dataIndex: 'isInoculate'},
         {title: '接种次数', dataIndex: 'inoculateCount'},
         {title: '接种时间', dataIndex: 'inoculateDate'},
-        {title: '操作', width: 350, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
+        {title: '操作', width: 330, scopedSlots: {customRender: 'operation'}, fixed: 'right'},
+        {title: '数据操作', width: 120, scopedSlots: {customRender: 'basicOperation'}, fixed: 'right'}
       ],
     }
   },

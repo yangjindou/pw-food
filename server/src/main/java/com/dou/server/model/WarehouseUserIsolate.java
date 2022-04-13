@@ -15,7 +15,7 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@Table(name="t_warehouse_user_check")
+@Table(name="t_warehouse_user_isolate")
 @Accessors(chain = true)
 public class WarehouseUserIsolate extends BaseEntity implements Serializable {
 

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <u-breadcrumb :items="['监管仓人员','监管仓人员列表']" title="监管仓人员列表" />
+    <u-breadcrumb :items="['监管仓人员','隔离记录列表']" :title="'隔离记录列表-' + name" back-btn />
     <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -26,7 +26,7 @@
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="formOpen('新增')">新增</a-button>
+          <a-button type="primary" @click="formOpen('新增', {pid: pid})">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
 <!--          <a-button type="primary" @click="exp">导出</a-button>-->
         </div>
@@ -37,14 +37,6 @@
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
-            <div class="operation-btn">
-              <a @click="check(row)">核酸检测</a>
-              <a @click="isolate(row)">日常健康记录</a>
-              <a @click="isolate(row)">隔离记录</a>
-              <a @click="isolate(row)">应急处理</a>
-            </div>
-          </template>
-          <template slot="basicOperation" slot-scope="row">
             <div class="operation-btn">
               <a @click="formOpen('详情', row)">详情</a>
               <a @click="formOpen('修改', row)">修改</a>
@@ -68,25 +60,30 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
+      pid: undefined,
+      name: '',
     };
   },
   mounted() {
-    this.fetch();
+    const id = this.$route.query.id;
+    if (id) {
+      this.$axios.get("/warehouseUser/list", {params: {id}}).then(res => {
+        if (res && res.data && res.data.length) {
+          this.name = res.data[0].name;
+          this.pid = id;
+          this.searchParams = {pid: id};
+          this.fetch();
+        }
+      });
+    }
   },
   methods: {
-    isolate(row) {
-      this.$router.push({name: 'warehouseUser-isolate', query: {id: row['id']}});
-    },
-    check(row) {
-      this.$router.push({name: 'warehouseUser-check', query: {id: row['id']}});
-    },
     exp() {
       this.formSearch.validateFields((err, data) => {
-        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/export`, data);
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/isolate/export`, data);
         window.open(url);
       });
     },
-
     formOpen(state, row) {
       this.$refs.form.open(state, row);
     },
@@ -105,7 +102,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("/warehouseUser", {params}).then(res => {
+          _this.$axios.delete("/warehouseUser/isolate", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();

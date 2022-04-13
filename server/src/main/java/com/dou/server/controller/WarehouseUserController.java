@@ -4,7 +4,9 @@ import com.dou.server.exception.LogicException;
 import com.dou.server.model.Pagination;
 import com.dou.server.model.WarehouseUser;
 import com.dou.server.model.WarehouseUserCheck;
+import com.dou.server.model.WarehouseUserIsolate;
 import com.dou.server.service.WarehouseUserCheckService;
+import com.dou.server.service.WarehouseUserIsolateService;
 import com.dou.server.service.WarehouseUserService;
 import com.dou.server.tag.Constant;
 import com.dou.server.utils.CommonUtils;
@@ -29,6 +31,7 @@ public class WarehouseUserController {
 
     private final WarehouseUserService warehouseUserService;
     private final WarehouseUserCheckService warehouseUserCheckService;
+    private final WarehouseUserIsolateService warehouseUserIsolateService;
 
     @ApiOperation(value = "监管仓用户列表", notes = "")
     @GetMapping("list")
@@ -110,6 +113,48 @@ public class WarehouseUserController {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         warehouseUserCheckService.delete(Arrays.asList(ids.split(",")));
+        return ResponseEntity.ok().build();
+    }
+
+
+    @ApiOperation(value = "监管仓用户隔离记录列表", notes = "")
+    @GetMapping("isolate/list")
+    public ResponseEntity<?> getIsolateList(Pagination pagination, WarehouseUserIsolate warehouseUserIsolate) {
+        if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
+            PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+            return ResponseEntity.ok(new PageInfo<>(warehouseUserIsolateService.getList(warehouseUserIsolate)));
+        } else {
+            return ResponseEntity.ok(warehouseUserIsolateService.getList(warehouseUserIsolate));
+        }
+    }
+
+    @ApiOperation(value = "监管仓用户隔离记录新增", notes = "pid必填")
+    @PostMapping("isolate")
+    public ResponseEntity<?> addIsolate(@RequestBody WarehouseUserIsolate warehouseUserIsolate) {
+        if (CommonUtils.varIsBlank(warehouseUserIsolate.getPid())) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        warehouseUserIsolateService.add(warehouseUserIsolate);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "监管仓用户隔离记录修改", notes = "id、pid必填")
+    @PutMapping("isolate")
+    public ResponseEntity<?> updateIsolate(@RequestBody WarehouseUserIsolate warehouseUserIsolate) {
+        if (CommonUtils.varIsBlank(warehouseUserIsolate.getId(), warehouseUserIsolate.getPid())) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        warehouseUserIsolateService.update(warehouseUserIsolate);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "监管仓用户隔离记录删除", notes = "ids必填")
+    @DeleteMapping("isolate")
+    public ResponseEntity<?> deleteIsolate(String ids) {
+        if (CommonUtils.varIsBlank(ids)) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        warehouseUserIsolateService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
     }
 }
