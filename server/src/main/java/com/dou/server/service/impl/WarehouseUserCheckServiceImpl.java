@@ -6,6 +6,8 @@ import com.dou.server.service.WarehouseUserCheckService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @author yangjd
  */
@@ -15,8 +17,8 @@ public class WarehouseUserCheckServiceImpl extends BaseServiceImpl<WarehouseUser
 
     private final WarehouseUserCheckMapper warehouseUserCheckMapper;
 
-//    @Override
-//    public List<WarehouseUserCheck> getList(WarehouseUserCheck temp) {
-//        return warehouseUserCheckMapper.getList(temp);
-//    }
+    @Override
+    public List<WarehouseUserCheck> getList(WarehouseUserCheck temp) {
+        return warehouseUserCheckMapper.getList(temp);
+    }
 }

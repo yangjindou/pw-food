@@ -41,7 +41,6 @@ export default {
   },
   methods: {
     open(state, row) {
-      debugger
       this.formState = state;
       this.setFormData(row);
       this.disabled = state === '详情';
