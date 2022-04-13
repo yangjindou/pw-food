@@ -2,39 +2,17 @@
   <a-modal v-model="formModal" :title="formState" :maskClosable="false">
     <a-form id="warehouseUser-form" class="modal-form" :form="form">
       <a-form-item label="id" hidden>
-        <a-input v-decorator="['id']" placeholder="id" />
+        <a-input v-decorator="['id']" />
+        <a-input v-decorator="['pid']" />
       </a-form-item>
-      <a-form-item label="姓名">
-        <a-input v-decorator="['name',{rules}]" placeholder="姓名" :disabled="disabled" />
+      <a-form-item label="检测结果">
+        <a-input v-decorator="['result',{rules}]" placeholder="检测结果" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="性别">
-        <a-select placeholder="性别" v-decorator="[`gender`,{rules}]" :disabled="disabled">
-          <a-select-option value="男">男</a-select-option>
-          <a-select-option value="女">女</a-select-option>
-        </a-select>
+      <a-form-item label="检测时间">
+        <a-date-picker v-decorator="[`date`,{rules}]" placeholder="检测时间" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="年龄">
-        <a-input v-decorator="['age',{rules}]" placeholder="年龄" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="手机号">
-        <a-input v-decorator="['phone',{rules}]" placeholder="手机号" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="工作种类">
-        <a-input v-decorator="['workType',{rules}]" placeholder="工作种类" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="监管仓">
-        <a-select placeholder="监管仓" v-decorator="[`warehouse`,{rules}]" :disabled="disabled">
-          <a-select-option v-for="item in selectList.warehouse" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
-        </a-select>
-      </a-form-item>
-      <a-form-item label="是否接种疫苗">
-        <a-radio-group v-decorator="['isInoculate',{rules}]" :options="['是','否']" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="接种次数">
-        <a-input v-decorator="['inoculateCount',{rules}]" placeholder="接种次数" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="接种时间">
-        <a-date-picker v-decorator="[`inoculateDate`,{rules}]" placeholder="接种时间" :disabled="disabled" />
+      <a-form-item label="检测人">
+        <a-input v-decorator="['user',{rules}]" placeholder="检测人" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -57,23 +35,13 @@ export default {
         message: '必填项',
       }],
       disabled: false,
-      selectList: {
-        warehouse: [],
-      }
     }
   },
   mounted() {
-    this.getSelectList();
   },
   methods: {
-    getSelectList() {
-      this.$axios.get(`/warehouse/list`).then(res => {
-        if (res) {
-          res.data.forEach(item => this.selectList.warehouse.push(item));
-        }
-      });
-    },
     open(state, row) {
+      debugger
       this.formState = state;
       this.setFormData(row);
       this.disabled = state === '详情';
@@ -83,10 +51,9 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "name", "gender", "age", "phone",
-              "workType", "warehouse", "isInoculate", "inoculateCount", "inoculateDate");
-          if (data['inoculateDate']) {
-            data['inoculateDate'] = this.$moment(data['inoculateDate']);
+          let data = objUtils.getObjectByKey(row, "id", "pid", "result", "date", "user");
+          if (data['date']) {
+            data['date'] = this.$moment(data['date']);
           }
           this.form.setFieldsValue(data);
         });
@@ -95,11 +62,11 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        if (data['inoculateDate']) {
-          data['inoculateDate'] = data['inoculateDate'].format('YYYY-MM-DD');
+        if (data['date']) {
+          data['date'] = data['date'].format('YYYY-MM-DD');
         }
         if (this.formState === '新增') {
-          this.$axios.post("/warehouseUser", data).then(res => {
+          this.$axios.post("/warehouseUser/check", data).then(res => {
             if (res) {
               this.$message.success("添加成功");
               this.formModal = false;
@@ -107,7 +74,7 @@ export default {
             }
           });
         } else if (this.formState === '修改') {
-          this.$axios.put("/warehouseUser", data).then(res => {
+          this.$axios.put("/warehouseUser/check", data).then(res => {
             if (res) {
               this.$message.success("修改成功");
               this.formModal = false;

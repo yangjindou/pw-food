@@ -4,16 +4,11 @@ let tableMixin = {
     return {
       ...data,
       columns: [
-        {title: '姓名', dataIndex: 'name'},
-        {title: '性别', dataIndex: 'gender'},
-        {title: '年龄', dataIndex: 'age'},
-        {title: '手机号', dataIndex: 'phone'},
-        {title: '工作种类', dataIndex: 'workType'},
-        {title: '所属监管仓', dataIndex: 'warehouseName'},
-        {title: '是否接种疫苗', dataIndex: 'isInoculate'},
-        {title: '接种次数', dataIndex: 'inoculateCount'},
-        {title: '接种时间', dataIndex: 'inoculateDate'},
-        {title: '操作', width: 350, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
+        {title: '检测结果', dataIndex: 'result'},
+        {title: '检测时间', dataIndex: 'date'},
+        {title: '检测人', dataIndex: 'user'},
+        {title: '操作人', dataIndex: 'createUserName'},
+        {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }
   },
@@ -24,7 +19,7 @@ let tableMixin = {
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
-      this.$axios.get("/warehouseUser/list", {params}).then(res => {
+      this.$axios.get("/warehouseUser/check/list", {params}).then(res => {
         if (res) {
           this.tableData = res.data.list;
           this.pagination.total = res.data.total;

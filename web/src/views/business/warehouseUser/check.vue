@@ -26,7 +26,7 @@
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="formOpen('新增')">新增</a-button>
+          <a-button type="primary" @click="formOpen('新增', {pid: pid})">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
 <!--          <a-button type="primary" @click="exp">导出</a-button>-->
         </div>
@@ -60,18 +60,21 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
+      pid: undefined
     };
   },
   mounted() {
-    const id = this.$route.query;
+    const id = this.$route.query.id;
     if (id) {
+      this.pid = id;
+      this.searchParams = {pid: id};
       this.fetch();
     }
   },
   methods: {
     exp() {
       this.formSearch.validateFields((err, data) => {
-        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/export`, data);
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/check/export`, data);
         window.open(url);
       });
     },
@@ -93,7 +96,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("/warehouseUser", {params}).then(res => {
+          _this.$axios.delete("/warehouseUser/check", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();
