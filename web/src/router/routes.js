@@ -69,5 +69,9 @@ export default [{
     path: "warehouseUser-isolate",
     name: "warehouseUser-isolate",
     component: () => import('@/views/business/warehouseUser/isolate/index')
+  }, {
+    path: "warehouseUser-emergency",
+    name: "warehouseUser-emergency",
+    component: () => import('@/views/business/warehouseUser/emergency/index')
   }]
 }];

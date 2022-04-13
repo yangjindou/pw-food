@@ -3,6 +3,8 @@
     <a-form id="warehouseUser-form" class="modal-form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" />
+      </a-form-item>
+      <a-form-item label="pid" hidden>
         <a-input v-decorator="['pid']" />
       </a-form-item>
       <a-form-item label="隔离时间">

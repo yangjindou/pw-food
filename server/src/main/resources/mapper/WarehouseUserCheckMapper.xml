@@ -8,5 +8,8 @@
         FROM t_warehouse_user_check t
         left join sys_user u on u.id = t.create_user
         where 1 = 1
+        <if test="pid !=null">
+            and t.pid = #{pid}
+        </if>
     </select>
 </mapper>

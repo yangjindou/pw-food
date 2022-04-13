@@ -7,14 +7,11 @@
       <a-form-item label="pid" hidden>
         <a-input v-decorator="['pid']" />
       </a-form-item>
-      <a-form-item label="检测结果">
-        <a-input v-decorator="['result',{rules}]" placeholder="检测结果" :disabled="disabled" />
+      <a-form-item label="时间">
+        <a-date-picker v-decorator="[`date`,{rules}]" placeholder="隔离时间" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="检测时间">
-        <a-date-picker v-decorator="[`date`,{rules}]" placeholder="检测时间" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="检测人">
-        <a-input v-decorator="['user',{rules}]" placeholder="检测人" :disabled="disabled" />
+      <a-form-item label="备注">
+        <a-input v-decorator="['remark',{rules}]" placeholder="备注" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -52,7 +49,7 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "pid", "result", "date", "user");
+          let data = objUtils.getObjectByKey(row, "id", "pid", "date", "remark");
           if (data['date']) {
             data['date'] = this.$moment(data['date']);
           }
@@ -67,7 +64,7 @@ export default {
           data['date'] = data['date'].format('YYYY-MM-DD');
         }
         if (this.formState === '新增') {
-          this.$axios.post("/warehouseUser/check", data).then(res => {
+          this.$axios.post("/warehouseUser/emergency", data).then(res => {
             if (res) {
               this.$message.success("添加成功");
               this.formModal = false;
@@ -75,7 +72,7 @@ export default {
             }
           });
         } else if (this.formState === '修改') {
-          this.$axios.put("/warehouseUser/check", data).then(res => {
+          this.$axios.put("/warehouseUser/emergency", data).then(res => {
             if (res) {
               this.$message.success("修改成功");
               this.formModal = false;

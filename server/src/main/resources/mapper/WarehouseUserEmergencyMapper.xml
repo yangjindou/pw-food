@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.dou.server.mapper.WarehouseUserIsolateMapper">
+<mapper namespace="com.dou.server.mapper.WarehouseUserEmergencyMapper">
 
-    <select id="getList" resultType="com.dou.server.model.WarehouseUserIsolate">
+    <select id="getList" resultType="com.dou.server.model.WarehouseUserEmergency">
         SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,u.user_name create_user_name,
-        t.pid,t.date,t.place,t.remark
-        FROM t_warehouse_user_isolate t
+        t.pid,t.date,t.remark
+        FROM t_warehouse_user_emergency t
         left join sys_user u on u.id = t.create_user
         where 1 = 1
         <if test="pid !=null">

@@ -1,11 +1,9 @@
 package com.dou.server.controller;
 
 import com.dou.server.exception.LogicException;
-import com.dou.server.model.Pagination;
-import com.dou.server.model.WarehouseUser;
-import com.dou.server.model.WarehouseUserCheck;
-import com.dou.server.model.WarehouseUserIsolate;
+import com.dou.server.model.*;
 import com.dou.server.service.WarehouseUserCheckService;
+import com.dou.server.service.WarehouseUserEmergencyService;
 import com.dou.server.service.WarehouseUserIsolateService;
 import com.dou.server.service.WarehouseUserService;
 import com.dou.server.tag.Constant;
@@ -32,6 +30,7 @@ public class WarehouseUserController {
     private final WarehouseUserService warehouseUserService;
     private final WarehouseUserCheckService warehouseUserCheckService;
     private final WarehouseUserIsolateService warehouseUserIsolateService;
+    private final WarehouseUserEmergencyService warehouseUserEmergencyService;
 
     @ApiOperation(value = "监管仓用户列表", notes = "")
     @GetMapping("list")
@@ -155,6 +154,47 @@ public class WarehouseUserController {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         warehouseUserIsolateService.delete(Arrays.asList(ids.split(",")));
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "监管仓用户应急处理列表", notes = "")
+    @GetMapping("emergency/list")
+    public ResponseEntity<?> getEmergencyList(Pagination pagination, WarehouseUserEmergency warehouseUserEmergency) {
+        if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
+            PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
+            return ResponseEntity.ok(new PageInfo<>(warehouseUserEmergencyService.getList(warehouseUserEmergency)));
+        } else {
+            return ResponseEntity.ok(warehouseUserEmergencyService.getList(warehouseUserEmergency));
+        }
+    }
+
+    @ApiOperation(value = "监管仓用户应急处理新增", notes = "pid必填")
+    @PostMapping("emergency")
+    public ResponseEntity<?> addEmergency(@RequestBody WarehouseUserEmergency warehouseUserEmergency) {
+        if (CommonUtils.varIsBlank(warehouseUserEmergency.getPid())) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        warehouseUserEmergencyService.add(warehouseUserEmergency);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "监管仓用户应急处理修改", notes = "id、pid必填")
+    @PutMapping("emergency")
+    public ResponseEntity<?> updateEmergency(@RequestBody WarehouseUserEmergency warehouseUserEmergency) {
+        if (CommonUtils.varIsBlank(warehouseUserEmergency.getId(), warehouseUserEmergency.getPid())) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        warehouseUserEmergencyService.update(warehouseUserEmergency);
+        return ResponseEntity.ok().build();
+    }
+
+    @ApiOperation(value = "监管仓用户应急处理删除", notes = "ids必填")
+    @DeleteMapping("emergency")
+    public ResponseEntity<?> deleteEmergency(String ids) {
+        if (CommonUtils.varIsBlank(ids)) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        warehouseUserEmergencyService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
     }
 }
