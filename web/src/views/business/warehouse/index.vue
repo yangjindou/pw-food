@@ -83,7 +83,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("/supervisionWarehouse", {params}).then(res => {
+          _this.$axios.delete("/warehouse", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();

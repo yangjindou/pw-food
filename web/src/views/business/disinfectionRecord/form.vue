@@ -5,8 +5,8 @@
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
       <a-form-item label="监管仓">
-        <a-select placeholder="监管仓" v-decorator="[`supervisionWarehouse`,{rules}]" :disabled="disabled">
-          <a-select-option v-for="item in selectList.supervisionWarehouse" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
+        <a-select placeholder="监管仓" v-decorator="[`warehouse`,{rules}]" :disabled="disabled">
+          <a-select-option v-for="item in selectList.warehouse" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
         </a-select>
       </a-form-item>
       <a-form-item label="消杀区域">
@@ -45,7 +45,7 @@ export default {
       }],
       disabled: false,
       selectList: {
-        supervisionWarehouse: [],
+        warehouse: [],
         disinfectant: [],
       }
     }
@@ -55,9 +55,9 @@ export default {
   },
   methods: {
     getSelectList() {
-      this.$axios.get(`/supervisionWarehouse/list`).then(res => {
+      this.$axios.get(`/warehouse/list`).then(res => {
         if (res) {
-          res.data.forEach(item => this.selectList.supervisionWarehouse.push(item));
+          res.data.forEach(item => this.selectList.warehouse.push(item));
         }
       });
       this.$axios.get(`/disinfectant/list`).then(res => {
@@ -76,7 +76,7 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "supervisionWarehouse", "area", "date", "phone", "disinfectantRatio");
+          let data = objUtils.getObjectByKey(row, "id", "warehouse", "area", "date", "phone", "disinfectantRatio");
           if (data['date']) {
             data['date'] = this.$moment(data['date']);
           }

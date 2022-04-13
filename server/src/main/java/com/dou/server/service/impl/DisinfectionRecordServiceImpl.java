@@ -45,7 +45,7 @@ public class DisinfectionRecordServiceImpl extends BaseServiceImpl<DisinfectionR
             for (int i = 0; i < list.size(); i++) {
                 Row row = sheet.createRow(i + 1);
                 DisinfectionRecord data = list.get(i);
-                row.createCell(0).setCellValue(data.getSupervisionWarehouseName());
+                row.createCell(0).setCellValue(data.getWarehouseName());
                 row.createCell(1).setCellValue(data.getArea());
                 row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getDate() ,"yyyy-MM-dd HH:mm:ss"));
                 row.createCell(3).setCellValue(data.getPhone());

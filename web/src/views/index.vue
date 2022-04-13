@@ -100,7 +100,7 @@ export default {
               name: '废物处理'
             });
             menuList.push({
-              key: 'supervisionWarehouse',
+              key: 'warehouse',
               icon: 'pie-chart',
               name: '监管仓管理'
             });

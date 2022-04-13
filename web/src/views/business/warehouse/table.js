@@ -21,7 +21,7 @@ let tableMixin = {
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
-      this.$axios.get("/supervisionWarehouse/list", {params}).then(res => {
+      this.$axios.get("/warehouse/list", {params}).then(res => {
         if (res) {
           this.tableData = res.data.list;
           this.pagination.total = res.data.total;

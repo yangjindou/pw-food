@@ -4,7 +4,7 @@ let tableMixin = {
     return {
       ...data,
       columns: [
-        {title: '监管仓', dataIndex: 'supervisionWarehouseName'},
+        {title: '监管仓', dataIndex: 'warehouseName'},
         {title: '消杀区域', dataIndex: 'area'},
         {title: '消杀时间', dataIndex: 'date'},
         {title: '电话号码', dataIndex: 'phone'},

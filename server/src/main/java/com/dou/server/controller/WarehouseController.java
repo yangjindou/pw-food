@@ -2,8 +2,8 @@ package com.dou.server.controller;
 
 import com.dou.server.exception.LogicException;
 import com.dou.server.model.Pagination;
-import com.dou.server.model.SupervisionWarehouse;
-import com.dou.server.service.SupervisionWarehouseService;
+import com.dou.server.model.Warehouse;
+import com.dou.server.service.WarehouseService;
 import com.dou.server.tag.Constant;
 import com.dou.server.utils.CommonUtils;
 import com.github.pagehelper.PageHelper;
@@ -19,42 +19,42 @@ import java.util.Arrays;
 /**
  * @author yangjd
  */
-@RequestMapping("/supervisionWarehouse")
+@RequestMapping("/warehouse")
 @RequiredArgsConstructor
 @RestController
 @Api(tags = "监管仓管理接口")
-public class SupervisionWarehouseController {
+public class WarehouseController {
 
-    private final SupervisionWarehouseService supervisionWarehouseService;
+    private final WarehouseService warehouseService;
 
     @ApiOperation(value = "监管仓列表", notes = "")
     @GetMapping("list")
-    public ResponseEntity<?> getList(Pagination pagination, SupervisionWarehouse supervisionWarehouse) {
+    public ResponseEntity<?> getList(Pagination pagination, Warehouse warehouse) {
         if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
             PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
-            return ResponseEntity.ok(new PageInfo<>(supervisionWarehouseService.getList(supervisionWarehouse)));
+            return ResponseEntity.ok(new PageInfo<>(warehouseService.getList(warehouse)));
         } else {
-            return ResponseEntity.ok(supervisionWarehouseService.getList(supervisionWarehouse));
+            return ResponseEntity.ok(warehouseService.getList(warehouse));
         }
     }
 
     @ApiOperation(value = "监管仓新增", notes = "名称、标识必填")
     @PostMapping("")
-    public ResponseEntity<?> add(@RequestBody SupervisionWarehouse supervisionWarehouse) {
-        if (CommonUtils.varIsBlank(supervisionWarehouse.getName())) {
+    public ResponseEntity<?> add(@RequestBody Warehouse warehouse) {
+        if (CommonUtils.varIsBlank(warehouse.getName())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
-        supervisionWarehouseService.add(supervisionWarehouse);
+        warehouseService.add(warehouse);
         return ResponseEntity.ok().build();
     }
 
     @ApiOperation(value = "监管仓修改", notes = "id、标识必填")
     @PutMapping("")
-    public ResponseEntity<?> update(@RequestBody SupervisionWarehouse supervisionWarehouse) {
-        if (CommonUtils.varIsBlank(supervisionWarehouse.getId(), supervisionWarehouse.getName())) {
+    public ResponseEntity<?> update(@RequestBody Warehouse warehouse) {
+        if (CommonUtils.varIsBlank(warehouse.getId(), warehouse.getName())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
-        supervisionWarehouseService.update(supervisionWarehouse);
+        warehouseService.update(warehouse);
         return ResponseEntity.ok().build();
     }
 
@@ -64,7 +64,7 @@ public class SupervisionWarehouseController {
         if (CommonUtils.varIsBlank(ids)) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
-        supervisionWarehouseService.delete(Arrays.asList(ids.split(",")));
+        warehouseService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
     }
 }

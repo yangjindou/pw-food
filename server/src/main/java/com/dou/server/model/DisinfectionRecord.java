@@ -26,7 +26,7 @@ public class DisinfectionRecord extends BaseEntity implements Serializable {
     private Integer id;
 
     @ApiModelProperty("监管仓")
-    private Integer supervisionWarehouse;
+    private Integer warehouse;
 
     @ApiModelProperty("消杀区域")
     private String area;
@@ -44,6 +44,6 @@ public class DisinfectionRecord extends BaseEntity implements Serializable {
 
     @Transient
     @ApiModelProperty("监管仓名称")
-    private String supervisionWarehouseName;
+    private String warehouseName;
 
 }

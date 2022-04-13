@@ -21,9 +21,9 @@ import java.util.Date;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @NoArgsConstructor
-@Table(name="t_supervision_warehouse")
+@Table(name="t_warehouse")
 @Accessors(chain = true)
-public class SupervisionWarehouse extends BaseEntity implements Serializable {
+public class Warehouse extends BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

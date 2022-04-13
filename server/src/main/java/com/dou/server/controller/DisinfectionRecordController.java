@@ -48,7 +48,7 @@ public class DisinfectionRecordController {
     @ApiOperation(value = "环境消杀记录新增", notes = "监管仓必填")
     @PostMapping("")
     public ResponseEntity<?> add(@RequestBody DisinfectionRecord disinfectionRecord) {
-        if (CommonUtils.varIsBlank(disinfectionRecord.getSupervisionWarehouse())) {
+        if (CommonUtils.varIsBlank(disinfectionRecord.getWarehouse())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         disinfectionRecordService.add(disinfectionRecord);
@@ -58,7 +58,7 @@ public class DisinfectionRecordController {
     @ApiOperation(value = "环境消杀记录修改", notes = "id、监管仓必填")
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody DisinfectionRecord disinfectionRecord) {
-        if (CommonUtils.varIsBlank(disinfectionRecord.getId(), disinfectionRecord.getSupervisionWarehouse())) {
+        if (CommonUtils.varIsBlank(disinfectionRecord.getId(), disinfectionRecord.getWarehouse())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         disinfectionRecordService.update(disinfectionRecord);

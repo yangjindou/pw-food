@@ -1,6 +1,6 @@
 <template>
   <a-modal v-model="formModal" :title="formState" :maskClosable="false">
-    <a-form id="supervisionWarehouse-form" class="modal-form" :form="form">
+    <a-form id="warehouse-form" class="modal-form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
@@ -124,7 +124,7 @@ export default {
           data['enableDate'] = data['enableDate'].format('YYYY-MM-DD');
         }
         if (this.formState === '新增') {
-          this.$axios.post("/supervisionWarehouse", data).then(res => {
+          this.$axios.post("/warehouse", data).then(res => {
             if (res) {
               this.$message.success("添加成功");
               this.formModal = false;
@@ -132,7 +132,7 @@ export default {
             }
           });
         } else if (this.formState === '修改') {
-          this.$axios.put("/supervisionWarehouse", data).then(res => {
+          this.$axios.put("/warehouse", data).then(res => {
             if (res) {
               this.$message.success("修改成功");
               this.formModal = false;
@@ -153,7 +153,7 @@ export default {
 
 </style>
 <style lang="less">
-#supervisionWarehouse-form {
+#warehouse-form {
   .ant-form-item {
     .ant-form-item-label {
       width: 195px;
