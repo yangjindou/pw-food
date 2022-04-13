@@ -50,8 +50,8 @@
 </template>
 
 <script>
-import tForm from "./checkForm";
-import tableMixin from './checkTable';
+import tForm from "./form";
+import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
   components: {tForm},

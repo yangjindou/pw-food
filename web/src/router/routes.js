@@ -64,6 +64,6 @@ export default [{
   }, {
     path: "warehouseUser-check",
     name: "warehouseUser-check",
-    component: () => import('@/views/business/warehouseUser/check')
+    component: () => import('@/views/business/warehouseUser/check/index')
   }]
 }];
