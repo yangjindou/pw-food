@@ -8,5 +8,8 @@
         FROM t_warehouse_user t
         left join t_warehouse w on w.id = t.warehouse
         where 1 = 1
+        <if test="id !=null">
+            and t.id = #{id}
+        </if>
     </select>
 </mapper>

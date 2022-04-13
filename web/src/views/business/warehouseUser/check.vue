@@ -1,6 +1,6 @@
 <template>
   <div>
-    <u-breadcrumb :items="['监管仓人员','核酸检测列表']" title="核酸检测列表-XXX" back-btn />
+    <u-breadcrumb :items="['监管仓人员','核酸检测列表']" :title="'核酸检测列表-' + name" back-btn />
     <div v-if="false" class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -60,15 +60,21 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
-      pid: undefined
+      pid: undefined,
+      name: '',
     };
   },
   mounted() {
     const id = this.$route.query.id;
     if (id) {
-      this.pid = id;
-      this.searchParams = {pid: id};
-      this.fetch();
+      this.$axios.get("/warehouseUser/list", {params: {id}}).then(res => {
+        if (res && res.data && res.data.length) {
+          this.name = res.data[0].name;
+          this.pid = id;
+          this.searchParams = {pid: id};
+          this.fetch();
+        }
+      });
     }
   },
   methods: {
