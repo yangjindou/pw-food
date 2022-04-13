@@ -57,5 +57,9 @@ export default [{
     path: "disinfectionRecord",
     name: "disinfectionRecord",
     component: () => import('@/views/business/disinfectionRecord/index')
+  }, {
+    path: "warehouseUser",
+    name: "warehouseUser",
+    component: () => import('@/views/business/warehouseUser/index')
   }]
 }];

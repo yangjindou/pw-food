@@ -114,6 +114,11 @@ export default {
               icon: 'pie-chart',
               name: '环境消杀记录'
             });
+            menuList.push({
+              key: 'warehouseUser',
+              icon: 'pie-chart',
+              name: '监管仓人员管理'
+            });
           }
           this.menuList = menuList;
         }
