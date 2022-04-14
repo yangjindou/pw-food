@@ -42,10 +42,10 @@
         <a-input v-decorator="['originPlace',{rules}]" placeholder="原产国/产地" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="件数">
-        <a-input v-decorator="['amount',{rules}]" placeholder="件数" :disabled="disabled" />
+        <a-input v-decorator="['amount',{rules: integerRules}]" placeholder="件数" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="重量（Kg）">
-        <a-input v-decorator="['weight',{rules}]" placeholder="重量（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['weight',{rules: integerRules}]" placeholder="重量（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="检疫证明">
         <a-input v-decorator="['quarantineCertificate',{rules}]" placeholder="检疫证明" :disabled="disabled" />
@@ -80,6 +80,7 @@
 </template>
 
 <script>
+import {rules, integerRules} from "@/utils/formRules";
 import objUtils from "@/utils/objUtils";
 import AreaCascader from "@/components/areaCascader";
 import apiUtils from "@/utils/apiUtils";
@@ -90,10 +91,8 @@ export default {
       form: this.$form.createForm(this, { name: 'form' }),
       formState: '',
       formModal: false,
-      rules: [{
-        required: true,
-        message: '必填项',
-      }],
+      rules,
+      integerRules,
       disabled: false,
       selectList: {
         warehouse: [],

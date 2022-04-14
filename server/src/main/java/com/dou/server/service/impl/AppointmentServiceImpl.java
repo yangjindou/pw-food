@@ -25,7 +25,7 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
     @Override
     public void add(Appointment temp) {
         Integer orderNo = appointmentMapper.getMaxOder();
-        orderNo = orderNo == null ? 1 : orderNo+1;
+        orderNo = orderNo == null ? 100000 : orderNo+1;
         temp.setFilingOrder(orderNo);
         super.add(temp);
     }
