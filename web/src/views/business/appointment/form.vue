@@ -49,43 +49,23 @@
       </a-form-item>
       <a-form-item label="检疫证明">
         <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
-                       @preview="handlePreview" @change="uploadChange(fileList.quarantineCertificate, $event)"
-                       :show-upload-list="true" :disabled="disabled">
-          <a-icon type="plus" style="font-size: 20px;" />
-          <div class="ant-upload-text">
-            上传
-          </div>
-        </u-upload-list>
+                       @change="uploadChange(fileList.quarantineCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="报关单">
         <u-upload-list :file-list="fileList.customsBill" :allow-type="['jpg','jpeg','png']"
-                       @preview="handlePreview" @change="uploadChange(fileList.customsBill, $event)"
-                       :show-upload-list="true" :disabled="disabled">
-          <a-icon type="plus" style="font-size: 20px;" />
-          <div class="ant-upload-text">
-            上传
-          </div>
-        </u-upload-list>
+                       @change="uploadChange(fileList.customsBill, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="港口核酸证明">
         <u-upload-list :file-list="fileList.portInspectionCertificate" :allow-type="['jpg','jpeg','png']"
-                       @preview="handlePreview" @change="uploadChange(fileList.portInspectionCertificate, $event)"
-                       :show-upload-list="true" :disabled="disabled">
-          <a-icon type="plus" style="font-size: 20px;" />
-          <div class="ant-upload-text">
-            上传
-          </div>
-        </u-upload-list>
+                       @change="uploadChange(fileList.portInspectionCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="港口消杀证明">
         <u-upload-list :file-list="fileList.portDisinfectionCertificate" :allow-type="['jpg','jpeg','png']"
-                       @preview="handlePreview" @change="uploadChange(fileList.portDisinfectionCertificate, $event)"
-                       :show-upload-list="true" :disabled="disabled">
-          <a-icon type="plus" style="font-size: 20px;" />
-          <div class="ant-upload-text">
-            上传
-          </div>
-        </u-upload-list>
+                       @change="uploadChange(fileList.portDisinfectionCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="承运司机">
         <a-input v-decorator="['driver',{rules}]" placeholder="承运司机" :disabled="disabled" />
@@ -132,42 +112,17 @@ export default {
         customsBill: [],
         portInspectionCertificate: [],
         portDisinfectionCertificate: [],
-      }
+      },
+      fileUrl: process.env.VUE_APP_FILE_URL
     }
   },
   mounted() {
     this.getSelectList();
   },
   methods: {
-    uploadChange(item, {type, file}) {
-      // if (type === 'removed') {
-      //   this.$axios.delete("/memberMaterial", {params: {ids: file.memberMaterialId}}).then(res => {
-      //     if (res) {
-      //       this.$message.success('删除成功');
-      //       // this.getData();
-      //       this.refreshWebStep();
-      //     }
-      //   });
-      // } else {
-      //   let params = {
-      //     "fileId": file.fileId,
-      //     "materialId": item.materialId,
-      //     "memberExtendId": this.memberExtendId,
-      //   }
-      //   this.$axios.post("/memberMaterial/createSubmitAndAudit", params).then(res => {
-      //     if (res) {
-      //       // this.getData();
-      //       this.refreshWebStep();
-      //     }
-      //   });
-      // }
-    },
-    async handlePreview(file) {
-      // if (!file.url && !file.preview) {
-      //   file.preview = await getBase64(file.originFileObj);
-      // }
-      // this.previewImage = file.url || file.preview;
-      // this.previewVisible = true;
+    uploadChange(item, {fileList}) {
+      item.splice(0, item.length);
+      fileList.forEach(file => item.push(file));
     },
     getSelectList() {
       this.$axios.get(`/warehouse/list?stateName=正常`).then(res => {
@@ -186,12 +141,15 @@ export default {
     setFormData(row) {
       this.formModal = true;
       this.form.resetFields();
+      this.fileList.quarantineCertificate.splice(0, this.fileList.quarantineCertificate.length);
+      this.fileList.customsBill.splice(0, this.fileList.customsBill.length);
+      this.fileList.portInspectionCertificate.splice(0, this.fileList.portInspectionCertificate.length);
+      this.fileList.portDisinfectionCertificate.splice(0, this.fileList.portDisinfectionCertificate.length);
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "area", "warehouse", "warehousingDate",
               "goodType", "goodName", "goodSource", "sourceName", "warehousedProve",
-              "originPlace", "amount", "weight", "quarantineCertificate", "customsBill", "portInspectionCertificate",
-              "portDisinfectionCertificate", "driver", "carNumber", "driverPhone", "filingDate");
+              "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "filingDate");
           if (data['warehousingDate']) {
             data['warehousingDate'] = this.$moment(data['warehousingDate']);
           }
@@ -202,6 +160,59 @@ export default {
             data['area'] = data['area'].split('/');
           }
           this.form.setFieldsValue(data);
+          let imgData = objUtils.getObjectByKey(row,"quarantineCertificate", "customsBill", "portInspectionCertificate", "portDisinfectionCertificate");
+          if (imgData['quarantineCertificate']) {
+            imgData['quarantineCertificate'].split(',').forEach((e,index) => {
+              this.fileList.quarantineCertificate.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
+          if (imgData['customsBill']) {
+            imgData['customsBill'].split(',').forEach((e,index) => {
+              this.fileList.customsBill.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
+          if (imgData['portInspectionCertificate']) {
+            imgData['portInspectionCertificate'].split(',').forEach((e,index) => {
+              this.fileList.portInspectionCertificate.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
+          if (imgData['portDisinfectionCertificate']) {
+            imgData['portDisinfectionCertificate'].split(',').forEach((e,index) => {
+              this.fileList.portDisinfectionCertificate.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
         });
       }
     },
@@ -217,6 +228,26 @@ export default {
         if (data['area']) {
           data['area'] = data['area'].join("/");
         }
+        if (!this.fileList.quarantineCertificate.length) {
+          this.$message.error('检疫证明未上传');
+          return;
+        }
+        if (!this.fileList.customsBill.length) {
+          this.$message.error('报关单未上传');
+          return;
+        }
+        if (!this.fileList.portInspectionCertificate.length) {
+          this.$message.error('港口核酸证明未上传');
+          return;
+        }
+        if (!this.fileList.portDisinfectionCertificate.length) {
+          this.$message.error('港口消杀证明未上传');
+          return;
+        }
+        data['quarantineCertificate'] = this.fileList.quarantineCertificate.map(e => e.response.name).join(',');
+        data['customsBill'] = this.fileList.customsBill.map(e => e.response.name).join(',');
+        data['portInspectionCertificate'] = this.fileList.portInspectionCertificate.map(e => e.response.name).join(',');
+        data['portDisinfectionCertificate'] = this.fileList.portDisinfectionCertificate.map(e => e.response.name).join(',');
         if (this.formState === '新增') {
           this.$axios.post("/appointment", data).then(res => {
             if (res) {

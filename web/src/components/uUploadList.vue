@@ -1,9 +1,22 @@
 <template>
-  <a-upload name="file" :action="uploadUrl" :list-type="listType" :file-list="list"
-            @preview="handlePreview" @change="uploadChange" :disabled="disabled"
-            :showUploadList="showUploadList" :before-upload="beforeUpload">
-    <slot></slot>
-  </a-upload>
+  <div>
+    <a-upload name="file" :action="uploadUrl" :list-type="listType" :file-list="list"
+              @preview="handlePreview" @change="uploadChange" :disabled="disabled"
+              :showUploadList="showUploadList" :before-upload="beforeUpload">
+      <template v-if="$slots.default">
+        <slot></slot>
+      </template>
+      <div v-else>
+        <a-icon type="plus" style="font-size: 20px;" />
+        <div class="ant-upload-text">
+          上传
+        </div>
+      </div>
+    </a-upload>
+    <a-modal v-model="previewVisible" footer="" @cancel="handleCancel">
+      <img alt="example" style="width: 100%" :src="previewImage" />
+    </a-modal>
+  </div>
 </template>
 
 <script>
@@ -39,8 +52,10 @@ export default {
     return {
       uploadUrl: process.env.VUE_APP_API_BASE_URL + '/file/upload',
       list: [],
+      previewVisible: false,
+      previewImage: '',
       fileType: {
-        // 'doc': 'application/msword',
+        'doc': 'application/msword',
         'docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         'pdf': 'application/pdf',
         'jpg': 'image/jpeg',
@@ -67,8 +82,15 @@ export default {
     }
   },
   methods: {
-    handlePreview(file) {
-      this.$emit('preview', file);
+    handleCancel() {
+      this.previewVisible = false;
+    },
+    async handlePreview(file) {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      this.previewImage = file.url || file.preview;
+      this.previewVisible = true;
     },
     beforeUpload(file) {
       return new Promise((resolve, reject) => {
@@ -93,12 +115,20 @@ export default {
         this.list = fileList;
       } else if (['done','removed'].includes(file.status)) {
         this.list = fileList;
-        this.$emit('change', {type: file.status, file: file.response});
+        this.$emit('change', {type: file.status, file, fileList});
       } else {
         this.list = fileList;
       }
     },
   }
+}
+function getBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = error => reject(error);
+  });
 }
 </script>
 
