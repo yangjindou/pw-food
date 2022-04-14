@@ -48,7 +48,7 @@
         <div class="table-btn">
           <a-button type="primary" @click="formOpen('新增')">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
-<!--          <a-button type="primary" @click="exp">导出</a-button>-->
+          <a-button type="primary" @click="exp">导出</a-button>
         </div>
       </div>
       <div class="table-content">
@@ -113,6 +113,11 @@ export default {
     },
     exp() {
       this.formSearch.validateFields((err, data) => {
+        if (data['warehousingDate']) {
+          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD");
+          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD");
+          delete data["warehousingDate"];
+        }
         let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/export`, data);
         window.open(url);
       });

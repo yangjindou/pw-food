@@ -5,6 +5,7 @@ let tableMixin = {
       ...data,
       columns: [
         {title: '备案单号', dataIndex: 'filingOrder'},
+        {title: '备案状态', dataIndex: 'filingState'},
         {title: '上报的省', dataIndex: 'area'},
         {title: '预约监管仓', dataIndex: 'warehouseName'},
         {title: '入仓时间', dataIndex: 'warehousingDate'},

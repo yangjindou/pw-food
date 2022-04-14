@@ -5,16 +5,23 @@ import com.dou.server.model.Appointment;
 import com.dou.server.model.Pagination;
 import com.dou.server.service.AppointmentService;
 import com.dou.server.tag.Constant;
+import com.dou.server.tag.PassToken;
 import com.dou.server.utils.CommonUtils;
+import com.dou.server.utils.DateUtils;
+import com.dou.server.utils.HttpContextUtils;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.Date;
 
 /**
  * @author yangjd
@@ -66,5 +73,14 @@ public class AppointmentController {
         }
         appointmentService.delete(Arrays.asList(ids.split(",")));
         return ResponseEntity.ok().build();
+    }
+
+    @PassToken
+    @ApiOperation(value = "预约导出", notes = "导出excel")
+    @GetMapping("/export")
+    public ResponseEntity<?> exportList(Appointment appointment) throws IOException {
+        ByteArrayOutputStream os = appointmentService.export(appointment);
+        String fileName = String.format("预约信息%s.xls", DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
+        return new ResponseEntity<>(os.toByteArray(), HttpContextUtils.excelHeaders(fileName), HttpStatus.OK);
     }
 }
