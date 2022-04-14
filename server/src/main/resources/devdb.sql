@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 100139
+ Source Server Version : 100419
  Source Host           : localhost:3306
  Source Schema         : devdb
 
  Target Server Type    : MySQL
- Target Server Version : 100139
+ Target Server Version : 100419
  File Encoding         : 65001
 
- Date: 13/04/2022 23:18:46
+ Date: 14/04/2022 18:17:21
 */
 
 SET NAMES utf8mb4;
@@ -23,9 +23,9 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `sys_dict`;
 CREATE TABLE `sys_dict`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
   `sign` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标识',
@@ -38,8 +38,8 @@ CREATE TABLE `sys_dict`  (
 -- ----------------------------
 INSERT INTO `sys_dict` VALUES (91, '2022-04-04 00:22:24', 1, NULL, NULL, '注册区县', 'register_area', NULL);
 INSERT INTO `sys_dict` VALUES (92, '2022-04-06 11:13:18', 1, '2022-04-06 11:13:29', 1, '监管仓状态', 'waste_disposal_state', '');
-INSERT INTO `sys_dict` VALUES (93, '2022-04-13 23:10:19', 1, NULL, NULL, '货物类别', 'good_type', NULL);
-INSERT INTO `sys_dict` VALUES (94, '2022-04-13 23:11:10', 1, NULL, NULL, '货物来源', 'source_name', NULL);
+INSERT INTO `sys_dict` VALUES (93, '2022-04-13 23:10:19', 1, '2022-04-14 11:35:45', 1, '货物类别', 'goodType', '');
+INSERT INTO `sys_dict` VALUES (94, '2022-04-13 23:11:10', 1, '2022-04-14 11:35:33', 1, '货物来源', 'goodSource', '');
 
 -- ----------------------------
 -- Table structure for sys_dict_data
@@ -47,9 +47,9 @@ INSERT INTO `sys_dict` VALUES (94, '2022-04-13 23:11:10', 1, NULL, NULL, '货物
 DROP TABLE IF EXISTS `sys_dict_data`;
 CREATE TABLE `sys_dict_data`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `pid` int NULL DEFAULT NULL COMMENT 'dict_id',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
@@ -81,15 +81,15 @@ INSERT INTO `sys_dict_data` VALUES (99, '2022-04-13 23:11:40', 1, NULL, NULL, 94
 DROP TABLE IF EXISTS `sys_file`;
 CREATE TABLE `sys_file`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
   `real_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '真实名称',
   `path` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 105 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_file
@@ -106,6 +106,13 @@ INSERT INTO `sys_file` VALUES (101, '2022-04-04 05:39:04', NULL, NULL, NULL, '24
 INSERT INTO `sys_file` VALUES (102, '2022-04-04 05:39:07', NULL, NULL, NULL, '86e19e32-b785-4f56-9a17-4a26b4bc0fd7.jpg', '微信截图_20220326002659.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\86e19e32-b785-4f56-9a17-4a26b4bc0fd7.jpg');
 INSERT INTO `sys_file` VALUES (103, '2022-04-04 05:39:39', NULL, NULL, NULL, '2b0e6562-2743-4771-ace5-89383093e11d.png', '22.png', 'D:\\developTools\\xampp\\htdocs\\file\\2b0e6562-2743-4771-ace5-89383093e11d.png');
 INSERT INTO `sys_file` VALUES (104, '2022-04-04 05:41:29', NULL, NULL, NULL, '9743e539-624d-4505-a45a-ed0f0563e48a.png', '22.png', 'D:\\developTools\\xampp\\htdocs\\file\\9743e539-624d-4505-a45a-ed0f0563e48a.png');
+INSERT INTO `sys_file` VALUES (105, '2022-04-14 18:08:34', NULL, NULL, NULL, '4d2f6358-a35c-44c6-96da-0ab3a721e949.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\4d2f6358-a35c-44c6-96da-0ab3a721e949.jpg');
+INSERT INTO `sys_file` VALUES (106, '2022-04-14 18:09:28', NULL, NULL, NULL, '3de1f5f0-a23a-4df5-984a-86ce937ce889.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\3de1f5f0-a23a-4df5-984a-86ce937ce889.jpg');
+INSERT INTO `sys_file` VALUES (107, '2022-04-14 18:10:23', NULL, NULL, NULL, '6cb451bd-93f5-492c-b934-3d48e7452d0d.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\6cb451bd-93f5-492c-b934-3d48e7452d0d.jpg');
+INSERT INTO `sys_file` VALUES (108, '2022-04-14 18:16:24', NULL, NULL, NULL, '58f31024-9dbe-40a3-9b3b-22490d9cbe27.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\58f31024-9dbe-40a3-9b3b-22490d9cbe27.jpg');
+INSERT INTO `sys_file` VALUES (109, '2022-04-14 18:16:26', NULL, NULL, NULL, 'ab3b49c2-cf49-48e9-a086-1aa1fea5d36a.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\ab3b49c2-cf49-48e9-a086-1aa1fea5d36a.jpg');
+INSERT INTO `sys_file` VALUES (110, '2022-04-14 18:16:29', NULL, NULL, NULL, 'f912849a-533e-41be-80d2-32e69c996c44.jpg', 'Dingtalk_20220325131555.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\f912849a-533e-41be-80d2-32e69c996c44.jpg');
+INSERT INTO `sys_file` VALUES (111, '2022-04-14 18:16:32', NULL, NULL, NULL, '5be42595-f283-46c7-93d3-0793279530d2.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\developTools\\xampp\\htdocs\\file\\5be42595-f283-46c7-93d3-0793279530d2.jpg');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -113,9 +120,9 @@ INSERT INTO `sys_file` VALUES (104, '2022-04-04 05:41:29', NULL, NULL, NULL, '97
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `login_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录名',
   `user_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
@@ -147,18 +154,18 @@ INSERT INTO `sys_user` VALUES (83, '2022-04-04 05:41:43', NULL, NULL, NULL, 'a1'
 DROP TABLE IF EXISTS `t_appointment`;
 CREATE TABLE `t_appointment`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NOT NULL COMMENT '录入人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
-  `order` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备案单号',
+  `filing_order` int NOT NULL COMMENT '备案单号',
   `area` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上报的省（省市区）',
   `warehouse` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预约监管仓',
   `warehousing_date` date NULL DEFAULT NULL COMMENT '入仓时间',
-  `good_type` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '货物类别',
-  `good_name` int NULL DEFAULT NULL COMMENT '货物名称',
-  `good_source` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '货物来源',
-  `source_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源名称',
+  `good_type` int NULL DEFAULT NULL COMMENT '货物类别',
+  `good_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '货物名称',
+  `good_source` int NULL DEFAULT NULL COMMENT '货物来源',
+  `source_name` int NULL DEFAULT NULL COMMENT '来源名称',
   `warehoused_prove` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出仓证明',
   `origin_place` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '原产国/产地',
   `amount` int NULL DEFAULT NULL COMMENT '件数',
@@ -172,14 +179,15 @@ CREATE TABLE `t_appointment`  (
   `driver_phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '司机电话',
   `refuse_reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '驳回理由',
   `update_reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '修改理由',
-  `backups_date` date NULL DEFAULT NULL COMMENT '备案时间',
-  `backups_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备案状态',
+  `filing_date` date NULL DEFAULT NULL COMMENT '备案时间',
+  `filing_state` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备案状态',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_appointment
 -- ----------------------------
+INSERT INTO `t_appointment` VALUES (114, '2022-04-14 16:34:06', 1, NULL, NULL, 1, '河北省/秦皇岛市/山海关区', '110', '2022-04-14', 96, '1', 99, 54, '6', '7', 8, 9, '9444', '4', '5', '6', '7', '8', '9', NULL, NULL, '2022-04-14', '保存');
 
 -- ----------------------------
 -- Table structure for t_device
@@ -187,9 +195,9 @@ CREATE TABLE `t_appointment`  (
 DROP TABLE IF EXISTS `t_device`;
 CREATE TABLE `t_device`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL COMMENT '录入人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `inspection_meter` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '检验计量器',
   `is_periodic_inspection` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否定期校验',
@@ -211,9 +219,9 @@ INSERT INTO `t_device` VALUES (112, '2022-04-04 20:57:14', 1, '2022-04-04 20:57:
 DROP TABLE IF EXISTS `t_disinfectant`;
 CREATE TABLE `t_disinfectant`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL COMMENT '操作人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液名称',
   `ratio` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液配比比例',
@@ -235,9 +243,9 @@ INSERT INTO `t_disinfectant` VALUES (110, '2022-04-12 16:22:36', 1, '2022-04-12 
 DROP TABLE IF EXISTS `t_disinfection_record`;
 CREATE TABLE `t_disinfection_record`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `warehouse` int NULL DEFAULT NULL COMMENT '监管仓',
   `area` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消杀区域',
@@ -259,9 +267,9 @@ INSERT INTO `t_disinfection_record` VALUES (112, '2022-04-12 22:55:50', 1, '2022
 DROP TABLE IF EXISTS `t_notice`;
 CREATE TABLE `t_notice`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL COMMENT '公告时间',
+  `create_date` datetime NOT NULL COMMENT '公告时间',
   `create_user` int NULL DEFAULT NULL COMMENT '公告人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告标题',
   `content` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告内容',
@@ -281,9 +289,9 @@ INSERT INTO `t_notice` VALUES (108, '2022-04-04 20:50:11', 1, NULL, NULL, '1', '
 DROP TABLE IF EXISTS `t_warehouse`;
 CREATE TABLE `t_warehouse`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `record_number` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '国家平台备案号',
   `code` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '监管仓编码',
@@ -316,9 +324,9 @@ INSERT INTO `t_warehouse` VALUES (112, '2022-04-13 22:37:46', 1, NULL, NULL, '53
 DROP TABLE IF EXISTS `t_warehouse_user`;
 CREATE TABLE `t_warehouse_user`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL,
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '姓名',
   `gender` varchar(10) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '性别',
@@ -346,7 +354,6 @@ CREATE TABLE `t_warehouse_user`  (
 -- Records of t_warehouse_user
 -- ----------------------------
 INSERT INTO `t_warehouse_user` VALUES (111, '2022-04-13 10:04:07', NULL, '2022-04-13 20:17:05', 1, '1', '女', '3', '4', '5', 110, '是', '7', '2022-04-14', '是', '是', '否', '是', '否', '是', '是', '否', '是', '是');
-INSERT INTO `t_warehouse_user` VALUES (112, '2022-04-13 15:12:50', 1, '2022-04-13 20:18:22', 1, '刚刚', '男', '1', '2', '3', 110, '否', '5', '2022-04-13', '是', '是', '是', '是', '否', '否', '是', '否', '否', '否');
 
 -- ----------------------------
 -- Table structure for t_warehouse_user_check
@@ -354,16 +361,16 @@ INSERT INTO `t_warehouse_user` VALUES (112, '2022-04-13 15:12:50', 1, '2022-04-1
 DROP TABLE IF EXISTS `t_warehouse_user_check`;
 CREATE TABLE `t_warehouse_user_check`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL COMMENT '操作人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `pid` int NULL DEFAULT NULL COMMENT 't_warehouse_user的id',
   `result` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '检测结果',
   `date` date NULL DEFAULT NULL COMMENT '检测时间',
   `user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '检测人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_warehouse_user_check
@@ -377,15 +384,15 @@ INSERT INTO `t_warehouse_user_check` VALUES (113, '2022-04-13 15:09:06', 1, NULL
 DROP TABLE IF EXISTS `t_warehouse_user_emergency`;
 CREATE TABLE `t_warehouse_user_emergency`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL COMMENT '操作人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `pid` int NULL DEFAULT NULL COMMENT 't_warehouse_user的id',
   `date` date NULL DEFAULT NULL COMMENT '时间',
   `remark` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_warehouse_user_emergency
@@ -398,16 +405,16 @@ INSERT INTO `t_warehouse_user_emergency` VALUES (115, '2022-04-13 17:58:44', 1, 
 DROP TABLE IF EXISTS `t_warehouse_user_isolate`;
 CREATE TABLE `t_warehouse_user_isolate`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL,
+  `create_date` datetime NOT NULL,
   `create_user` int NULL DEFAULT NULL COMMENT '操作人',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `pid` int NULL DEFAULT NULL COMMENT 't_warehouse_user的id',
   `date` date NULL DEFAULT NULL COMMENT '隔离时间',
   `place` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '隔离地点',
   `remark` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_warehouse_user_isolate
@@ -420,9 +427,9 @@ INSERT INTO `t_warehouse_user_isolate` VALUES (114, '2022-04-13 17:36:33', 1, '2
 DROP TABLE IF EXISTS `t_waste_disposal`;
 CREATE TABLE `t_waste_disposal`  (
   `id` int NOT NULL AUTO_INCREMENT,
-  `create_date` datetime(0) NOT NULL COMMENT '录入时间',
+  `create_date` datetime NOT NULL COMMENT '录入时间',
   `create_user` int NULL DEFAULT NULL COMMENT '操作人 ',
-  `update_date` datetime(0) NULL DEFAULT NULL,
+  `update_date` datetime NULL DEFAULT NULL,
   `update_user` int NULL DEFAULT NULL,
   `item_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '物品名称',
   `item_amount` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '物品数量',

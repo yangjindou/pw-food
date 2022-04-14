@@ -48,16 +48,44 @@
         <a-input v-decorator="['weight',{rules: integerRules}]" placeholder="重量（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="检疫证明">
-        <a-input v-decorator="['quarantineCertificate',{rules}]" placeholder="检疫证明" :disabled="disabled" />
+        <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
+                       @preview="handlePreview" @change="uploadChange(fileList.quarantineCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled">
+          <a-icon type="plus" style="font-size: 20px;" />
+          <div class="ant-upload-text">
+            上传
+          </div>
+        </u-upload-list>
       </a-form-item>
       <a-form-item label="报关单">
-        <a-input v-decorator="['customsBill',{rules}]" placeholder="报关单" :disabled="disabled" />
+        <u-upload-list :file-list="fileList.customsBill" :allow-type="['jpg','jpeg','png']"
+                       @preview="handlePreview" @change="uploadChange(fileList.customsBill, $event)"
+                       :show-upload-list="true" :disabled="disabled">
+          <a-icon type="plus" style="font-size: 20px;" />
+          <div class="ant-upload-text">
+            上传
+          </div>
+        </u-upload-list>
       </a-form-item>
       <a-form-item label="港口核酸证明">
-        <a-input v-decorator="['portInspectionCertificate',{rules}]" placeholder="港口核酸证明" :disabled="disabled" />
+        <u-upload-list :file-list="fileList.portInspectionCertificate" :allow-type="['jpg','jpeg','png']"
+                       @preview="handlePreview" @change="uploadChange(fileList.portInspectionCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled">
+          <a-icon type="plus" style="font-size: 20px;" />
+          <div class="ant-upload-text">
+            上传
+          </div>
+        </u-upload-list>
       </a-form-item>
       <a-form-item label="港口消杀证明">
-        <a-input v-decorator="['portDisinfectionCertificate',{rules}]" placeholder="港口消杀证明" :disabled="disabled" />
+        <u-upload-list :file-list="fileList.portDisinfectionCertificate" :allow-type="['jpg','jpeg','png']"
+                       @preview="handlePreview" @change="uploadChange(fileList.portDisinfectionCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled">
+          <a-icon type="plus" style="font-size: 20px;" />
+          <div class="ant-upload-text">
+            上传
+          </div>
+        </u-upload-list>
       </a-form-item>
       <a-form-item label="承运司机">
         <a-input v-decorator="['driver',{rules}]" placeholder="承运司机" :disabled="disabled" />
@@ -98,6 +126,12 @@ export default {
         warehouse: [],
         goodType: [],
         goodSource: [],
+      },
+      fileList: {
+        quarantineCertificate: [],
+        customsBill: [],
+        portInspectionCertificate: [],
+        portDisinfectionCertificate: [],
       }
     }
   },
@@ -105,6 +139,36 @@ export default {
     this.getSelectList();
   },
   methods: {
+    uploadChange(item, {type, file}) {
+      // if (type === 'removed') {
+      //   this.$axios.delete("/memberMaterial", {params: {ids: file.memberMaterialId}}).then(res => {
+      //     if (res) {
+      //       this.$message.success('删除成功');
+      //       // this.getData();
+      //       this.refreshWebStep();
+      //     }
+      //   });
+      // } else {
+      //   let params = {
+      //     "fileId": file.fileId,
+      //     "materialId": item.materialId,
+      //     "memberExtendId": this.memberExtendId,
+      //   }
+      //   this.$axios.post("/memberMaterial/createSubmitAndAudit", params).then(res => {
+      //     if (res) {
+      //       // this.getData();
+      //       this.refreshWebStep();
+      //     }
+      //   });
+      // }
+    },
+    async handlePreview(file) {
+      // if (!file.url && !file.preview) {
+      //   file.preview = await getBase64(file.originFileObj);
+      // }
+      // this.previewImage = file.url || file.preview;
+      // this.previewVisible = true;
+    },
     getSelectList() {
       this.$axios.get(`/warehouse/list?stateName=正常`).then(res => {
         if (res) {

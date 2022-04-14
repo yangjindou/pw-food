@@ -24,7 +24,7 @@ export default {
     },
     listType: {
       type: String,
-      default: 'text'
+      default: 'picture-card'
     },
     fileList: {
       type: Array ,

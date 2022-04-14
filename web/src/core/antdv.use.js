@@ -35,5 +35,7 @@ import UAvatar from "@/components/uAvatar";
 Vue.component('u-avatar',UAvatar);
 import UUpload from "@/components/uUpload";
 Vue.component('u-upload',UUpload);
+import UUploadList from "@/components/uUploadList";
+Vue.component('u-upload-list',UUploadList);
 import UBreadcrumb from "@/components/uBreadcrumb";
 Vue.component('u-breadcrumb',UBreadcrumb);
