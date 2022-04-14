@@ -10,4 +10,8 @@ import java.util.List;
 public interface AppointmentService extends BaseService<Appointment> {
 
     List<Appointment> getList(Appointment temp);
+
+    void add(Appointment temp);
+
+    void update(Appointment temp);
 }

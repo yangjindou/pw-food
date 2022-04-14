@@ -21,4 +21,18 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
     public List<Appointment> getList(Appointment temp) {
         return appointmentMapper.getList(temp);
     }
+
+    @Override
+    public void add(Appointment temp) {
+        Integer orderNo = appointmentMapper.getMaxOder();
+        orderNo = orderNo == null ? 1 : orderNo+1;
+        temp.setFilingOrder(orderNo);
+        super.add(temp);
+    }
+
+    @Override
+    public void update(Appointment temp) {
+        temp.setFilingOrder(null);
+        super.update(temp);
+    }
 }

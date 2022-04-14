@@ -30,4 +30,7 @@
             and t.warehousing_date between #{warehousingDateStart} and #{warehousingDateEnd}
         </if>
     </select>
+    <select id="getMaxOder" resultType="java.lang.Integer">
+        select max(filing_order) FROM t_appointment
+    </select>
 </mapper>

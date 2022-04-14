@@ -59,7 +59,6 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="check(row)">核酸检测</a>
-              <a @click="healthy(row)">日常健康记录</a>
               <a @click="isolate(row)">隔离记录</a>
               <a @click="emergency(row)">应急处理</a>
             </div>
@@ -74,17 +73,15 @@
       </div>
     </div>
     <t-form ref="form" />
-    <healthy ref="healthy" />
   </div>
 </template>
 
 <script>
-import healthy from "./healthy";
 import tForm from "./form";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {tForm, healthy},
+  components: {tForm},
   mixins:[tableMixin],
   data() {
     return {
@@ -119,9 +116,6 @@ export default {
         let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/export`, data);
         window.open(url);
       });
-    },
-    healthy(row) {
-      this.$refs.healthy.open('修改', row);
     },
     formOpen(state, row) {
       this.$refs.form.open(state, row);

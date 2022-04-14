@@ -11,4 +11,6 @@ import java.util.List;
 public interface AppointmentMapper extends MyMapper<Appointment> {
 
     List<Appointment> getList(Appointment temp);
+
+    Integer getMaxOder();
 }

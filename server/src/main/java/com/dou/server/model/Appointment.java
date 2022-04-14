@@ -25,7 +25,7 @@ public class Appointment extends BaseEntity implements Serializable {
     private Integer id;
 
     @ApiModelProperty("备案单号")
-    private String filingOrder;
+    private Integer filingOrder;
 
     @ApiModelProperty("上报的省（省市区）")
     private String area;
@@ -62,7 +62,7 @@ public class Appointment extends BaseEntity implements Serializable {
     private String goodTypeName;
 
     @ApiModelProperty("货物名称")
-    private Integer goodName;
+    private String goodName;
 
     @ApiModelProperty("货物来源")
     private Integer goodSource;

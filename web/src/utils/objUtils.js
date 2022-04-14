@@ -4,7 +4,11 @@ export default {
   },
   getObjectByKey(obj, ...keys) {
     const res = {};
-    keys.forEach(key => res[key] = obj[key]);
+    keys.forEach(key => {
+      if (obj[key]) {
+        res[key] = obj[key];
+      }
+    });
     return res;
   }
 }

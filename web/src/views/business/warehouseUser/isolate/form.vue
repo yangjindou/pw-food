@@ -14,7 +14,7 @@
         <a-input v-decorator="['place',{rules}]" placeholder="隔离地点" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="备注">
-        <a-input v-decorator="['remark',{rules}]" placeholder="备注" :disabled="disabled" />
+        <a-input v-decorator="['remark']" placeholder="备注" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">

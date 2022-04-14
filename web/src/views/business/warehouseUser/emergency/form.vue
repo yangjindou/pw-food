@@ -11,7 +11,7 @@
         <a-date-picker v-decorator="[`date`,{rules}]" placeholder="隔离时间" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="备注">
-        <a-input v-decorator="['remark',{rules}]" placeholder="备注" :disabled="disabled" />
+        <a-input v-decorator="['remark']" placeholder="备注" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
