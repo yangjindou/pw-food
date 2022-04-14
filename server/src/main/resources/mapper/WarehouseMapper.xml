@@ -12,5 +12,8 @@
         <if test="id !=null">
             and t.id = #{id}
         </if>
+        <if test="stateName !=null">
+            and dd.name = #{stateName}
+        </if>
     </select>
 </mapper>

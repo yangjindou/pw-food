@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     getSelectList() {
-      this.$axios.get(`/warehouse/list`).then(res => {
+      this.$axios.get(`/warehouse/list?stateName=正常`).then(res => {
         if (res) {
           res.data.forEach(item => this.selectList.warehouse.push(item));
         }
