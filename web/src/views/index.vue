@@ -119,6 +119,11 @@ export default {
               icon: 'pie-chart',
               name: '监管仓人员管理'
             });
+            menuList.push({
+              key: 'appointment',
+              icon: 'pie-chart',
+              name: '预约管理'
+            });
           }
           this.menuList = menuList;
         }

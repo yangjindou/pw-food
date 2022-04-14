@@ -73,5 +73,9 @@ export default [{
     path: "warehouseUser-emergency",
     name: "warehouseUser-emergency",
     component: () => import('@/views/business/warehouseUser/emergency/index')
+  }, {
+    path: "appointment",
+    name: "appointment",
+    component: () => import('@/views/business/appointment/index')
   }]
 }];

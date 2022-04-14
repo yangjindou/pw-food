@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dou.server.mapper.AppointmentMapper">
+
+    <select id="getList" resultType="com.dou.server.model.Appointment">
+        SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,
+        t.filing_order,t.area,t.warehouse,t.warehousing_date,t.good_type,t.good_name,t.good_source,
+        t.source_name,t.warehoused_prove,t.origin_place,t.amount,t.weight,t.quarantine_certificate,
+        t.customs_bill,t.port_inspection_certificate,t.port_disinfection_certificate,t.driver,
+        t.car_number,t.driver_phone,t.refuse_reason,t.update_reason,t.filing_date,t.filing_state,
+        w.name warehouse_name,dd.name good_type_name,dd2.name good_source_name
+        FROM t_appointment t
+        left join sys_dict_data dd on dd.id = t.good_type
+        left join sys_dict_data dd2 on dd2.id = t.good_source
+        left join t_warehouse w on w.id = t.warehouse
+        where 1 = 1
+        <if test="id != null">
+            and t.id = #{id}
+        </if>
+        <if test="goodType != null">
+            and t.good_type = #{goodType}
+        </if>
+        <if test="goodSource != null">
+            and t.good_source = #{goodSource}
+        </if>
+        <if test="carNumber != null">
+            and t.car_number like CONCAT("%",#{carNumber},"%")
+        </if>
+        <if test="warehousingDateStart != null and warehousingDateEnd != null">
+            and t.warehousing_date between #{warehousingDateStart} and #{warehousingDateEnd}
+        </if>
+    </select>
+</mapper>
