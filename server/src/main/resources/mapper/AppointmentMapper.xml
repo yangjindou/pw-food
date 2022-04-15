@@ -29,6 +29,12 @@
         <if test="warehousingDateStart != null and warehousingDateEnd != null">
             and t.warehousing_date between #{warehousingDateStart} and #{warehousingDateEnd}
         </if>
+        <if test="createUser != null">
+            and t.create_user = #{createUser}
+        </if>
+        <if test="filingState != null and filingState != ''">
+            and t.filing_state = #{filingState}
+        </if>
     </select>
     <select id="getMaxOder" resultType="java.lang.Integer">
         select max(filing_order) FROM t_appointment

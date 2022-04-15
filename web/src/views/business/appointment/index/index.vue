@@ -100,7 +100,7 @@ export default {
       this.$refs.detail.open("详情", row);
     },
     formOpen(state, row) {
-      if (state === '修改' && !['修改','驳回'].includes(row['filingState'])) {
+      if (state === '修改' && !['保存','驳回'].includes(row['filingState'])) {
         this.$message.error(`${row['filingState']}，无法修改`);
         return;
       }

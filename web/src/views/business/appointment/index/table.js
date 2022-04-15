@@ -24,6 +24,7 @@ let tableMixin = {
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
+      params.createUser = this.$store.state.user.userData['id'];
       this.$axios.get("/appointment/list", {params}).then(res => {
         if (res) {
           this.tableData = res.data.list;

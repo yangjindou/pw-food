@@ -115,9 +115,6 @@ export default {
         window.open(url);
       });
     },
-    formOpen(state, row) {
-      this.$refs.form.open(state, row);
-    },
     searchReset() {
       this.formSearch.resetFields();
       this.searchParams = {};
