@@ -3,15 +3,17 @@
     <a-upload name="file" :action="uploadUrl" :list-type="listType" :file-list="list"
               @preview="handlePreview" @change="uploadChange" :disabled="disabled"
               :showUploadList="showUploadList" :before-upload="beforeUpload">
-      <template v-if="$slots.default">
-        <slot></slot>
-      </template>
-      <div v-else>
-        <a-icon type="plus" style="font-size: 20px;" />
-        <div class="ant-upload-text">
-          上传
+      <template v-if="!disabled">
+        <template v-if="$slots.default">
+          <slot></slot>
+        </template>
+        <div v-else>
+          <a-icon type="plus" style="font-size: 20px;" />
+          <div class="ant-upload-text">
+            上传
+          </div>
         </div>
-      </div>
+      </template>
     </a-upload>
     <a-modal v-model="previewVisible" footer="" @cancel="handleCancel">
       <img alt="example" style="width: 100%" :src="previewImage" />

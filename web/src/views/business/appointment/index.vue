@@ -58,7 +58,7 @@
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
-              <a @click="check(row)">核酸检测</a>
+              <a @click="audit(row)">审核</a>
               <a @click="isolate(row)">隔离记录</a>
               <a @click="emergency(row)">应急处理</a>
             </div>
@@ -73,15 +73,17 @@
       </div>
     </div>
     <t-form ref="form" />
+    <audit ref="audit" />
   </div>
 </template>
 
 <script>
 import tForm from "./form";
+import audit from "./audit";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {tForm},
+  components: {tForm, audit},
   mixins:[tableMixin],
   data() {
     return {
@@ -98,6 +100,9 @@ export default {
     this.getSelectList();
   },
   methods: {
+    audit(row) {
+      this.$refs.audit.open("修改", row);
+    },
     getSelectList() {
       apiUtils.getDictData(this.selectList.goodType, 'goodType');
       apiUtils.getDictData(this.selectList.goodSource, 'goodSource');
@@ -188,7 +193,7 @@ export default {
     justify-content: space-between;
     .table-btn {
       button {
-        margin: 0 5px;
+        margin-right: 8px;
       }
     }
   }

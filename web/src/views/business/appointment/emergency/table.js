@@ -32,5 +32,4 @@ let tableMixin = {
   },
 };
 
-// 记住，最后一定要导出
 export default tableMixin;

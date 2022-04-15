@@ -82,7 +82,8 @@
     </a-form>
     <template slot="footer">
       <a-button @click="modalCancel">取消</a-button>
-      <a-button v-if="!disabled" type="primary" @click="modalOk">确定</a-button>
+      <a-button v-if="!disabled" type="primary" @click="modalOk">保存</a-button>
+      <a-button v-if="!disabled" type="primary" @click="modalOk('提交')">保存并提交</a-button>
     </template>
   </a-modal>
 </template>
@@ -216,7 +217,7 @@ export default {
         });
       }
     },
-    modalOk() {
+    modalOk(type) {
       this.form.validateFields((error, data) => {
         if (error) return;
         if (data['warehousingDate']) {
@@ -248,6 +249,7 @@ export default {
         data['customsBill'] = this.fileList.customsBill.map(e => e.response.name).join(',');
         data['portInspectionCertificate'] = this.fileList.portInspectionCertificate.map(e => e.response.name).join(',');
         data['portDisinfectionCertificate'] = this.fileList.portDisinfectionCertificate.map(e => e.response.name).join(',');
+        data['filingState'] = type ? '待审核' : '保存';
         if (this.formState === '新增') {
           this.$axios.post("/appointment", data).then(res => {
             if (res) {
