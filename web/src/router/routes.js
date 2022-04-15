@@ -76,6 +76,10 @@ export default [{
   }, {
     path: "appointment",
     name: "appointment",
-    component: () => import('@/views/business/appointment/index')
+    component: () => import('@/views/business/appointment/index/index')
+  }, {
+    path: "appointment-admin",
+    name: "appointment-admin",
+    component: () => import('@/views/business/appointment/admin/index')
   }]
 }];

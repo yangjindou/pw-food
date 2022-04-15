@@ -46,8 +46,6 @@
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="formOpen('新增')">新增</a-button>
-          <a-button type="danger" @click="del">删除</a-button>
           <a-button type="primary" @click="exp">导出</a-button>
         </div>
       </div>
@@ -58,15 +56,8 @@
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
-              <a @click="audit(row)">审核</a>
-              <a @click="isolate(row)">隔离记录</a>
-              <a @click="emergency(row)">应急处理</a>
-            </div>
-          </template>
-          <template slot="basicOperation" slot-scope="row">
-            <div class="operation-btn">
               <a @click="formOpen('详情', row)">详情</a>
-              <a @click="formOpen('修改', row)">修改</a>
+              <a @click="audit(row)">审核</a>
             </div>
           </template>
         </a-table>
@@ -107,15 +98,9 @@ export default {
       apiUtils.getDictData(this.selectList.goodType, 'goodType');
       apiUtils.getDictData(this.selectList.goodSource, 'goodSource');
     },
-    emergency(row) {
-      this.$router.push({name: 'warehouseUser-emergency', query: {id: row['id']}});
-    },
-    isolate(row) {
-      this.$router.push({name: 'warehouseUser-isolate', query: {id: row['id']}});
-    },
-    check(row) {
-      this.$router.push({name: 'warehouseUser-check', query: {id: row['id']}});
-    },
+    // emergency(row) {
+    //   this.$router.push({name: 'warehouseUser-emergency', query: {id: row['id']}});
+    // },
     exp() {
       this.formSearch.validateFields((err, data) => {
         if (data['warehousingDate']) {
@@ -129,31 +114,6 @@ export default {
     },
     formOpen(state, row) {
       this.$refs.form.open(state, row);
-    },
-    del() {
-      if (this.selectedRowKeys.length === 0) {
-        this.$message.error("请选择数据！");
-        return;
-      }
-      const _this = this;
-      this.$confirm({
-        title: '确定删除这些数据?',
-        okText: '确定',
-        okType: 'danger',
-        cancelText: '取消',
-        onOk() {
-          let params = {
-            ids: _this.selectedRowKeys.join(',')
-          };
-          _this.$axios.delete("/appointment", {params}).then(res => {
-            if (res) {
-              _this.$message.success("删除成功");
-              _this.fetch();
-              _this.selectedRowKeys = [];
-            }
-          });
-        },
-      });
     },
     searchReset() {
       this.formSearch.resetFields();

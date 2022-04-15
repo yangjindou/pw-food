@@ -124,6 +124,11 @@ export default {
               icon: 'pie-chart',
               name: '预约管理'
             });
+            menuList.push({
+              key: 'appointment-admin',
+              icon: 'pie-chart',
+              name: '预约管理(管理员)'
+            });
           }
           this.menuList = menuList;
         }

@@ -1,15 +1,28 @@
 <template>
   <div>
-    <u-breadcrumb :items="['监管仓人员','核酸检测列表']" :title="'核酸检测列表-' + name" back-btn />
-    <div v-if="false" class="search">
+    <u-breadcrumb :items="['预约管理','预约管理列表']" title="预约管理列表" />
+    <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
           <a-col :span="6" >
-            <a-form-item label="消毒液名称">
-              <a-input v-decorator="[`name`]" placeholder="请输入" />
+            <a-form-item label="货物类别">
+              <a-select v-decorator="[`goodType`]" placeholder="请选择">
+                <a-select-option v-for="item in selectList.goodType" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
+              </a-select>
             </a-form-item>
           </a-col>
-          <a-col :span="12"></a-col>
+          <a-col :span="6" >
+            <a-form-item label="货物来源">
+              <a-select v-decorator="[`goodSource`]" placeholder="请选择">
+                <a-select-option v-for="item in selectList.goodSource" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+          <a-col :span="6" >
+            <a-form-item label="车牌号">
+              <a-input v-decorator="[`carNumber`]" placeholder="请输入" />
+            </a-form-item>
+          </a-col>
           <a-col :span="6" :style="{ textAlign: 'right' }">
             <a-form-item>
               <a-button :style="{ marginRight: '10px' }" @click="searchReset">
@@ -21,14 +34,20 @@
             </a-form-item>
           </a-col>
         </a-row>
+        <a-row :gutter="24">
+          <a-col :span="8" >
+            <a-form-item label="入仓时间">
+              <a-range-picker v-decorator="[`warehousingDate`]" />
+            </a-form-item>
+          </a-col>
+        </a-row>
       </a-form>
     </div>
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="formOpen('新增', {pid: pid})">新增</a-button>
+          <a-button type="primary" @click="formOpen('新增')">新增</a-button>
           <a-button type="danger" @click="del">删除</a-button>
-<!--          <a-button type="primary" @click="exp">导出</a-button>-->
         </div>
       </div>
       <div class="table-content">
@@ -60,29 +79,20 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
-      pid: undefined,
-      name: '',
+      selectList: {
+        goodType: [],
+        goodSource: [],
+      }
     };
   },
   mounted() {
-    const id = this.$route.query.id;
-    if (id) {
-      this.$axios.get("/warehouseUser/list", {params: {id}}).then(res => {
-        if (res && res.data && res.data.length) {
-          this.name = res.data[0].name;
-          this.pid = id;
-          this.searchParams = {pid: id};
-          this.fetch();
-        }
-      });
-    }
+    this.fetch();
+    this.getSelectList();
   },
   methods: {
-    exp() {
-      this.formSearch.validateFields((err, data) => {
-        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/warehouseUser/check/export`, data);
-        window.open(url);
-      });
+    getSelectList() {
+      apiUtils.getDictData(this.selectList.goodType, 'goodType');
+      apiUtils.getDictData(this.selectList.goodSource, 'goodSource');
     },
     formOpen(state, row) {
       this.$refs.form.open(state, row);
@@ -102,7 +112,7 @@ export default {
           let params = {
             ids: _this.selectedRowKeys.join(',')
           };
-          _this.$axios.delete("/warehouseUser/check", {params}).then(res => {
+          _this.$axios.delete("/appointment", {params}).then(res => {
             if (res) {
               _this.$message.success("删除成功");
               _this.fetch();
@@ -120,6 +130,11 @@ export default {
     searchClick() {
       this.pagination.current = 1; // 搜索后跳转到第一页
       this.formSearch.validateFields((err, data) => {
+        if (data['warehousingDate']) {
+          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD");
+          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD");
+          delete data["warehousingDate"];
+        }
         this.searchParams = {...data};
         this.fetch();
       });
@@ -145,7 +160,7 @@ export default {
     justify-content: space-between;
     .table-btn {
       button {
-        margin: 0 5px;
+        margin-right: 8px;
       }
     }
   }

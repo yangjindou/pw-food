@@ -13,8 +13,7 @@ let tableMixin = {
         {title: '货物名称', dataIndex: 'goodName'},
         {title: '货物来源', dataIndex: 'goodSourceName'},
         {title: '车牌号', dataIndex: 'carNumber'},
-        {title: '操作', width: 330, scopedSlots: {customRender: 'operation'}, fixed: 'right'},
-        {title: '数据操作', width: 120, scopedSlots: {customRender: 'basicOperation'}, fixed: 'right'}
+        {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }
   },
