@@ -55,10 +55,10 @@ public class AppointmentController {
         return ResponseEntity.ok().build();
     }
 
-    @ApiOperation(value = "预约修改", notes = "id、监管仓必填")
+    @ApiOperation(value = "预约修改", notes = "id必填")
     @PutMapping("")
     public ResponseEntity<?> update(@RequestBody Appointment appointment) {
-        if (CommonUtils.varIsBlank(appointment.getId(), appointment.getWarehouse())) {
+        if (CommonUtils.varIsBlank(appointment.getId())) {
             throw new LogicException(Constant.REQUEST_MISS_PARAMS);
         }
         appointmentService.update(appointment);

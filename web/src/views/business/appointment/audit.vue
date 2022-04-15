@@ -48,6 +48,7 @@ export default {
     },
     setFormData(row) {
       this.formModal = true;
+      this.reasonVisible = false;
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
@@ -59,23 +60,13 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        if (this.formState === '新增') {
-          this.$axios.post("/warehouseUser", data).then(res => {
+          this.$axios.put("/appointment", data).then(res => {
             if (res) {
-              this.$message.success("添加成功");
+              this.$message.success("审核成功");
               this.formModal = false;
               this.$parent.fetch();
             }
           });
-        } else if (this.formState === '修改') {
-          this.$axios.put("/warehouseUser", data).then(res => {
-            if (res) {
-              this.$message.success("修改成功");
-              this.formModal = false;
-              this.$parent.fetch();
-            }
-          });
-        }
       });
     },
     modalCancel() {
