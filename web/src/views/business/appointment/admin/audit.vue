@@ -10,8 +10,8 @@
           <a-radio-button value="驳回">驳回</a-radio-button>
         </a-radio-group>
       </a-form-item>
-      <a-form-item v-if="reasonVisible" label="理由">
-        <a-textarea class="textarea" v-decorator="['reason',{rules}]" placeholder="理由" />
+      <a-form-item v-if="reasonVisible" label="驳回理由">
+        <a-textarea class="textarea" v-decorator="['refuseReason',{rules}]" placeholder="驳回理由" />
       </a-form-item>
     </a-form>
     <template slot="footer">

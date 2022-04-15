@@ -56,25 +56,25 @@
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
-              <a @click="formOpen('详情', row)">详情</a>
+              <a @click="detail(row)">详情</a>
               <a @click="audit(row)">审核</a>
             </div>
           </template>
         </a-table>
       </div>
     </div>
-    <t-form ref="form" />
     <audit ref="audit" />
+    <detail ref="detail" />
   </div>
 </template>
 
 <script>
-import tForm from "./form";
 import audit from "./audit";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
+import Detail from "@/views/business/appointment/detail";
 export default {
-  components: {tForm, audit},
+  components: {Detail, audit},
   mixins:[tableMixin],
   data() {
     return {
@@ -91,6 +91,9 @@ export default {
     this.getSelectList();
   },
   methods: {
+    detail(row) {
+      this.$refs.detail.open("详情", row);
+    },
     audit(row) {
       this.$refs.audit.open("修改", row);
     },

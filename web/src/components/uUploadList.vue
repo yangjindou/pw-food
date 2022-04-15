@@ -72,7 +72,6 @@ export default {
     fileList: {
       handler(newValue) {
         if (newValue.length) {
-          console.log('list修改');
           this.list = newValue;
         }
       },

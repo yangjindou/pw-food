@@ -4,48 +4,41 @@
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
+      <a-form-item label="备案状态">
+        <a-input v-decorator="['filingState']" :disabled="disabled" />
+      </a-form-item>
       <a-form-item label="上报的省">
-        <AreaCascader :field-names="{
-          label: 'name',
-          value: 'name',
-          children: 'children'
-        }" v-decorator="['area',{rules}]" placeholder="上报的省（省市区）" :disabled="disabled"/>
+        <a-input v-decorator="['area']" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="预约监管仓">
-        <a-select v-decorator="[`warehouse`,{rules}]" placeholder="预约监管仓" :disabled="disabled">
-          <a-select-option v-for="item in selectList.warehouse" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
-        </a-select>
+        <a-input v-decorator="['warehouseName']" placeholder="预约监管仓" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="入仓时间">
-        <a-date-picker v-decorator="[`warehousingDate`,{rules}]" placeholder="入仓时间" :disabled="disabled" />
+        <a-date-picker v-decorator="[`warehousingDate`]" placeholder="入仓时间" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="货物类别">
-        <a-select v-decorator="[`goodType`,{rules}]" placeholder="货物类别" :disabled="disabled">
-          <a-select-option v-for="item in selectList.goodType" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
-        </a-select>
+        <a-input v-decorator="['goodTypeName']" placeholder="货物类别" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="货物名称">
-        <a-input v-decorator="['goodName',{rules}]" placeholder="货物名称" :disabled="disabled" />
+        <a-input v-decorator="['goodName']" placeholder="货物名称" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="货物来源">
-        <a-select v-decorator="[`goodSource`,{rules}]" placeholder="货物来源" :disabled="disabled">
-          <a-select-option v-for="item in selectList.goodSource" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
-        </a-select>
+        <a-input v-decorator="['goodSourceName']" placeholder="货物来源" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="来源名称">
-        <a-input v-decorator="['sourceName',{rules}]" placeholder="来源名称" :disabled="disabled" />
+        <a-input v-decorator="['sourceName']" placeholder="来源名称" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="出仓证明">
-        <a-input v-decorator="['warehousedProve',{rules}]" placeholder="出仓证明" :disabled="disabled" />
+        <a-input v-decorator="['warehousedProve']" placeholder="出仓证明" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="原产国/产地">
-        <a-input v-decorator="['originPlace',{rules}]" placeholder="原产国/产地" :disabled="disabled" />
+        <a-input v-decorator="['originPlace']" placeholder="原产国/产地" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="件数">
-        <a-input v-decorator="['amount',{rules: integerRules}]" placeholder="件数" :disabled="disabled" />
+        <a-input v-decorator="['amount']" placeholder="件数" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="重量（Kg）">
-        <a-input v-decorator="['weight',{rules: integerRules}]" placeholder="重量（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['weight']" placeholder="重量（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="检疫证明">
         <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
@@ -68,46 +61,39 @@
                        :show-upload-list="true" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="承运司机">
-        <a-input v-decorator="['driver',{rules}]" placeholder="承运司机" :disabled="disabled" />
+        <a-input v-decorator="['driver']" placeholder="承运司机" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="车牌号">
-        <a-input v-decorator="['carNumber',{rules}]" placeholder="车牌号" :disabled="disabled" />
+        <a-input v-decorator="['carNumber']" placeholder="车牌号" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="司机电话">
-        <a-input v-decorator="['driverPhone',{rules}]" placeholder="司机电话" :disabled="disabled" />
+        <a-input v-decorator="['driverPhone']" placeholder="司机电话" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="备案时间">
-        <a-date-picker v-decorator="[`filingDate`,{rules}]" placeholder="备案时间" :disabled="disabled" />
+        <a-date-picker v-decorator="[`filingDate`]" placeholder="备案时间" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="驳回理由">
+        <a-textarea class="textarea" v-decorator="['refuseReason']" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="修改理由">
+        <a-textarea class="textarea" v-decorator="['updateReason']" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
       <a-button @click="modalCancel">取消</a-button>
-      <a-button v-if="!disabled" type="primary" @click="modalOk">保存</a-button>
-      <a-button v-if="!disabled" type="primary" @click="modalOk('提交')">保存并提交</a-button>
     </template>
   </a-modal>
 </template>
 
 <script>
-import {rules, integerRules} from "@/utils/formRules";
 import objUtils from "@/utils/objUtils";
-import AreaCascader from "@/components/areaCascader";
-import apiUtils from "@/utils/apiUtils";
 export default {
-  components: {AreaCascader},
   data() {
     return {
       form: this.$form.createForm(this, { name: 'form' }),
       formState: '',
       formModal: false,
-      rules,
-      integerRules,
       disabled: false,
-      selectList: {
-        warehouse: [],
-        goodType: [],
-        goodSource: [],
-      },
       fileList: {
         quarantineCertificate: [],
         customsBill: [],
@@ -118,21 +104,11 @@ export default {
     }
   },
   mounted() {
-    this.getSelectList();
   },
   methods: {
     uploadChange(item, {fileList}) {
       item.splice(0, item.length);
       fileList.forEach(file => item.push(file));
-    },
-    getSelectList() {
-      this.$axios.get(`/warehouse/list?stateName=正常`).then(res => {
-        if (res) {
-          res.data.forEach(item => this.selectList.warehouse.push(item));
-        }
-      });
-      apiUtils.getDictData(this.selectList.goodType, 'goodType');
-      apiUtils.getDictData(this.selectList.goodSource, 'goodSource');
     },
     open(state, row) {
       this.formState = state;
@@ -148,17 +124,15 @@ export default {
       this.fileList.portDisinfectionCertificate.splice(0, this.fileList.portDisinfectionCertificate.length);
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "area", "warehouse", "warehousingDate",
-              "goodType", "goodName", "goodSource", "sourceName", "warehousedProve",
-              "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "filingDate");
+          let data = objUtils.getObjectByKey(row, "id", "area", "warehouseName", "warehousingDate",
+              "goodTypeName", "goodName", "goodSourceName", "sourceName", "warehousedProve",
+              "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "filingDate",
+              "filingState", "refuseReason", "updateReason");
           if (data['warehousingDate']) {
             data['warehousingDate'] = this.$moment(data['warehousingDate']);
           }
           if (data['filingDate']) {
             data['filingDate'] = this.$moment(data['filingDate']);
-          }
-          if (data['area']) {
-            data['area'] = data['area'].split('/');
           }
           this.form.setFieldsValue(data);
           let imgData = objUtils.getObjectByKey(row,"quarantineCertificate", "customsBill", "portInspectionCertificate", "portDisinfectionCertificate");

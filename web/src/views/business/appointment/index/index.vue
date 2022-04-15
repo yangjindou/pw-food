@@ -57,7 +57,7 @@
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
-              <a @click="formOpen('详情', row)">详情</a>
+              <a @click="detail(row)">详情</a>
               <a @click="formOpen('修改', row)">修改</a>
             </div>
           </template>
@@ -65,6 +65,7 @@
       </div>
     </div>
     <t-form ref="form" />
+    <detail ref="detail" />
   </div>
 </template>
 
@@ -72,8 +73,9 @@
 import tForm from "./form";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
+import Detail from "@/views/business/appointment/detail";
 export default {
-  components: {tForm},
+  components: {Detail, tForm},
   mixins:[tableMixin],
   data() {
     return {
@@ -94,7 +96,14 @@ export default {
       apiUtils.getDictData(this.selectList.goodType, 'goodType');
       apiUtils.getDictData(this.selectList.goodSource, 'goodSource');
     },
+    detail(row) {
+      this.$refs.detail.open("详情", row);
+    },
     formOpen(state, row) {
+      if (state === '修改' && !['修改','驳回'].includes(row['filingState'])) {
+        this.$message.error(`${row['filingState']}，无法修改`);
+        return;
+      }
       this.$refs.form.open(state, row);
     },
     del() {
