@@ -58,7 +58,7 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
-              <a @click="emergency(row)">应急通知</a>
+              <a v-if="!row['emergency']" @click="emergency(row)">应急通知</a>
               <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
             </div>
           </template>

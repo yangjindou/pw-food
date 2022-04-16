@@ -64,7 +64,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
         if (!SecurityUtils.isPasswordValid(user.getPassword(), temp.getPassword(), user.getSalt())) {
             throw new LogicException("密码错误");
         }
-        if (null != user.getEnable() && user.getEnable() == 1) {
+        if (null != user.getDisabled() && user.getDisabled()) {
             throw new LogicException("账号已被禁用");
         }
         user.createToken();

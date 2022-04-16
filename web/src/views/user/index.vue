@@ -35,13 +35,13 @@
           <a-button type="danger" @click="del">删除</a-button>
         </div>
       </div>
-      <div class="table-content">
+      <div id="user-table" class="table-content">
         <a-table :columns="columns" size="small"
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="enable" slot-scope="item">
-            <a-switch @change="enabledChange($event,item)" checked-children="开" un-checked-children="关" :checked="!item.enable" />
+            <a-switch @change="enabledChange($event,item)" checked-children="是" un-checked-children="否" :checked="!!item.disabled" />
           </template>
           <template slot="operation" slot-scope="row">
 <!--            <a @click="info(row)">详情</a>-->
@@ -95,7 +95,7 @@ export default {
   methods: {
     enabledChange(event, {id}) {
       let params = {
-        enable: event ? 0:1,
+        disabled: event,
         id
       };
       this.$axios.put("/user", params).then(res => {
@@ -212,6 +212,13 @@ export default {
         margin: 0 5px;
       }
     }
+  }
+}
+</style>
+<style lang="less">
+#user-table {
+  .ant-switch-checked {
+    background-color: #ff0000;
   }
 }
 </style>
