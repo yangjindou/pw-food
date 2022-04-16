@@ -22,7 +22,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  store.commit('menu/set', to.name);
+  store.commit('menu/setSelectedKeys', to.name);
   // passAuth，跳过登录验证
   if (to.meta['passAuth']) return next();
   let user = localStorage.getItem('user');

@@ -68,69 +68,10 @@ export default {
         res.data['token'] = this.$store.state.user.userData.token;
         this.$store.commit('user/setUser', res.data);
         if (res && res.data) {
-          const menuList = [{
-            key: 'home',
-            icon: 'line-chart',
-            name: '首页'
-          }];
-          if (res.data['role'] === '管理员') {
-            menuList.push({
-              key: 'user',
-              icon: 'pie-chart',
-              name: '用户管理'
-            });
-            menuList.push({
-              key: 'dict',
-              icon: 'pie-chart',
-              name: '数据字典'
-            });
-            menuList.push({
-              key: 'notice',
-              icon: 'pie-chart',
-              name: '公告管理'
-            });
-            menuList.push({
-              key: 'device',
-              icon: 'pie-chart',
-              name: '设备管理'
-            });
-            menuList.push({
-              key: 'wasteDisposal',
-              icon: 'pie-chart',
-              name: '废物处理'
-            });
-            menuList.push({
-              key: 'warehouse',
-              icon: 'pie-chart',
-              name: '监管仓管理'
-            });
-            menuList.push({
-              key: 'disinfectant',
-              icon: 'pie-chart',
-              name: '消毒液管理'
-            });
-            menuList.push({
-              key: 'disinfectionRecord',
-              icon: 'pie-chart',
-              name: '环境消杀记录'
-            });
-            menuList.push({
-              key: 'warehouseUser',
-              icon: 'pie-chart',
-              name: '监管仓人员管理'
-            });
-            menuList.push({
-              key: 'appointment',
-              icon: 'pie-chart',
-              name: '预约管理'
-            });
-            menuList.push({
-              key: 'appointment-admin',
-              icon: 'pie-chart',
-              name: '预约管理(管理员)'
-            });
+          const menuList = this.$store.getters["menu/getMenu"](this.$store.state.user.userData['role']);
+          if (menuList) {
+            this.menuList = menuList;
           }
-          this.menuList = menuList;
         }
       });
     },
