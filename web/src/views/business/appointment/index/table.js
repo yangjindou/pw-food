@@ -6,14 +6,13 @@ let tableMixin = {
       columns: [
         {title: '备案单号', dataIndex: 'filingOrder'},
         {title: '备案状态', dataIndex: 'filingState'},
-        {title: '上报的省', dataIndex: 'area'},
         {title: '预约监管仓', dataIndex: 'warehouseName'},
         {title: '入仓时间', dataIndex: 'warehousingDate'},
         {title: '货物类别', dataIndex: 'goodTypeName'},
         {title: '货物名称', dataIndex: 'goodName'},
         {title: '货物来源', dataIndex: 'goodSourceName'},
         {title: '车牌号', dataIndex: 'carNumber'},
-        {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
+        {title: '操作', width: 180, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }
   },

@@ -60,6 +60,7 @@
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
               <a v-if="['保存','驳回'].includes(row['filingState'])" @click="formOpen('修改', row)">修改</a>
+              <a v-if="row['filingState'] ==='审核通过'" @click="formOpen('修改', row)">申请修改</a>
             </div>
           </template>
         </a-table>
