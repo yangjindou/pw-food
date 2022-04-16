@@ -60,8 +60,9 @@
               <a @click="detail(row)">详情</a>
               <a v-if="!row['emergency']" @click="emergency(row)">应急通知</a>
               <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
-              <a @click="detail(row)">采样</a>
-              <a @click="detail(row)">卸货</a>
+              <a @click="sampling(row)">采样</a>
+              <a @click="uninstall(row)">卸货</a>
+              <a @click="update(row)">同意修改</a>
             </div>
           </template>
         </a-table>
@@ -69,16 +70,20 @@
     </div>
     <audit ref="audit" />
     <detail ref="detail" />
+    <sampling ref="sampling" />
+    <uninstall ref="uninstall" />
   </div>
 </template>
 
 <script>
 import audit from "./audit";
+import uninstall from "./uninstall";
+import sampling from "./sampling";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 import Detail from "@/views/business/appointment/detail";
 export default {
-  components: {Detail, audit},
+  components: {Detail, audit, sampling, uninstall},
   mixins:[tableMixin],
   data() {
     return {
@@ -98,8 +103,35 @@ export default {
     this.getSelectList();
   },
   methods: {
+    update(row) {
+      const _this = this;
+      this.$confirm({
+        title: '确定同意修改?',
+        okText: '确定',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk() {
+          let params = {
+            emergency: true,
+            id: row.id
+          };
+          _this.$axios.put("/appointment", params).then(res => {
+            if (res) {
+              _this.$message.success("操作成功");
+              _this.fetch();
+            }
+          });
+        },
+      });
+    },
     tableRowClass(row) {
       return row['emergency'] ? 'text-red' : '';
+    },
+    uninstall(row) {
+      this.$refs.uninstall.open("修改", row);
+    },
+    sampling(row) {
+      this.$refs.sampling.open("修改", row);
     },
     detail(row) {
       this.$refs.detail.open("详情", row);

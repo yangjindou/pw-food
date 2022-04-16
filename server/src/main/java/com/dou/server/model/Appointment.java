@@ -97,12 +97,34 @@ public class Appointment extends BaseEntity implements Serializable {
     @ApiModelProperty("备案状态")
     private String filingState;
 
-    @ApiModelProperty("备案状态")
-    private Boolean showAuditfilingState;
-
     @ApiModelProperty("申请修改次数")
     private Integer applyUpdateCount;
 
     @ApiModelProperty("应急")
     private Boolean emergency;
+
+    @ApiModelProperty("采样货物名称")
+    private String samplingGoodName;
+
+    @ApiModelProperty("采样数量")
+    private Integer samplingAmount;
+
+    @ApiModelProperty("采样时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date samplingDate;
+
+    @ApiModelProperty("采样备注")
+    private String samplingRemark;
+
+    @ApiModelProperty("采样检测人")
+    private String samplingUser;
+
+    @ApiModelProperty("卸货人员")
+    private String uninstallUser;
+
+    @ApiModelProperty("卸货时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    private Date uninstallDate;
 }

@@ -54,6 +54,7 @@
         <a-table :columns="columns" size="small"
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
+                 :rowClassName="tableRowClass"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
@@ -93,6 +94,9 @@ export default {
     this.getSelectList();
   },
   methods: {
+    tableRowClass(row) {
+      return row['emergency'] ? 'text-red' : '';
+    },
     getSelectList() {
       apiUtils.getDictData(this.selectList.goodType, 'goodType');
       apiUtils.getDictData(this.selectList.goodSource, 'goodSource');

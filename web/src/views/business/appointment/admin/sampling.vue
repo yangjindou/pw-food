@@ -1,17 +1,23 @@
 <template>
-  <a-modal v-model="formModal" title="审批" :maskClosable="false">
+  <a-modal v-model="formModal" title="采样" :maskClosable="false">
     <a-form class="modal-form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
-      <a-form-item label="审核">
-        <a-radio-group v-decorator="['filingState',{rules}]" @change="auditChange">
-          <a-radio-button value="审核通过">审核通过</a-radio-button>
-          <a-radio-button value="驳回">驳回</a-radio-button>
-        </a-radio-group>
+      <a-form-item label="采样货物名称">
+        <a-input v-decorator="['samplingGoodName',{rules}]" placeholder="采样货物名称" :disabled="disabled" />
       </a-form-item>
-      <a-form-item v-if="reasonVisible" label="驳回理由">
-        <a-textarea class="textarea" v-decorator="['refuseReason',{rules}]" placeholder="驳回理由" />
+      <a-form-item label="采样数量">
+        <a-input v-decorator="['samplingAmount',{rules: integerRules}]" placeholder="采样数量" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="采样时间">
+        <a-date-picker v-decorator="[`samplingDate`,{rules}]" placeholder="采样时间" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="采样检测人">
+        <a-input v-decorator="['samplingUser',{rules}]" placeholder="采样检测人" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="备注">
+        <a-input v-decorator="['samplingRemark']" placeholder="备注" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -23,7 +29,7 @@
 
 <script>
 import objUtils from "@/utils/objUtils";
-import {rules} from "@/utils/formRules";
+import {rules, integerRules} from "@/utils/formRules";
 export default {
   data() {
     return {
@@ -31,16 +37,13 @@ export default {
       formState: '',
       formModal: false,
       rules,
+      integerRules,
       disabled: false,
-      reasonVisible: false,
     }
   },
   mounted() {
   },
   methods: {
-    auditChange(e) {
-      this.reasonVisible = e.target.value === "驳回";
-    },
     open(state, row) {
       this.formState = state;
       this.setFormData(row);
@@ -52,7 +55,11 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id");
+          let data = objUtils.getObjectByKey(row, "id", "samplingGoodName",
+              "samplingAmount", "samplingDate", "samplingRemark", "samplingUser");
+          if (data['samplingDate']) {
+            data['samplingDate'] = this.$moment(data['samplingDate']);
+          }
           this.form.setFieldsValue(data);
         });
       }
@@ -60,9 +67,12 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
+        if (data['samplingDate']) {
+          data['samplingDate'] = data['samplingDate'].format('YYYY-MM-DD');
+        }
         this.$axios.put("/appointment", data).then(res => {
           if (res) {
-            this.$message.success("审核成功");
+            this.$message.success("操作成功");
             this.formModal = false;
             this.$parent.fetch();
           }

@@ -11,6 +11,6 @@ export const numberRules = [{
 
 export const integerRules = [{
   required: true,
-  pattern: new RegExp(/^[1-9]\d*|0$/, "g"),
+  pattern: new RegExp(/^[0-9]+$/, "g"),
   message: '请输入正确的整数'
 }];

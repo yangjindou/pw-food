@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Transient;
 import java.util.Date;
 
 @EqualsAndHashCode(callSuper = true)
@@ -18,31 +17,28 @@ import java.util.Date;
 @Accessors(chain = true)
 public class AppointmentVO extends Appointment {
 
-    @Transient
     @ApiModelProperty("预约监管仓名称")
     private String warehouseName;
 
-    @Transient
     @ApiModelProperty("预约监管仓创建人")
     private Integer warehouseCreateUser;
 
     @ApiModelProperty("入仓开始时间")
-    @Transient
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date warehousingDateStart;
 
     @ApiModelProperty("入仓结束时间")
-    @Transient
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
     private Date warehousingDateEnd;
 
-    @Transient
     @ApiModelProperty("货物类别名称")
     private String goodTypeName;
 
-    @Transient
     @ApiModelProperty("货物来源名称")
     private String goodSourceName;
+
+    @ApiModelProperty("审批备案状态")
+    private Boolean showAuditfilingState;
 }
