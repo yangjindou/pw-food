@@ -58,7 +58,7 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
-              <a @click="formOpen('修改', row)">修改</a>
+              <a v-if="['保存','驳回'].includes(row['filingState'])" @click="formOpen('修改', row)">修改</a>
             </div>
           </template>
         </a-table>
@@ -101,10 +101,6 @@ export default {
       this.$refs.detail.open("详情", row);
     },
     formOpen(state, row) {
-      if (state === '修改' && !['保存','驳回'].includes(row['filingState'])) {
-        this.$message.error(`${row['filingState']}，无法修改`);
-        return;
-      }
       this.$refs.form.open(state, row);
     },
     del() {

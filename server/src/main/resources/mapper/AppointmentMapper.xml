@@ -38,6 +38,9 @@
         <if test="warehouseCreateUser !=null">
             and w.create_user = #{warehouseCreateUser}
         </if>
+        <if test="showAuditfilingState != null and 'true' == showAuditfilingState.toString()">
+            and t.filing_state in('待审核','审核通过')
+        </if>
     </select>
 
     <select id="getMaxOder" resultType="java.lang.Integer">

@@ -57,7 +57,7 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
-              <a @click="audit(row)">审核</a>
+              <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
             </div>
           </template>
         </a-table>
@@ -88,6 +88,8 @@ export default {
     };
   },
   mounted() {
+    this.basicParams['showAuditfilingState'] = true;
+    this.basicParams['warehouseCreateUser'] = this.$store.state.user.userData['id'];
     this.fetch();
     this.getSelectList();
   },

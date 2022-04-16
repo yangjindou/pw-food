@@ -25,7 +25,6 @@ let tableMixin = {
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
-      params.filingState = "待审核";
       this.$axios.get("/appointment/list", {params}).then(res => {
         if (res) {
           this.tableData = res.data.list;
