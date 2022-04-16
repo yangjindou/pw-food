@@ -7,5 +7,8 @@
         t.warehouse,t.area,t.date,t.phone,t.disinfectant_ratio FROM t_disinfection_record t
         left join t_warehouse w on w.id = t.warehouse
         where 1 = 1
+        <if test="createUser !=null">
+            and t.create_user = #{createUser}
+        </if>
     </select>
 </mapper>

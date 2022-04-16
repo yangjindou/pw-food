@@ -12,5 +12,8 @@
         <if test="id !=null">
             and t.id = #{id}
         </if>
+        <if test="warehouseCreateUser !=null">
+            and w.create_user = #{warehouseCreateUser}
+        </if>
     </select>
 </mapper>

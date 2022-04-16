@@ -12,6 +12,9 @@
         <if test="id !=null">
             and t.id = #{id}
         </if>
+        <if test="createUser !=null">
+            and t.create_user = #{createUser}
+        </if>
         <if test="stateName !=null">
             and dd.name = #{stateName}
         </if>

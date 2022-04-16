@@ -26,15 +26,15 @@ router.beforeEach((to, from, next) => {
   if (to.meta['passAuth']) return next();
   let user = localStorage.getItem('user');
   if (!user) return next({ name: "login" });
-  user = JSON.parse(user);
   store.commit('menu/setSelectedKeys', to.name);
-  const menuList = store.getters["menu/getMenu"](user['role']);
-  const menuKeyList = menuList.map(e => e.key);
-  if (menuKeyList.includes(to.name)) {
+  // user = JSON.parse(user);
+  // const menuList = store.getters["menu/getMenu"](user['role']);
+  // const menuKeyList = menuList.map(e => e.key);
+  // if (menuKeyList.includes(to.name)) {
     return next();
-  } else {
-    return next({ name: "404" });
-  }
+  // } else {
+  //   return next({ name: "404" });
+  // }
 });
 
 export default router;

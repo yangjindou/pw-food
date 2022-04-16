@@ -74,6 +74,7 @@ export default {
     };
   },
   mounted() {
+    this.basicParams['warehouseCreateUser'] = this.$store.state.user.userData['id'];
     this.fetch();
   },
   methods: {

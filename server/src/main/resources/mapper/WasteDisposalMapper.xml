@@ -10,5 +10,8 @@
         <if test="createDate !=null">
             and date_format(t.create_date, '%Y-%m-%d') = date_format(#{createDate},'%Y-%m-%d')
         </if>
+        <if test="createUser !=null">
+            and t.create_user = #{createUser}
+        </if>
     </select>
 </mapper>

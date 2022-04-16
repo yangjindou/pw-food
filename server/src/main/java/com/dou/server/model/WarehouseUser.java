@@ -57,6 +57,10 @@ public class WarehouseUser extends BaseEntity implements Serializable {
     @ApiModelProperty("所属监管仓名称")
     private String warehouseName;
 
+    @Transient
+    @ApiModelProperty("所属监管仓创建人")
+    private Integer warehouseCreateUser;
+
     private String option1;
 
     private String option2;

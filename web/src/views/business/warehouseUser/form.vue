@@ -64,7 +64,10 @@ export default {
   },
   methods: {
     getSelectList() {
-      this.$axios.get(`/warehouse/list`).then(res => {
+      let params = {
+        createUser: this.$store.state.user.userData['id']
+      }
+      this.$axios.get(`/warehouse/list`, {params}).then(res => {
         if (res) {
           res.data.forEach(item => this.selectList.warehouse.push(item));
         }

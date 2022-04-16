@@ -35,7 +35,11 @@
         <if test="filingState != null and filingState != ''">
             and t.filing_state = #{filingState}
         </if>
+        <if test="warehouseCreateUser !=null">
+            and w.create_user = #{warehouseCreateUser}
+        </if>
     </select>
+
     <select id="getMaxOder" resultType="java.lang.Integer">
         select max(filing_order) FROM t_appointment
     </select>

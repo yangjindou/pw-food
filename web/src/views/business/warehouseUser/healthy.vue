@@ -62,16 +62,8 @@ export default {
     }
   },
   mounted() {
-    this.getSelectList();
   },
   methods: {
-    getSelectList() {
-      this.$axios.get(`/warehouse/list`).then(res => {
-        if (res) {
-          res.data.forEach(item => this.selectList.warehouse.push(item));
-        }
-      });
-    },
     open(state, row) {
       this.formState = state;
       this.setFormData(row);

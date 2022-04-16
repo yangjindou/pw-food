@@ -10,5 +10,8 @@
         <if test="name !=null and name !=''">
             and t.name like CONCAT("%",#{name},"%")
         </if>
+        <if test="createUser !=null">
+            and t.create_user = #{createUser}
+        </if>
     </select>
 </mapper>
