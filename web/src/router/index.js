@@ -22,12 +22,19 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  store.commit('menu/setSelectedKeys', to.name);
   // passAuth，跳过登录验证
   if (to.meta['passAuth']) return next();
   let user = localStorage.getItem('user');
   if (!user) return next({ name: "login" });
-  return next();
+  user = JSON.parse(user);
+  store.commit('menu/setSelectedKeys', to.name);
+  const menuList = store.getters["menu/getMenu"](user['role']);
+  const menuKeyList = menuList.map(e => e.key);
+  if (menuKeyList.includes(to.name)) {
+    return next();
+  } else {
+    return next({ name: "404" });
+  }
 });
 
 export default router;
