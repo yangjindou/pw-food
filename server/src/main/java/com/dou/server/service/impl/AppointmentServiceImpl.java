@@ -2,6 +2,7 @@ package com.dou.server.service.impl;
 
 import com.dou.server.mapper.AppointmentMapper;
 import com.dou.server.model.Appointment;
+import com.dou.server.model.vo.AppointmentVO;
 import com.dou.server.service.AppointmentService;
 import com.dou.server.utils.CommonUtils;
 import com.dou.server.utils.DateUtils;
@@ -25,7 +26,7 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
     private final AppointmentMapper appointmentMapper;
 
     @Override
-    public List<Appointment> getList(Appointment temp) {
+    public List<AppointmentVO> getList(AppointmentVO temp) {
         return appointmentMapper.getList(temp);
     }
 
@@ -44,9 +45,9 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
     }
 
     @Override
-    public ByteArrayOutputStream export(Appointment temp) throws IOException {
+    public ByteArrayOutputStream export(AppointmentVO temp) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        List<Appointment> list = this.getList(temp);
+        List<AppointmentVO> list = this.getList(temp);
         ExcelUtils etUtils = new ExcelUtils();
         HSSFSheet sheet = etUtils.getSheet();
         Row rowFirst = sheet.createRow(0);
@@ -70,7 +71,7 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
         if (CommonUtils.varIsNotBlank(list)) {
             for (int i = 0; i < list.size(); i++) {
                 Row row = sheet.createRow(i + 1);
-                Appointment data = list.get(i);
+                AppointmentVO data = list.get(i);
                 row.createCell(0).setCellValue(data.getFilingOrder());
                 row.createCell(1).setCellValue(data.getFilingState());
                 row.createCell(2).setCellValue(data.getArea());

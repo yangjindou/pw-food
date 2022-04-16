@@ -3,6 +3,7 @@ package com.dou.server.controller;
 import com.dou.server.exception.LogicException;
 import com.dou.server.model.Appointment;
 import com.dou.server.model.Pagination;
+import com.dou.server.model.vo.AppointmentVO;
 import com.dou.server.service.AppointmentService;
 import com.dou.server.tag.Constant;
 import com.dou.server.tag.PassToken;
@@ -36,7 +37,7 @@ public class AppointmentController {
 
     @ApiOperation(value = "预约列表", notes = "")
     @GetMapping("list")
-    public ResponseEntity<?> getList(Pagination pagination, Appointment appointment) {
+    public ResponseEntity<?> getList(Pagination pagination, AppointmentVO appointment) {
         if (CommonUtils.varIsNotBlank(pagination.getPageNum(), pagination.getPageSize())) {
             PageHelper.startPage(pagination.getPageNum(), pagination.getPageSize());
             return ResponseEntity.ok(new PageInfo<>(appointmentService.getList(appointment)));
@@ -78,7 +79,7 @@ public class AppointmentController {
     @PassToken
     @ApiOperation(value = "预约导出", notes = "导出excel")
     @GetMapping("/export")
-    public ResponseEntity<?> exportList(Appointment appointment) throws IOException {
+    public ResponseEntity<?> exportList(AppointmentVO appointment) throws IOException {
         ByteArrayOutputStream os = appointmentService.export(appointment);
         String fileName = String.format("预约信息%s.xls", DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
         return new ResponseEntity<>(os.toByteArray(), HttpContextUtils.excelHeaders(fileName), HttpStatus.OK);

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dou.server.mapper.AppointmentMapper">
 
-    <select id="getList" resultType="com.dou.server.model.Appointment">
+    <select id="getList" resultType="com.dou.server.model.vo.AppointmentVO">
         SELECT t.*, w.name warehouse_name,dd.name good_type_name,dd2.name good_source_name
         FROM t_appointment t
         left join sys_dict_data dd on dd.id = t.good_type

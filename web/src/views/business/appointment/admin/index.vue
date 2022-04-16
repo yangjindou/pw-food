@@ -60,6 +60,8 @@
               <a @click="detail(row)">详情</a>
               <a v-if="!row['emergency']" @click="emergency(row)">应急通知</a>
               <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
+              <a @click="detail(row)">采样</a>
+              <a @click="detail(row)">卸货</a>
             </div>
           </template>
         </a-table>
