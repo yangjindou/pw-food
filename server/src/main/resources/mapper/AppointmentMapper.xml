@@ -3,12 +3,7 @@
 <mapper namespace="com.dou.server.mapper.AppointmentMapper">
 
     <select id="getList" resultType="com.dou.server.model.Appointment">
-        SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,
-        t.filing_order,t.area,t.warehouse,t.warehousing_date,t.good_type,t.good_name,t.good_source,
-        t.source_name,t.warehoused_prove,t.origin_place,t.amount,t.weight,t.quarantine_certificate,
-        t.customs_bill,t.port_inspection_certificate,t.port_disinfection_certificate,t.driver,
-        t.car_number,t.driver_phone,t.refuse_reason,t.update_reason,t.filing_date,t.filing_state,
-        w.name warehouse_name,dd.name good_type_name,dd2.name good_source_name
+        SELECT t.*, w.name warehouse_name,dd.name good_type_name,dd2.name good_source_name
         FROM t_appointment t
         left join sys_dict_data dd on dd.id = t.good_type
         left join sys_dict_data dd2 on dd2.id = t.good_source

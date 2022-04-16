@@ -250,6 +250,7 @@ export default {
         data['portInspectionCertificate'] = this.fileList.portInspectionCertificate.map(e => e.response.name).join(',');
         data['portDisinfectionCertificate'] = this.fileList.portDisinfectionCertificate.map(e => e.response.name).join(',');
         data['filingState'] = type === '提交' ? '待审核' : '保存';
+        data['refuseReason'] = '';
         if (this.formState === '新增') {
           this.$axios.post("/appointment", data).then(res => {
             if (res) {

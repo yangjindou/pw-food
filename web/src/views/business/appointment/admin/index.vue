@@ -53,10 +53,12 @@
         <a-table :columns="columns" size="small"
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
+                 :rowClassName="tableRowClass"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
+              <a @click="emergency(row)">应急通知</a>
               <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
             </div>
           </template>
@@ -94,6 +96,9 @@ export default {
     this.getSelectList();
   },
   methods: {
+    tableRowClass(row) {
+      return row['emergency'] ? 'text-red' : '';
+    },
     detail(row) {
       this.$refs.detail.open("详情", row);
     },
@@ -104,9 +109,27 @@ export default {
       apiUtils.getDictData(this.selectList.goodType, 'goodType');
       apiUtils.getDictData(this.selectList.goodSource, 'goodSource');
     },
-    // emergency(row) {
-    //   this.$router.push({name: 'warehouseUser-emergency', query: {id: row['id']}});
-    // },
+    emergency(row) {
+      const _this = this;
+      this.$confirm({
+        title: '确定应急通知?',
+        okText: '确定',
+        okType: 'danger',
+        cancelText: '取消',
+        onOk() {
+          let params = {
+            emergency: true,
+            id: row.id
+          };
+          _this.$axios.put("/appointment", params).then(res => {
+            if (res) {
+              _this.$message.success("操作成功");
+              _this.fetch();
+            }
+          });
+        },
+      });
+    },
     exp() {
       this.formSearch.validateFields((err, data) => {
         if (data['warehousingDate']) {
@@ -165,6 +188,5 @@ export default {
       margin-right: 15px;
     }
   }
-
 }
 </style>

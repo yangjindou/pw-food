@@ -60,13 +60,13 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-          this.$axios.put("/appointment", data).then(res => {
-            if (res) {
-              this.$message.success("审核成功");
-              this.formModal = false;
-              this.$parent.fetch();
-            }
-          });
+        this.$axios.put("/appointment", data).then(res => {
+          if (res) {
+            this.$message.success("审核成功");
+            this.formModal = false;
+            this.$parent.fetch();
+          }
+        });
       });
     },
     modalCancel() {

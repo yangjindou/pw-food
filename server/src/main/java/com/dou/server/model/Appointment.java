@@ -127,4 +127,10 @@ public class Appointment extends BaseEntity implements Serializable {
 
     @ApiModelProperty("备案状态")
     private Boolean showAuditfilingState;
+
+    @ApiModelProperty("申请修改次数")
+    private Integer applyUpdateCount;
+
+    @ApiModelProperty("应急")
+    private Boolean emergency;
 }
