@@ -80,6 +80,7 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
+      basicParams: {},
       selectList: {
         goodType: [],
         goodSource: [],

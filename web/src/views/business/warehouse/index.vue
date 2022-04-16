@@ -58,9 +58,11 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
+      basicParams: {},
     };
   },
   mounted() {
+    this.basicParams['createUser'] = this.$store.state.user.userData['id'];
     this.fetch();
   },
   methods: {

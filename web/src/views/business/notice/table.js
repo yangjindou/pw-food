@@ -13,6 +13,7 @@ export default {
     ...methods,
     fetch(params = {}) {
       this.loading = true;
+      Object.assign(params, this.basicParams);
       Object.assign(params, this.searchParams);
       params.pageSize = this.pagination.pageSize;
       params.pageNum = this.pagination.current;
