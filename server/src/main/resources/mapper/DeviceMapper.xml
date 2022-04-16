@@ -12,7 +12,7 @@
             and device.inspection_date = date_format(#{inspectionDate},'%Y-%m-%d')
         </if>
         <if test="createUser !=null">
-            and t.create_user = #{createUser}
+            and device.create_user = #{createUser}
         </if>
     </select>
 </mapper>
