@@ -88,7 +88,7 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
                 row.createCell(13).setCellValue(data.getDriver());
                 row.createCell(14).setCellValue(data.getCarNumber());
                 row.createCell(15).setCellValue(data.getDriverPhone());
-                row.createCell(16).setCellValue(DateUtils.dateToFormatStr(data.getFilingDate() ,"yyyy-MM-dd"));
+                row.createCell(16).setCellValue(DateUtils.dateToFormatStr(data.getCreateDate() ,"yyyy-MM-dd HH:mm:ss"));
             }
         }
         etUtils.setAutoColumnWidth();

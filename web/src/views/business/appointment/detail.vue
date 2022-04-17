@@ -1,45 +1,91 @@
 <template>
-  <a-modal v-model="formModal" :title="formState" :maskClosable="false">
-    <a-form id="warehouseUser-form" class="modal-form" :form="form">
+  <a-modal :width="800" v-model="formModal" :title="formState" :maskClosable="false">
+    <a-form class="form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
-      <a-form-item label="备案状态">
-        <a-input v-decorator="['filingState']" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="上报的省">
-        <a-input v-decorator="['area']" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="预约监管仓">
-        <a-input v-decorator="['warehouseName']" placeholder="预约监管仓" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="入仓时间">
-        <a-date-picker v-decorator="[`warehousingDate`]" placeholder="入仓时间" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="货物类别">
-        <a-input v-decorator="['goodTypeName']" placeholder="货物类别" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="货物名称">
-        <a-input v-decorator="['goodName']" placeholder="货物名称" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="货物来源">
-        <a-input v-decorator="['goodSourceName']" placeholder="货物来源" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="来源名称">
-        <a-input v-decorator="['sourceName']" placeholder="来源名称" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="出仓证明">
-        <a-input v-decorator="['warehousedProve']" placeholder="出仓证明" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="原产国/产地">
-        <a-input v-decorator="['originPlace']" placeholder="原产国/产地" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="件数">
-        <a-input v-decorator="['amount']" placeholder="件数" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="重量（Kg）">
-        <a-input v-decorator="['weight']" placeholder="重量（Kg）" :disabled="disabled" />
-      </a-form-item>
+      <a-row :gutter="24">
+        <a-col :span="12">
+          <a-form-item label="备案单号">
+            <a-input v-decorator="['filingOrder']" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="备案状态">
+            <a-input v-decorator="['filingState']" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="备案时间">
+            <a-input v-decorator="['createDate']" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="上报的省">
+            <a-input v-decorator="['area']" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="预约监管仓">
+            <a-input v-decorator="['warehouseName']" placeholder="预约监管仓" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="货物类别">
+            <a-input v-decorator="['goodTypeName']" placeholder="货物类别" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="货物名称">
+            <a-input v-decorator="['goodName']" placeholder="货物名称" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="货物来源">
+            <a-input v-decorator="['goodSourceName']" placeholder="货物来源" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="来源名称">
+            <a-input v-decorator="['sourceName']" placeholder="来源名称" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="出仓证明">
+            <a-input v-decorator="['warehousedProve']" placeholder="出仓证明" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="原产国/产地">
+            <a-input v-decorator="['originPlace']" placeholder="原产国/产地" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="件数">
+            <a-input v-decorator="['amount']" placeholder="件数" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="重量（Kg）">
+            <a-input v-decorator="['weight']" placeholder="重量（Kg）" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="承运司机">
+            <a-input v-decorator="['driver']" placeholder="承运司机" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="车牌号">
+            <a-input v-decorator="['carNumber']" placeholder="车牌号" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
+          <a-form-item label="司机电话">
+            <a-input v-decorator="['driverPhone']" placeholder="司机电话" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+      </a-row>
       <a-form-item label="检疫证明">
         <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
                        @change="uploadChange(fileList.quarantineCertificate, $event)"
@@ -59,18 +105,6 @@
         <u-upload-list :file-list="fileList.portDisinfectionCertificate" :allow-type="['jpg','jpeg','png']"
                        @change="uploadChange(fileList.portDisinfectionCertificate, $event)"
                        :show-upload-list="true" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="承运司机">
-        <a-input v-decorator="['driver']" placeholder="承运司机" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="车牌号">
-        <a-input v-decorator="['carNumber']" placeholder="车牌号" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="司机电话">
-        <a-input v-decorator="['driverPhone']" placeholder="司机电话" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="备案时间">
-        <a-date-picker v-decorator="[`filingDate`]" placeholder="备案时间" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="驳回理由">
         <a-textarea class="textarea" v-decorator="['refuseReason']" :disabled="disabled" />
@@ -124,16 +158,10 @@ export default {
       this.fileList.portDisinfectionCertificate.splice(0, this.fileList.portDisinfectionCertificate.length);
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "area", "warehouseName", "warehousingDate",
+          let data = objUtils.getObjectByKey(row, "id", "area", "warehouseName", "filingOrder",
               "goodTypeName", "goodName", "goodSourceName", "sourceName", "warehousedProve",
-              "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "filingDate",
+              "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "createDate",
               "filingState", "refuseReason", "updateReason");
-          if (data['warehousingDate']) {
-            data['warehousingDate'] = this.$moment(data['warehousingDate']);
-          }
-          if (data['filingDate']) {
-            data['filingDate'] = this.$moment(data['filingDate']);
-          }
           this.form.setFieldsValue(data);
           let imgData = objUtils.getObjectByKey(row,"quarantineCertificate", "customsBill", "portInspectionCertificate", "portDisinfectionCertificate");
           if (imgData['quarantineCertificate']) {
@@ -194,12 +222,6 @@ export default {
     modalOk(type) {
       this.form.validateFields((error, data) => {
         if (error) return;
-        if (data['warehousingDate']) {
-          data['warehousingDate'] = data['warehousingDate'].format('YYYY-MM-DD');
-        }
-        if (data['filingDate']) {
-          data['filingDate'] = data['filingDate'].format('YYYY-MM-DD');
-        }
         if (data['area']) {
           data['area'] = data['area'].join("/");
         }

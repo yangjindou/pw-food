@@ -62,6 +62,8 @@
               <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
               <a @click="sampling(row)">采样</a>
               <a @click="uninstall(row)">卸货</a>
+              <a @click="sampling(row)">入仓</a>
+              <a @click="uninstall(row)">出仓</a>
               <a @click="update(row)">同意修改</a>
             </div>
           </template>

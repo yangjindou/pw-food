@@ -89,11 +89,6 @@ public class Appointment extends BaseEntity implements Serializable {
     @ApiModelProperty("修改理由")
     private String updateReason;
 
-    @ApiModelProperty("备案时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private Date filingDate;
-
     @ApiModelProperty("备案状态")
     private String filingState;
 
