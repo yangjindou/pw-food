@@ -16,6 +16,16 @@
       <a-form-item label="其他（Kg）">
         <a-input v-decorator="['warehousedWeightOther',{rules: integerRules}]" placeholder="其他（Kg）" :disabled="disabled" />
       </a-form-item>
+      <a-form-item label="消杀证明">
+        <u-upload-list :file-list="fileList.warehousedDisinfectionCertificate" :allow-type="['jpg','jpeg','png']"
+                       @change="uploadChange(fileList.warehousedDisinfectionCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="核酸检测">
+        <u-upload-list :file-list="fileList.warehousedInspectionCertificate" :allow-type="['jpg','jpeg','png']"
+                       @change="uploadChange(fileList.warehousedInspectionCertificate, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
+      </a-form-item>
     </a-form>
     <template slot="footer">
       <a-button @click="modalCancel">取消</a-button>
@@ -35,11 +45,18 @@ export default {
       formModal: false,
       integerRules,
       disabled: false,
+      fileList: {
+        warehousedDisinfectionCertificate: [],
+        warehousedInspectionCertificate: [],
+      },
+      fileUrl: process.env.VUE_APP_FILE_URL
     }
   },
-  mounted() {
-  },
   methods: {
+    uploadChange(item, {fileList}) {
+      item.splice(0, item.length);
+      fileList.forEach(file => item.push(file));
+    },
     open(state, row) {
       this.formState = state;
       this.setFormData(row);
@@ -49,6 +66,8 @@ export default {
       this.formModal = true;
       this.reasonVisible = false;
       this.form.resetFields();
+      this.fileList.warehousedDisinfectionCertificate.splice(0, this.fileList.warehousedDisinfectionCertificate.length);
+      this.fileList.warehousedInspectionCertificate.splice(0, this.fileList.warehousedInspectionCertificate.length);
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "warehousedWeightPoultry",
@@ -57,6 +76,33 @@ export default {
             data['samplingDate'] = this.$moment(data['samplingDate']);
           }
           this.form.setFieldsValue(data);
+          let imgData = objUtils.getObjectByKey(row,"warehousedDisinfectionCertificate", "warehousedInspectionCertificate");
+          if (imgData['warehousedDisinfectionCertificate']) {
+            imgData['warehousedDisinfectionCertificate'].split(',').forEach((e,index) => {
+              this.fileList.warehousedDisinfectionCertificate.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
+          if (imgData['warehousedInspectionCertificate']) {
+            imgData['warehousedInspectionCertificate'].split(',').forEach((e,index) => {
+              this.fileList.warehousedInspectionCertificate.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
         });
       }
     },
