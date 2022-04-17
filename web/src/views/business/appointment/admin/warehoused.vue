@@ -1,20 +1,20 @@
 <template>
-  <a-modal v-model="formModal" title="入仓" :maskClosable="false">
+  <a-modal v-model="formModal" title="出仓" :maskClosable="false">
     <a-form class="modal-form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
       <a-form-item label="禽类（Kg）">
-        <a-input v-decorator="['warehousingWeightPoultry',{rules: integerRules}]" placeholder="禽类（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightPoultry',{rules: integerRules}]" placeholder="禽类（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="畜类（Kg）">
-        <a-input v-decorator="['warehousingWeightLivestock',{rules: integerRules}]" placeholder="畜类（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightLivestock',{rules: integerRules}]" placeholder="畜类（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="水产品（Kg）">
-        <a-input v-decorator="['warehousingWeightAquatic',{rules: integerRules}]" placeholder="水产品（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightAquatic',{rules: integerRules}]" placeholder="水产品（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="其他（Kg）">
-        <a-input v-decorator="['warehousingWeightOther',{rules: integerRules}]" placeholder="其他（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightOther',{rules: integerRules}]" placeholder="其他（Kg）" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">

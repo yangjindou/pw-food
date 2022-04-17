@@ -41,4 +41,7 @@ public class AppointmentVO extends Appointment {
 
     @ApiModelProperty("审批备案状态")
     private Boolean showAuditfilingState;
+
+    @ApiModelProperty("出入仓过滤类型")
+    private String filterType;
 }

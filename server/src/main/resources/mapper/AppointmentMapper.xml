@@ -36,6 +36,12 @@
         <if test="showAuditfilingState != null and 'true' == showAuditfilingState.toString()">
             and t.filing_state in('待审核','审核通过','申请修改')
         </if>
+        <if test="filterType != null and filterType == '入仓'">
+            and t.warehousing_date is not null
+        </if>
+        <if test="filterType != null and filterType == '出仓'">
+            and t.warehoused_date is not null
+        </if>
     </select>
 
     <select id="getMaxOder" resultType="java.lang.Integer">

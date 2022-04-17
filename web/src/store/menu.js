@@ -51,6 +51,14 @@ export default {
         key: 'appointment-admin',
         icon: 'pie-chart',
         name: '预约管理(管理员)'
+      },{
+        key: 'appointment-warehousing',
+        icon: 'pie-chart',
+        name: '入仓上报'
+      },{
+        key: 'appointment-warehoused',
+        icon: 'pie-chart',
+        name: '出仓上报'
       }],
       system: [{
         key: 'user',

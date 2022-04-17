@@ -138,7 +138,7 @@ public class Appointment extends BaseEntity implements Serializable {
     @ApiModelProperty("出仓时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
-    private Double warehousedDate;
+    private Date warehousedDate;
 
     @ApiModelProperty("出仓禽类（Kg）")
     private Double warehousedWeightPoultry;

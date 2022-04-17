@@ -63,7 +63,7 @@
               <a @click="sampling(row)">采样</a>
               <a @click="uninstall(row)">卸货</a>
               <a @click="warehousing(row)">入仓</a>
-              <a @click="uninstall(row)">出仓</a>
+              <a @click="warehoused(row)">出仓</a>
               <a @click="update(row)">同意修改</a>
             </div>
           </template>
@@ -75,6 +75,7 @@
     <sampling ref="sampling" />
     <uninstall ref="uninstall" />
     <warehousing ref="warehousing" />
+    <warehoused ref="warehoused" />
   </div>
 </template>
 
@@ -83,11 +84,12 @@ import audit from "./audit";
 import uninstall from "./uninstall";
 import sampling from "./sampling";
 import warehousing from "./warehousing";
+import warehoused from "./warehoused";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 import Detail from "@/views/business/appointment/detail";
 export default {
-  components: {Detail, audit, sampling, uninstall, warehousing},
+  components: {Detail, audit, sampling, uninstall, warehousing, warehoused},
   mixins:[tableMixin],
   data() {
     return {
@@ -130,6 +132,9 @@ export default {
     },
     tableRowClass(row) {
       return row['emergency'] ? 'text-red' : '';
+    },
+    warehoused(row) {
+      this.$refs.warehoused.open("修改", row);
     },
     warehousing(row) {
       this.$refs.warehousing.open("修改", row);

@@ -48,6 +48,12 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
         if (CommonUtils.varIsNotBlank(temp.getUninstallUser())) {
             temp.setUninstallDate(new Date());
         }
+        if (CommonUtils.varIsNotBlank(temp.getWarehousingWeightPoultry())) {
+            temp.setWarehousingDate(new Date());
+        }
+        if (CommonUtils.varIsNotBlank(temp.getWarehousedWeightPoultry())) {
+            temp.setWarehousedDate(new Date());
+        }
         super.update(temp);
     }
 
