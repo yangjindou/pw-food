@@ -84,4 +84,13 @@ public class AppointmentController {
         String fileName = String.format("预约信息%s.xls", DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
         return new ResponseEntity<>(os.toByteArray(), HttpContextUtils.excelHeaders(fileName), HttpStatus.OK);
     }
+
+    @PassToken
+    @ApiOperation(value = "出仓导出", notes = "")
+    @GetMapping("/warehoused/export")
+    public ResponseEntity<?> exportWarehouseList(AppointmentVO appointment) throws IOException {
+        ByteArrayOutputStream os = appointmentService.exportWarehoused(appointment);
+        String fileName = String.format("出仓信息%s.xls", DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
+        return new ResponseEntity<>(os.toByteArray(), HttpContextUtils.excelHeaders(fileName), HttpStatus.OK);
+    }
 }

@@ -110,4 +110,38 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
         etUtils.getWorkbook().write(outputStream);
         return outputStream;
     }
+
+    @Override
+    public ByteArrayOutputStream exportWarehoused(AppointmentVO temp) throws IOException {
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        List<AppointmentVO> list = this.getList(temp);
+        ExcelUtils etUtils = new ExcelUtils();
+        HSSFSheet sheet = etUtils.getSheet();
+        Row rowFirst = sheet.createRow(0);
+        rowFirst.createCell(0).setCellValue("备案单号");
+        rowFirst.createCell(1).setCellValue("监管仓");
+        rowFirst.createCell(2).setCellValue("出仓时间");
+        rowFirst.createCell(3).setCellValue("总重量（Kg）");
+        rowFirst.createCell(4).setCellValue("禽类（总Kg）");
+        rowFirst.createCell(5).setCellValue("畜类（Kg）");
+        rowFirst.createCell(6).setCellValue("水产品（Kg）");
+        rowFirst.createCell(7).setCellValue("其他（Kg）");
+        if (CommonUtils.varIsNotBlank(list)) {
+            for (int i = 0; i < list.size(); i++) {
+                Row row = sheet.createRow(i + 1);
+                AppointmentVO data = list.get(i);
+                row.createCell(0).setCellValue(data.getFilingOrder());
+                row.createCell(1).setCellValue(data.getWarehouseName());
+                row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getWarehousingDate() ,"yyyy-MM-dd"));
+                row.createCell(3).setCellValue(data.getWarehousedWeightPoultry());
+                row.createCell(4).setCellValue(data.getWarehousedWeightPoultry());
+                row.createCell(5).setCellValue(data.getWarehousedWeightPoultry());
+                row.createCell(6).setCellValue(data.getWarehousedWeightPoultry());
+                row.createCell(7).setCellValue(data.getWarehousedWeightPoultry());
+            }
+        }
+        etUtils.setAutoColumnWidth();
+        etUtils.getWorkbook().write(outputStream);
+        return outputStream;
+    }
 }

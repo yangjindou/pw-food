@@ -51,8 +51,8 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "warehousingWeightPoultry",
-              "warehousingWeightLivestock", "warehousingWeightAquatic", "warehousingWeightOther");
+          let data = objUtils.getObjectByKey(row, "id", "warehousedWeightPoultry",
+              "warehousedWeightLivestock", "warehousedWeightAquatic", "warehousedWeightOther");
           if (data['samplingDate']) {
             data['samplingDate'] = this.$moment(data['samplingDate']);
           }

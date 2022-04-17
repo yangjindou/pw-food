@@ -51,11 +51,8 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "warehousingWeightPoultry",
-              "warehousingWeightLivestock", "warehousingWeightAquatic", "warehousingWeightOther");
-          if (data['samplingDate']) {
-            data['samplingDate'] = this.$moment(data['samplingDate']);
-          }
+          let data = objUtils.getObjectByKey(row, "id", "warehousedWeightPoultry",
+              "warehousedWeightLivestock", "warehousedWeightAquatic", "warehousedWeightOther");
           this.form.setFieldsValue(data);
         });
       }
@@ -63,9 +60,6 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        if (data['samplingDate']) {
-          data['samplingDate'] = data['samplingDate'].format('YYYY-MM-DD');
-        }
         this.$axios.put("/appointment", data).then(res => {
           if (res) {
             this.$message.success("操作成功");

@@ -24,6 +24,9 @@
         <if test="warehousingDateStart != null and warehousingDateEnd != null">
             and t.warehousing_date between #{warehousingDateStart} and #{warehousingDateEnd}
         </if>
+        <if test="warehousedDateStart != null and warehousedDateEnd != null">
+            and t.warehoused_date between #{warehousedDateStart} and #{warehousedDateEnd}
+        </if>
         <if test="createUser != null">
             and t.create_user = #{createUser}
         </if>

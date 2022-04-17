@@ -5,11 +5,11 @@
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
           <a-col :span="8" >
-            <a-form-item label="入仓时间">
-              <a-range-picker v-decorator="[`warehousingDate`]" />
+            <a-form-item label="出仓时间">
+              <a-range-picker v-decorator="[`warehousedDate`]" />
             </a-form-item>
           </a-col>
-          <a-col :span="6" :style="{ textAlign: 'right' }">
+          <a-col :offset="10" :span="6" :style="{ textAlign: 'right' }">
             <a-form-item>
               <a-button :style="{ marginRight: '10px' }" @click="searchReset">
                 重置
@@ -33,6 +33,9 @@
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
+          <template slot="weightAll" slot-scope="row">
+            {{row['warehousedWeightPoultry'] + row['warehousedWeightLivestock'] + row['warehousedWeightAquatic'] + row['warehousedWeightOther']}}
+          </template>
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="warehoused(row)">详情</a>
@@ -56,24 +59,26 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
-      basicParams: {},
+      basicParams: {
+        showAuditfilingState: true,
+        filterType: '出仓'
+      },
     };
   },
   mounted() {
-    this.basicParams['showAuditfilingState'] = true;
     this.basicParams['warehouseCreateUser'] = this.$store.state.user.userData['id'];
     this.fetch();
   },
   methods: {
     warehoused(row) {
-      this.$refs.warehoused.open("修改", row);
+      this.$refs.warehoused.open("详情", row);
     },
     exp() {
       this.formSearch.validateFields((err, data) => {
-        if (data['warehousingDate']) {
-          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
-          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
-          delete data["warehousingDate"];
+        if (data['warehousedDateEnd']) {
+          data["warehousedDateStart"] = this.$moment(data['warehousedDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
+          data["warehousedDateEnd"] = this.$moment(data['warehousedDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
+          delete data["warehousedDate"];
         }
         let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/export`, data);
         window.open(url);
@@ -87,10 +92,10 @@ export default {
     searchClick() {
       this.pagination.current = 1; // 搜索后跳转到第一页
       this.formSearch.validateFields((err, data) => {
-        if (data['warehousingDate']) {
-          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
-          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
-          delete data["warehousingDate"];
+        if (data['warehousedDate']) {
+          data["warehousedDateStart"] = this.$moment(data['warehousedDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
+          data["warehousedDateEnd"] = this.$moment(data['warehousedDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
+          delete data["warehousedDate"];
         }
         this.searchParams = {...data};
         this.fetch();

@@ -56,17 +56,19 @@ export default {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
-      basicParams: {},
+      basicParams: {
+        showAuditfilingState: true,
+        filterType: '入仓'
+      },
     };
   },
   mounted() {
-    this.basicParams['showAuditfilingState'] = true;
     this.basicParams['warehouseCreateUser'] = this.$store.state.user.userData['id'];
     this.fetch();
   },
   methods: {
     warehousing(row) {
-      this.$refs.warehousing.open("修改", row);
+      this.$refs.warehousing.open("详情", row);
     },
     exp() {
       this.formSearch.validateFields((err, data) => {

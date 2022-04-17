@@ -19,4 +19,6 @@ public interface AppointmentService extends BaseService<Appointment> {
     void update(Appointment temp);
 
     ByteArrayOutputStream export(AppointmentVO temp) throws IOException;
+
+    ByteArrayOutputStream exportWarehoused(AppointmentVO temp) throws IOException;
 }

@@ -33,6 +33,16 @@ public class AppointmentVO extends Appointment {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date warehousingDateEnd;
 
+    @ApiModelProperty("出仓开始时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date warehousedDateStart;
+
+    @ApiModelProperty("出仓结束时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date warehousedDateEnd;
+
     @ApiModelProperty("货物类别名称")
     private String goodTypeName;
 
