@@ -34,3 +34,7 @@ application:
   file:
     upload:
       path: D:\developTools\xampp\htdocs\file
+  wechat:
+    miniprogram:
+      appId: wxd449ec34061a16d8
+      appSecret: 7ff7b2e4d7060e7a8c35aecb9402ee75

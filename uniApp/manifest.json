@@ -1,5 +1,5 @@
 {
-    "name" : "qrcodeReport",
+    "name" : "food",
     "appid" : "__UNI__90BF7CD",
     "description" : "",
     "versionName" : "1.0.0",
@@ -57,7 +57,7 @@
     "quickapp" : {},
     /* 小程序特有相关 */
     "mp-weixin" : {
-        "appid" : "wxcb93047443445d44",
+        "appid" : "wxd449ec34061a16d8",
         "setting" : {
             "urlCheck" : false
         },
@@ -78,9 +78,9 @@
     },
     "h5" : {
         "router" : {
-            "base" : "/h8"
+            "base" : "/h5"
         },
-        "title" : "疫情防控",
+        "title" : "",
         "sdkConfigs" : {
             "maps" : {}
         }

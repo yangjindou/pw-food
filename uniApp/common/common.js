@@ -2,8 +2,8 @@ module.exports = {
 	// api 基础路径地址
 	// appServer: 'http://182.92.124.118:9090/qrcode/',
 	// fileServer: 'http://182.92.124.118:9090/file/',
-	appServer: 'https://www.shanghaiyly.com/qrcodeReport/',
-	fileServer: 'http://192.168.1.69:8090/file',
+	appServer: 'http://192.168.0.115:8088/',
+	fileServer: 'http://192.168.0.115:8090/file',
 	
 	
 	formatDate(date, fmt) {
