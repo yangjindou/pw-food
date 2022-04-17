@@ -1,11 +1,23 @@
 <template>
-  <a-modal v-model="formModal" title="卸货" :maskClosable="false">
+  <a-modal v-model="formModal" title="入仓" :maskClosable="false">
     <a-form class="modal-form" :form="form">
       <a-form-item label="id" hidden>
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
-      <a-form-item label="卸货人员">
-        <a-input v-decorator="['uninstallUser',{rules}]" placeholder="卸货人员" :disabled="disabled" />
+      <a-form-item label="采样货物名称">
+        <a-input v-decorator="['samplingGoodName',{rules}]" placeholder="采样货物名称" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="采样数量">
+        <a-input v-decorator="['samplingAmount',{rules: integerRules}]" placeholder="采样数量" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="采样时间">
+        <a-date-picker v-decorator="[`samplingDate`,{rules}]" placeholder="采样时间" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="采样检测人">
+        <a-input v-decorator="['samplingUser',{rules}]" placeholder="采样检测人" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="备注">
+        <a-input v-decorator="['samplingRemark']" placeholder="备注" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -43,7 +55,11 @@ export default {
       this.form.resetFields();
       if (row) {
         this.$nextTick(() => {
-          let data = objUtils.getObjectByKey(row, "id", "uninstallUser");
+          let data = objUtils.getObjectByKey(row, "id", "samplingGoodName",
+              "samplingAmount", "samplingDate", "samplingRemark", "samplingUser");
+          if (data['samplingDate']) {
+            data['samplingDate'] = this.$moment(data['samplingDate']);
+          }
           this.form.setFieldsValue(data);
         });
       }
@@ -51,6 +67,9 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
+        if (data['samplingDate']) {
+          data['samplingDate'] = data['samplingDate'].format('YYYY-MM-DD');
+        }
         this.$axios.put("/appointment", data).then(res => {
           if (res) {
             this.$message.success("操作成功");

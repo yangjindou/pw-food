@@ -10,9 +10,6 @@
       <a-form-item label="采样数量">
         <a-input v-decorator="['samplingAmount',{rules: integerRules}]" placeholder="采样数量" :disabled="disabled" />
       </a-form-item>
-      <a-form-item label="采样时间">
-        <a-date-picker v-decorator="[`samplingDate`,{rules}]" placeholder="采样时间" :disabled="disabled" />
-      </a-form-item>
       <a-form-item label="采样检测人">
         <a-input v-decorator="['samplingUser',{rules}]" placeholder="采样检测人" :disabled="disabled" />
       </a-form-item>
@@ -56,10 +53,7 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "samplingGoodName",
-              "samplingAmount", "samplingDate", "samplingRemark", "samplingUser");
-          if (data['samplingDate']) {
-            data['samplingDate'] = this.$moment(data['samplingDate']);
-          }
+              "samplingAmount", "samplingRemark", "samplingUser");
           this.form.setFieldsValue(data);
         });
       }
@@ -67,9 +61,6 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
-        if (data['samplingDate']) {
-          data['samplingDate'] = data['samplingDate'].format('YYYY-MM-DD');
-        }
         this.$axios.put("/appointment", data).then(res => {
           if (res) {
             this.$message.success("操作成功");

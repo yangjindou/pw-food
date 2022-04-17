@@ -62,7 +62,7 @@
               <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
               <a @click="sampling(row)">采样</a>
               <a @click="uninstall(row)">卸货</a>
-              <a @click="sampling(row)">入仓</a>
+              <a @click="warehousing(row)">入仓</a>
               <a @click="uninstall(row)">出仓</a>
               <a @click="update(row)">同意修改</a>
             </div>
@@ -74,6 +74,7 @@
     <detail ref="detail" />
     <sampling ref="sampling" />
     <uninstall ref="uninstall" />
+    <warehousing ref="warehousing" />
   </div>
 </template>
 
@@ -81,11 +82,12 @@
 import audit from "./audit";
 import uninstall from "./uninstall";
 import sampling from "./sampling";
+import warehousing from "./warehousing";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 import Detail from "@/views/business/appointment/detail";
 export default {
-  components: {Detail, audit, sampling, uninstall},
+  components: {Detail, audit, sampling, uninstall, warehousing},
   mixins:[tableMixin],
   data() {
     return {
@@ -129,6 +131,9 @@ export default {
     tableRowClass(row) {
       return row['emergency'] ? 'text-red' : '';
     },
+    warehousing(row) {
+      this.$refs.warehousing.open("修改", row);
+    },
     uninstall(row) {
       this.$refs.uninstall.open("修改", row);
     },
@@ -169,8 +174,8 @@ export default {
     exp() {
       this.formSearch.validateFields((err, data) => {
         if (data['warehousingDate']) {
-          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD");
-          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD");
+          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
+          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
           delete data["warehousingDate"];
         }
         let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/export`, data);
@@ -186,8 +191,8 @@ export default {
       this.pagination.current = 1; // 搜索后跳转到第一页
       this.formSearch.validateFields((err, data) => {
         if (data['warehousingDate']) {
-          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD");
-          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD");
+          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
+          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
           delete data["warehousingDate"];
         }
         this.searchParams = {...data};

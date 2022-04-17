@@ -142,8 +142,8 @@ export default {
       this.pagination.current = 1; // 搜索后跳转到第一页
       this.formSearch.validateFields((err, data) => {
         if (data['warehousingDate']) {
-          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD");
-          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD");
+          data["warehousingDateStart"] = this.$moment(data['warehousingDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
+          data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
           delete data["warehousingDate"];
         }
         this.searchParams = {...data};

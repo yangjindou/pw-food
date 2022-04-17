@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -41,6 +42,12 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
     @Override
     public void update(Appointment temp) {
         temp.setFilingOrder(null);
+        if (CommonUtils.varIsNotBlank(temp.getSamplingGoodName())) {
+            temp.setSamplingDate(new Date());
+        }
+        if (CommonUtils.varIsNotBlank(temp.getUninstallUser())) {
+            temp.setUninstallDate(new Date());
+        }
         super.update(temp);
     }
 
@@ -76,7 +83,9 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
                 row.createCell(1).setCellValue(data.getFilingState());
                 row.createCell(2).setCellValue(data.getArea());
                 row.createCell(3).setCellValue(data.getWarehouseName());
-                row.createCell(4).setCellValue(DateUtils.dateToFormatStr(data.getWarehousingDate() ,"yyyy-MM-dd"));
+                if (CommonUtils.varIsNotBlank(data.getWarehousingDate())) {
+                    row.createCell(4).setCellValue(DateUtils.dateToFormatStr(data.getWarehousingDate() ,"yyyy-MM-dd"));
+                }
                 row.createCell(5).setCellValue(data.getGoodTypeName());
                 row.createCell(6).setCellValue(data.getGoodName());
                 row.createCell(7).setCellValue(data.getGoodSourceName());

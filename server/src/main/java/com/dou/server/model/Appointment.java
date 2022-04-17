@@ -33,11 +33,6 @@ public class Appointment extends BaseEntity implements Serializable {
     @ApiModelProperty("预约监管仓")
     private Integer warehouse;
 
-    @ApiModelProperty("入仓时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
-    private Date warehousingDate;
-
     @ApiModelProperty("货物类别")
     private Integer goodType;
 
@@ -105,8 +100,8 @@ public class Appointment extends BaseEntity implements Serializable {
     private Integer samplingAmount;
 
     @ApiModelProperty("采样时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date samplingDate;
 
     @ApiModelProperty("采样备注")
@@ -119,7 +114,47 @@ public class Appointment extends BaseEntity implements Serializable {
     private String uninstallUser;
 
     @ApiModelProperty("卸货时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date uninstallDate;
+
+    @ApiModelProperty("入仓时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Date warehousingDate;
+
+    @ApiModelProperty("入仓禽类（Kg）")
+    private Double warehousingWeightPoultry;
+
+    @ApiModelProperty("入仓畜类（Kg）")
+    private Double warehousingWeightLivestock;
+
+    @ApiModelProperty("入仓水产品（Kg）")
+    private Double warehousingWeightAquatic;
+
+    @ApiModelProperty("入仓其他（Kg）")
+    private Double warehousingWeightOther;
+
+    @ApiModelProperty("出仓时间")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
+    private Double warehousedDate;
+
+    @ApiModelProperty("出仓禽类（Kg）")
+    private Double warehousedWeightPoultry;
+
+    @ApiModelProperty("出仓禽类（Kg）")
+    private Double warehousedWeightLivestock;
+
+    @ApiModelProperty("出仓水产品（Kg）")
+    private Double warehousedWeightAquatic;
+
+    @ApiModelProperty("出仓其他（Kg）")
+    private Double warehousedWeightOther;
+
+    @ApiModelProperty("出仓消杀证明图片")
+    private String warehousedDisinfectionCertificate;
+
+    @ApiModelProperty("出仓核酸检测图片")
+    private String warehousedInspectionCertificate;
 }
