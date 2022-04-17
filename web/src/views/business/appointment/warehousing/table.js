@@ -5,13 +5,13 @@ let tableMixin = {
       ...data,
       columns: [
         {title: '备案单号', dataIndex: 'filingOrder'},
-        {title: '备案状态', dataIndex: 'filingState'},
-        {title: '预约监管仓', dataIndex: 'warehouseName'},
+        {title: '监管仓', dataIndex: 'warehouseName'},
         {title: '入仓时间', dataIndex: 'warehousingDate'},
-        {title: '货物类别', dataIndex: 'goodTypeName'},
-        {title: '货物名称', dataIndex: 'goodName'},
-        {title: '货物来源', dataIndex: 'goodSourceName'},
-        {title: '车牌号', dataIndex: 'carNumber'},
+        {title: '总重量（Kg）', scopedSlots: {customRender: 'weightAll'}},
+        {title: '禽类（总Kg）', dataIndex: 'warehousingWeightPoultry'},
+        {title: '畜类（Kg）', dataIndex: 'warehousingWeightLivestock'},
+        {title: '水产品（Kg）', dataIndex: 'warehousingWeightAquatic'},
+        {title: '其他（Kg）', dataIndex: 'warehousingWeightOther'},
         {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }

@@ -120,7 +120,7 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
         Row rowFirst = sheet.createRow(0);
         rowFirst.createCell(0).setCellValue("备案单号");
         rowFirst.createCell(1).setCellValue("监管仓");
-        rowFirst.createCell(2).setCellValue("出仓时间");
+        rowFirst.createCell(2).setCellValue(temp.getFilterType() + "时间");
         rowFirst.createCell(3).setCellValue("总重量（Kg）");
         rowFirst.createCell(4).setCellValue("禽类（总Kg）");
         rowFirst.createCell(5).setCellValue("畜类（Kg）");

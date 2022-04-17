@@ -33,6 +33,9 @@
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
+          <template slot="weightAll" slot-scope="row">
+            {{row['warehousingWeightPoultry'] + row['warehousingWeightLivestock'] + row['warehousingWeightAquatic'] + row['warehousingWeightOther']}}
+          </template>
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="warehousing(row)">详情</a>
@@ -77,7 +80,8 @@ export default {
           data["warehousingDateEnd"] = this.$moment(data['warehousingDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
           delete data["warehousingDate"];
         }
-        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/export`, data);
+        Object.assign(data, this.basicParams);
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/warehouse/export`, data);
         window.open(url);
       });
     },
