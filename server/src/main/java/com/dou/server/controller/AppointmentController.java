@@ -86,11 +86,14 @@ public class AppointmentController {
     }
 
     @PassToken
-    @ApiOperation(value = "出仓导出", notes = "")
-    @GetMapping("/warehoused/export")
+    @ApiOperation(value = "出入仓导出", notes = "")
+    @GetMapping("/warehouse/export")
     public ResponseEntity<?> exportWarehouseList(AppointmentVO appointment) throws IOException {
-        ByteArrayOutputStream os = appointmentService.exportWarehoused(appointment);
-        String fileName = String.format("出仓信息%s.xls", DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
+        if (CommonUtils.varIsBlank(appointment.getFilterType())) {
+            throw new LogicException(Constant.REQUEST_MISS_PARAMS);
+        }
+        ByteArrayOutputStream os = appointmentService.exportWarehouse(appointment);
+        String fileName = String.format("%s信息%s.xls", appointment.getFilterType(), DateUtils.dateToFormatStr(new Date(),"yyyyMMddHHmmss"));
         return new ResponseEntity<>(os.toByteArray(), HttpContextUtils.excelHeaders(fileName), HttpStatus.OK);
     }
 }

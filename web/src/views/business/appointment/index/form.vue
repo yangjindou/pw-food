@@ -57,12 +57,12 @@
         </a-col>
         <a-col :span="12">
           <a-form-item label="件数">
-            <a-input v-decorator="['amount',{rules: integerRules}]" placeholder="件数" :disabled="disabled" />
+            <a-input v-decorator="['amount',{rules: numberRules}]" placeholder="件数" :disabled="disabled" />
           </a-form-item>
         </a-col>
         <a-col :span="12">
           <a-form-item label="重量（Kg）">
-            <a-input v-decorator="['weight',{rules: integerRules}]" placeholder="重量（Kg）" :disabled="disabled" />
+            <a-input v-decorator="['weight',{rules: numberRules}]" placeholder="重量（Kg）" :disabled="disabled" />
           </a-form-item>
         </a-col>
         <a-col :span="12">
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import {rules, integerRules} from "@/utils/formRules";
+import {rules, numberRules} from "@/utils/formRules";
 import objUtils from "@/utils/objUtils";
 import AreaCascader from "@/components/areaCascader";
 import apiUtils from "@/utils/apiUtils";
@@ -123,7 +123,7 @@ export default {
       formState: '',
       formModal: false,
       rules,
-      integerRules,
+      numberRules,
       disabled: false,
       selectList: {
         warehouse: [],

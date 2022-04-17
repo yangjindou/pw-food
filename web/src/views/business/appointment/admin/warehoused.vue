@@ -5,16 +5,16 @@
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
       <a-form-item label="禽类（Kg）">
-        <a-input v-decorator="['warehousedWeightPoultry',{rules: integerRules}]" placeholder="禽类（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightPoultry',{rules: numberRules}]" placeholder="禽类（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="畜类（Kg）">
-        <a-input v-decorator="['warehousedWeightLivestock',{rules: integerRules}]" placeholder="畜类（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightLivestock',{rules: numberRules}]" placeholder="畜类（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="水产品（Kg）">
-        <a-input v-decorator="['warehousedWeightAquatic',{rules: integerRules}]" placeholder="水产品（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightAquatic',{rules: numberRules}]" placeholder="水产品（Kg）" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="其他（Kg）">
-        <a-input v-decorator="['warehousedWeightOther',{rules: integerRules}]" placeholder="其他（Kg）" :disabled="disabled" />
+        <a-input v-decorator="['warehousedWeightOther',{rules: numberRules}]" placeholder="其他（Kg）" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -26,14 +26,14 @@
 
 <script>
 import objUtils from "@/utils/objUtils";
-import {integerRules} from "@/utils/formRules";
+import {numberRules} from "@/utils/formRules";
 export default {
   data() {
     return {
       form: this.$form.createForm(this, { name: 'form' }),
       formState: '',
       formModal: false,
-      integerRules,
+      numberRules,
       disabled: false,
     }
   },

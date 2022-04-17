@@ -50,7 +50,7 @@ export default {
       },{
         key: 'appointment-admin',
         icon: 'pie-chart',
-        name: '预约管理(管理员)'
+        name: '预约管理'
       },{
         key: 'appointment-warehousing',
         icon: 'pie-chart',

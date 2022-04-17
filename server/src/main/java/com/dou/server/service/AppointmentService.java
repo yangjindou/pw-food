@@ -20,5 +20,5 @@ public interface AppointmentService extends BaseService<Appointment> {
 
     ByteArrayOutputStream export(AppointmentVO temp) throws IOException;
 
-    ByteArrayOutputStream exportWarehoused(AppointmentVO temp) throws IOException;
+    ByteArrayOutputStream exportWarehouse(AppointmentVO temp) throws IOException;
 }

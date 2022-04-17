@@ -112,7 +112,7 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
     }
 
     @Override
-    public ByteArrayOutputStream exportWarehoused(AppointmentVO temp) throws IOException {
+    public ByteArrayOutputStream exportWarehouse(AppointmentVO temp) throws IOException {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         List<AppointmentVO> list = this.getList(temp);
         ExcelUtils etUtils = new ExcelUtils();
@@ -127,17 +127,34 @@ public class AppointmentServiceImpl extends BaseServiceImpl<Appointment> impleme
         rowFirst.createCell(6).setCellValue("水产品（Kg）");
         rowFirst.createCell(7).setCellValue("其他（Kg）");
         if (CommonUtils.varIsNotBlank(list)) {
-            for (int i = 0; i < list.size(); i++) {
-                Row row = sheet.createRow(i + 1);
-                AppointmentVO data = list.get(i);
-                row.createCell(0).setCellValue(data.getFilingOrder());
-                row.createCell(1).setCellValue(data.getWarehouseName());
-                row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getWarehousingDate() ,"yyyy-MM-dd"));
-                row.createCell(3).setCellValue(data.getWarehousedWeightPoultry());
-                row.createCell(4).setCellValue(data.getWarehousedWeightPoultry());
-                row.createCell(5).setCellValue(data.getWarehousedWeightPoultry());
-                row.createCell(6).setCellValue(data.getWarehousedWeightPoultry());
-                row.createCell(7).setCellValue(data.getWarehousedWeightPoultry());
+            if (temp.getFilterType().equals("入仓")) {
+                for (int i = 0; i < list.size(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    AppointmentVO data = list.get(i);
+                    double sum = data.getWarehousingWeightPoultry() + data.getWarehousingWeightLivestock() + data.getWarehousingWeightAquatic() + data.getWarehousingWeightOther();
+                    row.createCell(0).setCellValue(data.getFilingOrder());
+                    row.createCell(1).setCellValue(data.getWarehouseName());
+                    row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getWarehousingDate(), "yyyy-MM-dd"));
+                    row.createCell(3).setCellValue(sum);
+                    row.createCell(4).setCellValue(data.getWarehousingWeightPoultry());
+                    row.createCell(5).setCellValue(data.getWarehousingWeightLivestock());
+                    row.createCell(6).setCellValue(data.getWarehousingWeightAquatic());
+                    row.createCell(7).setCellValue(data.getWarehousingWeightOther());
+                }
+            } else if (temp.getFilterType().equals("出仓")) {
+                for (int i = 0; i < list.size(); i++) {
+                    Row row = sheet.createRow(i + 1);
+                    AppointmentVO data = list.get(i);
+                    double sum = data.getWarehousedWeightPoultry() + data.getWarehousedWeightLivestock() + data.getWarehousedWeightAquatic() + data.getWarehousedWeightOther();
+                    row.createCell(0).setCellValue(data.getFilingOrder());
+                    row.createCell(1).setCellValue(data.getWarehouseName());
+                    row.createCell(2).setCellValue(DateUtils.dateToFormatStr(data.getWarehousingDate(), "yyyy-MM-dd"));
+                    row.createCell(3).setCellValue(sum);
+                    row.createCell(4).setCellValue(data.getWarehousedWeightPoultry());
+                    row.createCell(5).setCellValue(data.getWarehousedWeightLivestock());
+                    row.createCell(6).setCellValue(data.getWarehousedWeightAquatic());
+                    row.createCell(7).setCellValue(data.getWarehousedWeightOther());
+                }
             }
         }
         etUtils.setAutoColumnWidth();

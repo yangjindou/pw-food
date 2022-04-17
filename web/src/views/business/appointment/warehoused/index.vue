@@ -75,12 +75,13 @@ export default {
     },
     exp() {
       this.formSearch.validateFields((err, data) => {
-        if (data['warehousedDateEnd']) {
+        if (data['warehousedDate']) {
           data["warehousedDateStart"] = this.$moment(data['warehousedDate'][0]).format("YYYY-MM-DD") + ' 00:00:00';
           data["warehousedDateEnd"] = this.$moment(data['warehousedDate'][1]).format("YYYY-MM-DD") + ' 23:59:59';
           delete data["warehousedDate"];
         }
-        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/export`, data);
+        Object.assign(data, this.basicParams);
+        let url = apiUtils.createGetUrl(`${process.env.VUE_APP_API_BASE_URL}/appointment/warehouse/export`, data);
         window.open(url);
       });
     },
