@@ -86,6 +86,9 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-form-item label="驳回理由">
+        <a-textarea class="textarea" v-decorator="['refuseReason']" :disabled="disabled" />
+      </a-form-item>
       <a-form-item label="检疫证明">
         <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
                        @change="uploadChange(fileList.quarantineCertificate, $event)"
@@ -105,12 +108,6 @@
         <u-upload-list :file-list="fileList.portDisinfectionCertificate" :allow-type="['jpg','jpeg','png']"
                        @change="uploadChange(fileList.portDisinfectionCertificate, $event)"
                        :show-upload-list="true" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="驳回理由">
-        <a-textarea class="textarea" v-decorator="['refuseReason']" :disabled="disabled" />
-      </a-form-item>
-      <a-form-item label="修改理由">
-        <a-textarea class="textarea" v-decorator="['updateReason']" :disabled="disabled" />
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -161,7 +158,7 @@ export default {
           let data = objUtils.getObjectByKey(row, "id", "area", "warehouseName", "filingOrder",
               "goodTypeName", "goodName", "goodSourceName", "sourceName", "warehousedProve",
               "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "createDate",
-              "filingState", "refuseReason", "updateReason");
+              "filingState", "refuseReason");
           this.form.setFieldsValue(data);
           let imgData = objUtils.getObjectByKey(row,"quarantineCertificate", "customsBill", "portInspectionCertificate", "portDisinfectionCertificate");
           if (imgData['quarantineCertificate']) {

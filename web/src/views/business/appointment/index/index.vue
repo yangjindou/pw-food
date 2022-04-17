@@ -60,7 +60,7 @@
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
               <a v-if="['保存','驳回'].includes(row['filingState'])" @click="formOpen('修改', row)">修改</a>
-              <a v-if="row['filingState'] ==='审核通过'" @click="formOpen('修改', row)">申请修改</a>
+              <a v-if="row['filingState'] ==='审核通过' && row['applyUpdateCount'] < 3" @click="applyUpdate(row)">申请修改</a>
             </div>
           </template>
         </a-table>
@@ -68,16 +68,18 @@
     </div>
     <t-form ref="form" />
     <detail ref="detail" />
+    <applyUpdate ref="applyUpdate" />
   </div>
 </template>
 
 <script>
+import applyUpdate from "./applyUpdate";
 import tForm from "./form";
 import tableMixin from './table';
 import apiUtils from "@/utils/apiUtils";
 import Detail from "@/views/business/appointment/detail";
 export default {
-  components: {Detail, tForm},
+  components: {Detail, tForm, applyUpdate},
   mixins:[tableMixin],
   data() {
     return {
@@ -95,6 +97,9 @@ export default {
     this.getSelectList();
   },
   methods: {
+    applyUpdate(row) {
+      this.$refs.applyUpdate.open("修改", row);
+    },
     tableRowClass(row) {
       return row['emergency'] ? 'text-red' : '';
     },
