@@ -3,7 +3,8 @@
 		<view v-if="fileUrls.length != 0" class="grace-add-list-items">
 			<image :src="fileUrls[0]" @tap="showImgs" class="grace-add-list-img" :mode="imgMode"></image>
 			<view class="grace-add-list-count" :style="{color:closeBtnColor}">{{fileUrls.length}}</view>
-			<view v-if="fileUrls.length < maxFileNumber" class="grace-add-list-add grace-icons icon-add" :style="{color:closeBtnColor}" @tap="addImg"></view>
+			<view v-if="fileUrls.length < maxFileNumber" class="grace-add-list-add grace-icons icon-add"
+				:style="{color:closeBtnColor}" @tap="addImg"></view>
 			<view class="grace-add-list-remove grace-icons icon-close" :style="{color:closeBtnColor}" @tap="removeImg">
 			</view>
 		</view>
@@ -56,46 +57,35 @@
 			return {
 				files: [],
 				fileUrls: [],
-				uri: this.$common.imgServer
+				uri: this.$common.fileServer
 			}
 		},
 		mounted() {
-			if(this.$common.varIsError(this.urls)) {
+			if (!this.urls) {
 				return;
 			}
-			this.files = eval('(' + this.urls + ')');
-			this.files.some((item) => {
-				this.fileUrls.push(this.uri + item);
-			});
+			this.files = this.urls.splice(',');
+			this.files.some(item => this.fileUrls.push(this.uri + item));
 		},
 		methods: {
 			addImg: function() {
-				var _this = this;
 				uni.chooseImage({
 					count: 1,
 					sizeType: ['compressed'],
 					success: (res) => {
-						for (var i = 0; i < res.tempFilePaths.length; i++) {
-							var fileName = this.$common.createGuid() + ".jpg";
-							uni.uploadFile({
-								url: _this.$common.appServer + "uploadImg",
-								filePath: res.tempFilePaths[i],
-								formData: {
-									"fileName": fileName,
-								},
-								header:{
-									"Request-Type": "APP",// 一定要加上这个，不然后台返回403
-								},
-								name: "file",
-								success: (uploadRes) => {
-									if(!_this.$common.varIsError(uploadRes.data)) {
-										_this.files.push(uploadRes.data);
-										_this.fileUrls.push(_this.uri + uploadRes.data);
-										this.$emit('change', this.name, this.files);
-									}
+						uni.uploadFile({
+							url: this.$common.appServer + "/file/upload",
+							filePath: res.tempFilePaths[0],
+							name: "file",
+							success: (uploadRes) => {
+								if (uploadRes && uploadRes.data) {
+									const data = JSON.parse(uploadRes.data);
+									this.files.push(data.name);
+									this.fileUrls.push(this.uri + data.name);
+									this.$emit('change', this.name, this.files);
 								}
-							});
-						}
+							}
+						});
 					}
 				});
 			},
@@ -152,12 +142,15 @@
 		font-size: 0;
 		position: relative;
 		border-radius: 10rpx;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.grace-add-list-image {
 		width: 222rpx;
 	}
-	
+
 	.grace-add-list-count {
 		color: #fff !important;
 		border-radius: 50%;
@@ -172,7 +165,7 @@
 		left: 0;
 		top: 0;
 	}
-	
+
 	.grace-add-list-add {
 		color: #fff !important;
 		border-radius: 50%;

@@ -53,7 +53,7 @@
 				<input type="text" :disabled="true" class="grace-form-input" v-model="item.value" :name="item.name"
 					:placeholder="item.placeholder" hidden />
 				<ugSelectImg :disabled="item.disabled" @change="imgsChange" :name="item.name"
-					:maxFileNumber="item.maxFileNumber" :urls="item.value"></ugSelectImg>
+				 :maxFileNumber="item.maxFileNumber ? item.maxFileNumber : 9" :urls="item.value"></ugSelectImg>
 			</view>
 		</view>
 		<slot></slot>
@@ -122,7 +122,7 @@
 			imgsChange(name, img) {
 				this.formColumns.some((item) => {
 					if (item.name == name) {
-						item.value = JSON.stringify(img);
+						item.value = img.join(',');
 						return true;
 					}
 				});

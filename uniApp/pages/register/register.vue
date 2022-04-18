@@ -9,6 +9,7 @@
 	</view>
 </template>
 <script>
+	import apiUtils from '@/utils/apiUtils.js'
 	import objUtils from '@/utils/objUtils.js'
 	export default {
 		data() {
@@ -18,43 +19,113 @@
 		},
 		onLoad() {
 			this.getFormColumns();
+			this.getSelectList();
 		},
 		methods: {
+			async getSelectList() {
+				for (var i = 0; i < this.formColumns.length; i++) {
+					let e = this.formColumns[i];
+					if (e.name == 'area') {
+						await apiUtils.getDictData('register_area').then(res => {
+							e.dropboxGroup = res.data.map(e => {
+								return {
+									value: e.id,
+									label: e.name
+								};
+							});
+						});
+					}
+				}
+				this.$refs.form.changeColumns(this.formColumns);
+			},
 			getFormColumns() {
 				this.formColumns = [{
-					label: "账号",
+					label: "登录名",
 					name: "loginName",
 					type: "text",
-					placeholder: "请输入账号",
+					placeholder: "请输入登录名",
 					value: '',
 					checkType: "notnull",
 					checkRule: "",
-					errorMsg: "请输入账号"
+					errorMsg: "请输入登录名"
 				}, {
-					label: "密码",
-					name: "password",
-					type: "password",
-					placeholder: "请输入密码",
+					label: "用户名",
+					name: "userName",
+					type: "text",
+					placeholder: "请输入用户名",
 					value: '',
 					checkType: "notnull",
 					checkRule: "",
-					errorMsg: "请输入密码"
+					errorMsg: "请输入用户名"
 				}, {
-					label: "确认密码",
-					name: "rpassword",
-					type: "password",
-					placeholder: "请输入确认密码",
+					label: "属地",
+					name: "area",
+					type: "dropbox",
+					dropboxGroup: [],
+					placeholder: "请选择属地",
 					value: '',
-					checkType: "samewith",
-					checkRule: "password",
-					errorMsg: "两次密码不一致"
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请选择属地"
+				}, {
+					label: "联系电话",
+					name: "phone",
+					type: "text",
+					placeholder: "请输入联系电话",
+					value: '',
+					checkType: "phoneno",
+					checkRule: "",
+					errorMsg: "请输入联系电话"
+				}, {
+					label: "企业名称",
+					name: "enterpriseName",
+					type: "text",
+					placeholder: "请输入企业名称",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入企业名称"
+				}, {
+					label: "社会统一信用代码",
+					name: "enterpriseCode",
+					type: "text",
+					placeholder: "请输入社会统一信用代码",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入社会统一信用代码"
+				}, {
+					label: "法人",
+					name: "enterpriseOwner",
+					type: "text",
+					placeholder: "请输入法人",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入法人"
+				}, {
+					label: "营业执照注册地址",
+					name: "enterpriseLicenseAddress",
+					type: "text",
+					placeholder: "请输入营业执照注册地址",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入营业执照注册地址"
+				}, {
+					label: "营业执照照片",
+					name: "enterpriseLicenseImg",
+					type: "img",
+					maxFileNumber: 1,
+					placeholder: "请输入营业执照照片",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入营业执照照片"
 				}]
 			},
 			formSubmit(formData) {
-				let params = objUtils.getObjectByKey(formData, 'loginName', 'password');
-				params['street'] = this.formData.street;
-				params['community'] = this.formData.community;
-				this.$http.post("/auth/register", params).then(res => {
+				this.$http.post("/auth/register", formData).then(res => {
 					uni.setStorageSync("registerMsg", "注册成功");
 					uni.reLaunch({
 						url: '../login/login',
