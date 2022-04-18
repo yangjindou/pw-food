@@ -2,18 +2,31 @@
 	<gracePage headerBG="#0088FE" :bounding="false">
 		<ugNav slot="gHeader" :isBack="false" title="信息填报"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
-			<view id="top" class="grace-body grace-bg-white"></view>
-			<ugCheckList :lists="listData" @change="checkChange" :isPage="true" :batch="true" :height="mainHeight">
-				<view slot="page">
-					<paging :total="total" :pageSize='pageSize' :first="false" :arrow="false" v-model="pageNum"
-						@changes="pageChange" />
+			<view id="top" class="grace-body grace-bg-white">
+				<!-- <ugForm submitName="查询" :columns="formColumns" @submit="formSubmit"></ugForm> -->
+			</view>
+			<view class="">
+				<ugCheckList :lists="listData" @change="checkChange" :isPage="true" :batch="true" :height="mainHeight">
+					<view slot="page">
+						<paging :total="total" :pageSize='pageSize' :first="false" :arrow="false" v-model="pageNum"
+							@changes="pageChange"></paging>
+					</view>
+					<view class="grace-nowrap grace-flex-end list-btn">
+						<text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
+						<text class="grace-blue grace-icons icon-article" @tap="action('修改')">修改</text>
+						<text class="grace-blue grace-icons icon-add" @tap="action('新增')">上报</text>
+					</view>
+				</ugCheckList>
+			</view>
+			<graceDialog ref="delDialog" title="警告" :isCloseBtn="false">
+				<view class="del-content" slot="content">
+					<text>确定删除所选的数据？</text>
 				</view>
-				<view class="grace-nowrap grace-flex-end list-btn">
-					<text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
-					<text class="grace-blue grace-icons icon-article" @tap="action('修改')">修改</text>
-					<text class="grace-blue grace-icons icon-add" @tap="action('新增')">上报</text>
+				<view slot="btns" class="grace-space-between">
+					<text class="grace-dialog-buttons" @tap="dialogTap(false)">取消</text>
+					<text class="grace-dialog-buttons grace-blue" @tap="dialogTap(true)">确认</text>
 				</view>
-			</ugCheckList>
+			</graceDialog>
 		</view>
 	</gracePage>
 </template>

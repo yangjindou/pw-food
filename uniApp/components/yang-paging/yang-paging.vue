@@ -32,7 +32,7 @@
 		props: {
 			arrow: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			value: {
 				type: [Number, String],
@@ -40,7 +40,7 @@
 			},
 			first: {
 				type: Boolean,
-				default: true
+				default: false
 			},
 			total: {
 				type: Number,

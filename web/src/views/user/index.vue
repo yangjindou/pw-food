@@ -40,8 +40,8 @@
                  :row-selection="{ selectedRowKeys: selectedRowKeys, type: 'checkbox', onChange: onSelectChange}"
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
-          <template slot="enable" slot-scope="item">
-            <a-switch @change="enabledChange($event,item)" checked-children="是" un-checked-children="否" :checked="!!item.disabled" />
+          <template slot="disabled" slot-scope="item">
+            <a-switch @change="disabledChange($event,item)" checked-children="是" un-checked-children="否" :checked="!!item.disabled" />
           </template>
           <template slot="operation" slot-scope="row">
 <!--            <a @click="info(row)">详情</a>-->
@@ -93,7 +93,7 @@ export default {
     this.fetch();
   },
   methods: {
-    enabledChange(event, {id}) {
+    disabledChange(event, {id}) {
       let params = {
         disabled: event,
         id

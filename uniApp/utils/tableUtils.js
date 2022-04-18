@@ -1,9 +1,8 @@
 export const data = {
 	listData: [],
 	selectIndex: [],
-	pageSize: 5,
 	total: 0,
-	pageNum: 1
+	pageNum: 1,
 }
 
 export const methods = {

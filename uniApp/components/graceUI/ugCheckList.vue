@@ -43,7 +43,7 @@
 		props: {
 			isPage: {
 				type: Boolean,
-				default: false
+				default: true
 			},
 			height: {
 				type: Number,
@@ -91,7 +91,7 @@
 			},
 			batch: {
 				type: Boolean,
-				default: false
+				default: true
 			}
 		},
 		data() {

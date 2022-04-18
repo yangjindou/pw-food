@@ -6,8 +6,8 @@ export default {
       {title: '登录名', dataIndex: 'loginName', width: '25%'},
       {title: '用户名', dataIndex: 'userName'},
       {title: '角色', dataIndex: 'role'},
-      {title: '是否禁用', scopedSlots: {customRender: 'enable'}},
-      {title: '创建时间', width: 230,dataIndex: 'createDate'},
+      {title: '是否禁用', scopedSlots: {customRender: 'disabled'}},
+      {title: '注册时间', width: 230, dataIndex: 'createDate'},
       // {title: '操作', width: 110, scopedSlots: {customRender: 'operation'},fixed: 'right'}
     ],
   },

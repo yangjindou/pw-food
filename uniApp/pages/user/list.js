@@ -6,6 +6,8 @@ export default {
 	data() {
 		return {
 			...data,
+			pageSize: 10,
+			mainHeight: 0,
 		}
 	},
 	methods: {
@@ -26,7 +28,10 @@ export default {
 						checked: false,
 						title: item["userName"],
 						columns: [
-							["地区：" + item["loginName"]]
+							[`登录名：${item["loginName"]}`],
+							[`角色：${item["role"]}`],
+							[`是否禁用：${item["disabled"] ? "是": "否"}`],
+							[`注册时间：${item["createDate"]}`],
 						],
 						data: item
 					});
@@ -51,5 +56,14 @@ export default {
 		setTimeout(() => {
 			this.computedHeight();
 		}, 500);
+	},
+	onShow() {
+		if (uni.getStorageSync("msg")) {
+			this.$common.showToast(uni.getStorageSync("msg"));
+			uni.removeStorageSync("msg");
+			setTimeout(() => {
+				this.getList();
+			}, 1500)
+		}
 	},
 }
