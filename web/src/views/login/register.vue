@@ -37,9 +37,6 @@
           </u-upload>
         </div>
       </a-form-item>
-      <a-form-item label="营业执照照片">
-        <a-input v-decorator="['enterpriseLicenseImg',{rules}]" placeholder="营业执照照片" />
-      </a-form-item>
     </a-form>
   </a-modal>
 </template>
