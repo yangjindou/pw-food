@@ -4,9 +4,8 @@
 		<view slot="gBody">
 			<view class="index-top">
 				<view class="text-box">
-					<text v-if="userData['role'] == '管理员'">您好，管理员。欢迎使用本平台</text>
-					<text v-else-if="userData['role'] == '街道管理员'">您好，{{userData['street']}}。欢迎使用本平台</text>
-					<text v-else-if="userData['role'] == '社区管理员'">您好，{{userData['community']}}。欢迎使用本平台</text>
+					<text v-if="userData['role'] == '系统管理员'">您好，管理员。欢迎使用本平台</text>
+					<text v-else>您好，{{userData['userName']}}。欢迎使用本平台</text>
 				</view>
 			</view>
 			<view class="index-menu grace-margin-top">
@@ -17,7 +16,7 @@
 							:style="'color:'+item.color+' !important;background-color:'+item.bgColor+' !important;'"
 							class="grace-bg-blue grace-grids-icon-menu grace-icons"></text>
 						<text class="grace-grids-text-menu">{{item.name}}</text>
-						<view v-if="item.iconMark.length>0"
+						<view v-if="item.iconMark"
 							class="grace-badge grace-bg-red grace-badge-absolute grace-white red-dot">{{item.iconMark}}
 						</view>
 					</view>
@@ -34,7 +33,66 @@
 		data() {
 			return {
 				menuArr: [],
-				userData: {}
+				userData: {},
+				menuData: {
+					all: [{
+						icon: 'article',
+						name: '修改密码',
+						bgColor: '#FF2851',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '退出',
+						bgColor: '#FF2851',
+					}],
+					user: [{
+						icon: 'article',
+						name: '预约管理',
+						url: '../passwordModify/passwordModify',
+					}],
+					admin: [{
+						icon: 'article',
+						name: '公告管理',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '监管仓管理',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '监管仓人员',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '设备管理',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '废物处理',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '消毒液管理',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '环境消杀记录',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '预约管理',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '入仓上报',
+						url: '../passwordModify/passwordModify',
+					}, {
+						icon: 'article',
+						name: '出仓上报',
+						url: '../passwordModify/passwordModify',
+					}],
+					system: []
+				}
 			}
 		},
 		onLoad() {
@@ -46,64 +104,21 @@
 				return;
 			}
 			this.userData = userData;
-			this.getLocalMenu();
+			this.getMenu();
 		},
 		methods: {
-			getLocalMenu() {
-				let menuArr = [];
-				if(this.userData['role'] === '管理员') {
-					menuArr.push({
-						icon: 'article',
-						iconMark: '',
-						name: '列表',
-						color: '',
-						bgColor: '#FF9600',
-						url: '../business/list/admin',
-					});
-				} else if(this.userData['role'] === '街道管理员') {
-					menuArr.push({
-						icon: 'article',
-						iconMark: '',
-						name: '街道列表',
-						color: '',
-						bgColor: '#FF9600',
-						url: '../business/list/street',
-					});
-				} else if(this.userData['role'] === '社区管理员') {
-					menuArr.push({
-						icon: 'article',
-						iconMark: '',
-						name: '社区列表',
-						color: '',
-						bgColor: '#FF9600',
-						url: '../business/list/community',
-					});
-					menuArr.push({
-						icon: 'article',
-						iconMark: '',
-						name: '生成二维码',
-						color: '',
-						bgColor: '#FF9600',
-						url: '../business/list/qrcode',
-					});
+			getMenu() {
+				const role = this.userData['role'];
+				let menuRoleData = [];
+				if (role === '企业用户') {
+					menuRoleData = menuRoleData.concat(this.menuData.user);
+				} else if (role === '监管仓管理员') {
+					menuRoleData = menuRoleData.concat(this.menuData.admin);
+				} else if (role === '系统管理员') {
+					menuRoleData = menuRoleData.concat(this.menuData.system);
 				}
-				menuArr.push({
-					icon: 'article',
-					iconMark: '',
-					name: '修改密码',
-					color: '',
-					bgColor: '#FF2851',
-					url: '../passwordModify/passwordModify',
-				});
-				menuArr.push({
-					icon: 'article',
-					iconMark: '',
-					name: '退出',
-					color: '',
-					bgColor: '#FF2851',
-					url: '',
-				});
-				this.menuArr = menuArr;
+				menuRoleData = menuRoleData.concat(this.menuData.all);
+				this.menuArr = menuRoleData;
 			},
 			openMenu(index) {
 				var menu = this.menuArr[index];
@@ -122,12 +137,12 @@
 	}
 </script>
 <style lang="less" scoped>
-
 	.index-top {
 		display: flex;
 		background-color: #FFFFFF;
 		padding: 20rpx 40rpx;
 		align-items: center;
+
 		.text-box {
 			padding-left: 20rpx;
 			display: flex;
@@ -138,10 +153,12 @@
 	.index-menu {
 		padding: 0 25rpx;
 		background: #FFFFFF;
+
 		.grace-grids-menu {
 			display: flex;
 			padding: 30rpx 0;
 			flex-wrap: wrap;
+
 			.grace-grids-items-menu {
 				width: 25%;
 				padding: 20rpx 0;
@@ -149,12 +166,14 @@
 				box-sizing: border-box;
 				flex-direction: column;
 				align-items: center;
+
 				.grace-grids-text-menu {
 					margin-top: 10rpx;
 					width: 100%;
 					text-align: center;
 					font-size: 26rpx;
 				}
+
 				.grace-grids-icon-menu {
 					border-radius: 14rpx;
 					width: 90rpx;
