@@ -9,8 +9,7 @@
 	</view>
 </template>
 <script>
-	import apiUtils from '@/utils/apiUtils.js'
-	import objUtils from '@/utils/objUtils.js'
+	import apiUtils from '@/utils/apiUtils.js';
 	export default {
 		data() {
 			return {

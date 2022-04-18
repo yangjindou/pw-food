@@ -24,14 +24,14 @@
 			}
 		}
 	}, {
-		"path": "pages/business/users/list",
+		"path": "pages/user/list",
 		"style": {
 			"mp-weixin": {
 				"disableScroll": true
 			}
 		}
 	}, {
-		"path": "pages/business/users/form",
+		"path": "pages/user/form",
 		"style": {
 			"mp-weixin": {
 				"disableScroll": true

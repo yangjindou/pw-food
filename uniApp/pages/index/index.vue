@@ -48,50 +48,66 @@
 					user: [{
 						icon: 'article',
 						name: '预约管理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}],
 					admin: [{
 						icon: 'article',
 						name: '公告管理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '监管仓管理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '监管仓人员',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '设备管理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '废物处理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '消毒液管理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '环境消杀记录',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '预约管理',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '入仓上报',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
 						name: '出仓上报',
+						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}],
-					system: []
+					system: [{
+						icon: 'article',
+						name: '用户管理',
+						bgColor: '#FF2851',
+						url: '../user/list',
+					}]
 				}
 			}
 		},
