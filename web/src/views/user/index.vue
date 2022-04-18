@@ -56,8 +56,8 @@
         <a-form-item label="id" hidden>
           <a-input v-decorator="['id']" placeholder="id" />
         </a-form-item>
-        <a-form-item label="账号">
-          <a-input :disabled="formState === 'update'" v-decorator="['loginName',{rules}]" placeholder="账号" />
+        <a-form-item label="登录名">
+          <a-input :disabled="formState === 'update'" v-decorator="['loginName',{rules}]" placeholder="登录名" />
         </a-form-item>
         <a-form-item label="用户名">
           <a-input v-decorator="['userName',{rules}]" placeholder="用户名" />
