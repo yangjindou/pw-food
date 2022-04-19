@@ -11,7 +11,7 @@
  Target Server Version : 100419
  File Encoding         : 65001
 
- Date: 18/04/2022 18:17:16
+ Date: 19/04/2022 17:50:29
 */
 
 SET NAMES utf8mb4;
@@ -89,7 +89,7 @@ CREATE TABLE `sys_file`  (
   `real_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '真实名称',
   `path` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '路径',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 173 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 182 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_file
@@ -174,6 +174,15 @@ INSERT INTO `sys_file` VALUES (169, '2022-04-18 11:27:54', NULL, NULL, NULL, '23
 INSERT INTO `sys_file` VALUES (170, '2022-04-18 11:29:15', NULL, NULL, NULL, '2769db38-8a95-4714-ae35-5a0b0bbfb249.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\2769db38-8a95-4714-ae35-5a0b0bbfb249.jpg');
 INSERT INTO `sys_file` VALUES (171, '2022-04-18 11:34:30', NULL, NULL, NULL, 'b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg');
 INSERT INTO `sys_file` VALUES (172, '2022-04-18 11:49:33', NULL, NULL, NULL, '81669892-5b25-4282-bbbe-d066daf7ecd4.jpg', 'nxKevMUrALf9c2957dade7b1649bfe13229fea9acb47.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\81669892-5b25-4282-bbbe-d066daf7ecd4.jpg');
+INSERT INTO `sys_file` VALUES (173, '2022-04-19 13:35:09', NULL, NULL, NULL, '936aa2f9-dff4-49c9-b3be-c2e383978899.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\936aa2f9-dff4-49c9-b3be-c2e383978899.jpg');
+INSERT INTO `sys_file` VALUES (174, '2022-04-19 13:35:23', NULL, NULL, NULL, '23649223-6a82-4d3f-b8d4-643f021ea577.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\23649223-6a82-4d3f-b8d4-643f021ea577.jpg');
+INSERT INTO `sys_file` VALUES (175, '2022-04-19 15:47:55', NULL, NULL, NULL, 'c8c11952-d799-44cf-903a-26e4b3ae3d20.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\c8c11952-d799-44cf-903a-26e4b3ae3d20.jpg');
+INSERT INTO `sys_file` VALUES (176, '2022-04-19 15:48:25', NULL, NULL, NULL, '399860d8-e518-4415-a380-166a56810182.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\399860d8-e518-4415-a380-166a56810182.jpg');
+INSERT INTO `sys_file` VALUES (177, '2022-04-19 15:48:27', NULL, NULL, NULL, '5ef5d387-2fbb-4ef0-a19a-032ec75f5441.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\5ef5d387-2fbb-4ef0-a19a-032ec75f5441.jpg');
+INSERT INTO `sys_file` VALUES (178, '2022-04-19 15:48:29', NULL, NULL, NULL, '95116da1-5755-466c-89bc-99f938373300.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\95116da1-5755-466c-89bc-99f938373300.jpg');
+INSERT INTO `sys_file` VALUES (179, '2022-04-19 15:48:31', NULL, NULL, NULL, '3697701b-0676-4fe9-9305-e6f7607a5b73.jpg', 'Dingtalk_20220315165516.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\3697701b-0676-4fe9-9305-e6f7607a5b73.jpg');
+INSERT INTO `sys_file` VALUES (180, '2022-04-19 15:51:17', NULL, NULL, NULL, '3937345d-31c7-4938-bd8d-a83dc5699ef3.jpg', 'Dingtalk_20220325131555.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\3937345d-31c7-4938-bd8d-a83dc5699ef3.jpg');
+INSERT INTO `sys_file` VALUES (181, '2022-04-19 15:51:18', NULL, NULL, NULL, '9c6c8fd0-e421-4d58-8607-9ef5d623e258.jpg', 'Dingtalk_20220325131555.jpg', 'D:\\devTools\\xampp\\htdocs\\file\\9c6c8fd0-e421-4d58-8607-9ef5d623e258.jpg');
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -208,10 +217,9 @@ INSERT INTO `sys_user` VALUES (1, '2022-03-30 11:35:02', NULL, '2022-04-01 08:47
 INSERT INTO `sys_user` VALUES (2, '2022-03-30 11:35:02', NULL, '2022-04-01 08:47:38', 1, 'aa', '系统管理员', 'ca2@!1cf@aa!23b5b#6f4@adc0560adg#6@2d!6664c5@3d4c35@df413d6*223a', 'M07KjwZBHfVWO93I', '系统管理员', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (79, '2022-04-02 08:56:57', 1, '2022-04-18 13:16:49', 79, 'b', '监管仓管理员', '31d*cd!d6f30cb4d!1@12643ac531*4d6f1ccdc0#6#aaF5b0@4023cg5a@3c30f', 'VMvGsYedmGaMaLtL', '监管仓管理员', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (80, '2022-04-03 13:40:00', 1, '2022-04-18 18:10:08', 1, '测试2', '1', 'd#d0d0@22F3gc45c0*b5*111464613222b24!cd6cca##f3dbgcc#c2a6#!a13a3', 'kp2OBULU5jZcFUra', '监管仓管理员', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (83, '2022-04-18 11:34:48', NULL, '2022-04-18 18:10:28', 1, 'c', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', 1, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
-INSERT INTO `sys_user` VALUES (87, '2022-04-18 11:34:48', NULL, NULL, NULL, 'c', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', NULL, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
-INSERT INTO `sys_user` VALUES (88, '2022-04-18 11:34:48', NULL, NULL, NULL, 'c', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', NULL, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
-INSERT INTO `sys_user` VALUES (93, '2022-04-18 18:01:04', 1, NULL, NULL, 'zc', '1', '4!6*53bc@a616*4c02a43@cf2!434bb*3#b54aad1c0#10a3#*b#3a02b@12#d1F', 'A6TtSd3hIdZa0qZo', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (83, '2022-04-18 11:34:48', NULL, '2022-04-18 18:10:28', 1, 'c', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', 0, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
+INSERT INTO `sys_user` VALUES (87, '2022-04-18 11:34:48', NULL, NULL, NULL, 'c1', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', NULL, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
+INSERT INTO `sys_user` VALUES (88, '2022-04-18 11:34:48', NULL, NULL, NULL, 'c2', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', NULL, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
 
 -- ----------------------------
 -- Table structure for t_appointment
@@ -226,11 +234,12 @@ CREATE TABLE `t_appointment`  (
   `filing_order` int NOT NULL COMMENT '备案单号',
   `area` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '上报的省（省市区）',
   `warehouse` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '预约监管仓',
+  `appointment_warehousing_date` date NULL DEFAULT NULL COMMENT '预约入仓时间',
   `good_type` int NULL DEFAULT NULL COMMENT '货物类别',
   `good_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '货物名称',
   `good_source` int NULL DEFAULT NULL COMMENT '货物来源',
   `source_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '来源名称',
-  `warehoused_prove` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出仓证明',
+  `warehoused_prove` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出仓证明',
   `origin_place` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '原产国/产地',
   `amount` int NULL DEFAULT NULL COMMENT '件数',
   `weight` int NULL DEFAULT NULL COMMENT '重量（Kg）',
@@ -266,15 +275,12 @@ CREATE TABLE `t_appointment`  (
   `warehoused_disinfection_certificate` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出仓消杀证明图片',
   `warehoused_inspection_certificate` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '出仓核酸检测图片',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 119 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_appointment
 -- ----------------------------
-INSERT INTO `t_appointment` VALUES (114, '2022-04-14 16:34:06', 83, '2022-04-17 17:41:58', 79, 1, '河北省/秦皇岛市/山海关区', '110', 96, '1', 99, '54', '6', '7', 8, 9, '18fe033e-e0b7-4408-ae94-688feb8d14b5.jpeg,fb6a975e-cb7d-49dc-9fc1-a069a61a6a43.jpeg', '3839f177-8c4b-4af3-911d-558024a88eed.jpeg', 'd5f44d9e-7626-4b85-8a51-4d1c8bc2dc59.jpeg', '28a2e3d3-db0a-4a3b-9918-441dbd103a67.jpeg', '7', '8', '9', '', '', '审核通过', 3, 1, 'c', 1, '2022-04-17 00:00:00', 'ccz', 'bb', '55aa5a5', '2022-04-16 00:00:00', '2022-04-17 14:17:03', 20.00, 1.00, 223.00, 6.00, '2022-04-17 15:29:14', 5.00, 6.10, 7.00, 8.00, NULL, NULL);
-INSERT INTO `t_appointment` VALUES (115, '2022-04-16 18:59:11', 83, '2022-04-17 13:14:26', 83, 2, '天津市/直辖区/南开区', '111', 96, '32', 99, 'g', 'b', 'a', 2, 1, '096d80c6-b23a-444b-ad5d-26b5afa155bd.jpeg', '876af501-ce58-461d-a8df-61903d7ea560.jpeg', '4f54bf06-e5bf-4e16-89e8-508f2697353d.jpeg', '07f789c0-51b5-4d87-8904-2640aabf779e.jpeg', 'g', 'c', '1', '', NULL, '待审核', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-16 00:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_appointment` VALUES (116, '2022-04-17 09:09:15', 83, '2022-04-17 15:45:50', 79, 3, '天津市/直辖区/河北区', '110', 93, '1', 97, '2', 'vv', '3', 5, 4, 'bb75d236-417f-4c03-8c45-f324bf67aa2c.jpeg,d0e2aecf-307f-4b89-917f-13fc953198c6.jpeg,57e84cbd-73ab-46fd-963c-4511f610c079.jpeg,4fecbda0-4d63-4573-9deb-4581ccdd640b.jpeg,9e992846-1141-401a-9d02-02f505f54327.jpeg,a4ad7534-eea6-49e2-9430-182ab7857b59.jpeg', '1b5a8c6f-b498-404b-80e8-03c0b73b7eac.jpeg', 'de9d1e4b-af63-49bc-ba81-3423eb4c7a67.jpeg', '8366cd00-17fd-4e5e-9c7f-409b37fd5c3d.jpeg', '6', '7', '888', '', NULL, '待审核', NULL, NULL, 'a', 1, '2022-04-17 13:45:04', '', '2', 'cbbbb', '2022-04-17 13:47:14', '2022-04-17 15:45:50', 5.10, 2.30, 44.40, 555.00, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `t_appointment` VALUES (117, '2022-04-17 17:13:09', 83, NULL, NULL, 4, '北京市', '111', 96, '22', 99, '4', '5', '6', 7, 8, '46d58ec0-324c-491d-b340-06a2d61b1e81.jpeg', 'fc1c8f9f-5637-473e-a5f9-18759fb44c30.jpeg', 'f3ce0ec6-066a-46cb-910b-59672312c4c8.jpeg', '8007a14e-9ce0-4ffa-a54b-6aaa0e51595f.jpeg', '9', '11', '11', '', NULL, '待审核', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_appointment` VALUES (118, '2022-04-19 15:48:36', 83, '2022-04-19 16:26:11', 79, 100000, '北京市/直辖区', '110', '2022-04-19', 95, 'cc', 97, '1', NULL, '2', 3, 4, '399860d8-e518-4415-a380-166a56810182.jpg', '5ef5d387-2fbb-4ef0-a19a-032ec75f5441.jpg', '95116da1-5755-466c-89bc-99f938373300.jpg', '3697701b-0676-4fe9-9305-e6f7607a5b73.jpg', '5', '6', '7', '', NULL, '待审核', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1、bb', '2022-04-19 16:26:11', '2022-04-19 15:53:48', 1.00, 2.00, 3.00, 4.00, '2022-04-19 15:53:43', 2.00, 3.00, 4.00, 5.00, '3937345d-31c7-4938-bd8d-a83dc5699ef3.jpg', '9c6c8fd0-e421-4d58-8607-9ef5d623e258.jpg');
 
 -- ----------------------------
 -- Table structure for t_device
@@ -317,13 +323,14 @@ CREATE TABLE `t_disinfectant`  (
   `concentration` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液浓度',
   `assessment` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消杀评估',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 112 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_disinfectant
 -- ----------------------------
 INSERT INTO `t_disinfectant` VALUES (110, '2022-04-12 16:22:36', 1, '2022-04-12 22:56:15', 1, '1', '比例比例', '2022-04-07', '2', '3', '4');
-INSERT INTO `t_disinfectant` VALUES (111, '2022-04-16 14:35:06', 79, NULL, NULL, 'c', 'v', '2022-04-16', '1', '2', '3');
+INSERT INTO `t_disinfectant` VALUES (111, '2022-04-16 14:35:06', 79, '2022-04-19 13:17:35', 79, 'c', '测试比例', '2022-04-16', '1', '2', '3');
+INSERT INTO `t_disinfectant` VALUES (112, '2022-04-19 13:22:51', 79, NULL, NULL, '攻1', '2', '2022-04-19', '4', '5', '6');
 
 -- ----------------------------
 -- Table structure for t_disinfection_record
@@ -339,15 +346,15 @@ CREATE TABLE `t_disinfection_record`  (
   `area` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消杀区域',
   `date` date NULL DEFAULT NULL COMMENT '消杀时间',
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话号码',
-  `disinfectant_ratio` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液配比',
+  `disinfectant_ratio` int NULL DEFAULT NULL COMMENT '消毒液配比（t_disinfectant表的id）',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_disinfection_record
 -- ----------------------------
-INSERT INTO `t_disinfection_record` VALUES (111, '2022-04-12 22:26:17', NULL, '2022-04-13 09:26:11', 1, 110, '233', '2022-04-15', '11', '比例比例');
-INSERT INTO `t_disinfection_record` VALUES (112, '2022-04-12 22:55:50', 1, '2022-04-13 09:26:14', 1, 110, '1', '2022-04-12', '555', '比例比例');
+INSERT INTO `t_disinfection_record` VALUES (111, '2022-04-12 22:26:17', NULL, '2022-04-19 13:25:37', 79, 112, '233', '2022-04-15', '11', 111);
+INSERT INTO `t_disinfection_record` VALUES (112, '2022-04-12 22:55:50', 1, '2022-04-19 13:25:40', 79, 110, '1', '2022-04-12', '555', 112);
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -362,7 +369,7 @@ CREATE TABLE `t_notice`  (
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告标题',
   `content` varchar(3000) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '公告内容',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 109 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_notice
@@ -370,6 +377,7 @@ CREATE TABLE `t_notice`  (
 INSERT INTO `t_notice` VALUES (106, '2022-04-04 08:04:55', 1, NULL, NULL, '测试', '123123123');
 INSERT INTO `t_notice` VALUES (107, '2022-04-04 08:34:10', 1, '2022-04-04 08:34:18', 1, '33', '55\n444');
 INSERT INTO `t_notice` VALUES (108, '2022-04-04 20:50:11', 1, NULL, NULL, '1', '2');
+INSERT INTO `t_notice` VALUES (109, '2022-04-19 13:11:48', 79, NULL, NULL, '测试', '测试');
 
 -- ----------------------------
 -- Table structure for t_warehouse
@@ -441,7 +449,7 @@ CREATE TABLE `t_warehouse_user`  (
 -- ----------------------------
 -- Records of t_warehouse_user
 -- ----------------------------
-INSERT INTO `t_warehouse_user` VALUES (111, '2022-04-13 10:04:07', NULL, '2022-04-13 20:17:05', 1, '1', '女', '3', '4', '5', 110, '是', '7', '2022-04-14', '是', '是', '否', '是', '否', '是', '是', '否', '是', '是');
+INSERT INTO `t_warehouse_user` VALUES (111, '2022-04-13 10:04:07', NULL, '2022-04-19 17:02:24', 79, '张三', '女', '3', '4', '5', 110, '是', '7', '2022-04-14', '是', '是', '否', '是', '否', '是', '是', '否', '是', '是');
 
 -- ----------------------------
 -- Table structure for t_warehouse_user_check
@@ -463,8 +471,8 @@ CREATE TABLE `t_warehouse_user_check`  (
 -- ----------------------------
 -- Records of t_warehouse_user_check
 -- ----------------------------
-INSERT INTO `t_warehouse_user_check` VALUES (112, '2022-04-13 14:59:49', NULL, '2022-04-13 15:09:27', 1, 111, '1555', '2022-04-13', '4444');
-INSERT INTO `t_warehouse_user_check` VALUES (113, '2022-04-13 15:09:06', 1, NULL, NULL, 111, '1', '2022-04-13', '555');
+INSERT INTO `t_warehouse_user_check` VALUES (112, '2022-04-13 14:59:49', NULL, '2022-04-19 17:03:09', 79, 111, '阴性', '2022-04-13', '张三');
+INSERT INTO `t_warehouse_user_check` VALUES (113, '2022-04-13 15:09:06', 1, '2022-04-19 15:28:00', 79, 111, '阳性', '2022-04-13', '555');
 
 -- ----------------------------
 -- Table structure for t_warehouse_user_emergency
