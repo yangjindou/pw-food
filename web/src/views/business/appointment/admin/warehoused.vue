@@ -72,6 +72,12 @@ export default {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "warehousedWeightPoultry",
               "warehousedWeightLivestock", "warehousedWeightAquatic", "warehousedWeightOther");
+          if (!row['warehousedDate'] && row['warehousingDate']) {
+            data['warehousedWeightPoultry'] = row['warehousingWeightPoultry'];
+            data['warehousedWeightLivestock'] = row['warehousingWeightLivestock'];
+            data['warehousedWeightAquatic'] = row['warehousingWeightAquatic'];
+            data['warehousedWeightOther'] = row['warehousingWeightOther'];
+          }
           this.form.setFieldsValue(data);
           let imgData = objUtils.getObjectByKey(row,"warehousedDisinfectionCertificate", "warehousedInspectionCertificate");
           if (imgData['warehousedDisinfectionCertificate']) {
