@@ -10,5 +10,8 @@
         <if test="title !=null and title!=''">
             and notice.title like CONCAT("%",#{title},"%")
         </if>
+        <if test="createUser != null">
+            and notice.create_user = #{createUser}
+        </if>
     </select>
 </mapper>
