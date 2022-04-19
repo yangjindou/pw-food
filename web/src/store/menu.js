@@ -54,11 +54,11 @@ export default {
       },{
         key: 'appointment-warehousing',
         icon: 'pie-chart',
-        name: '入仓上报'
+        name: '入仓管理'
       },{
         key: 'appointment-warehoused',
         icon: 'pie-chart',
-        name: '出仓上报'
+        name: '出仓管理'
       }],
       system: [{
         key: 'user',
