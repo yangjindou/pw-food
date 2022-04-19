@@ -33,6 +33,11 @@ public class Appointment extends BaseEntity implements Serializable {
     @ApiModelProperty("预约监管仓")
     private Integer warehouse;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd",timezone = "GMT+8")
+    @ApiModelProperty("预约入仓时间")
+    private Date appointmentWarehousingDate;
+
     @ApiModelProperty("货物类别")
     private Integer goodType;
 

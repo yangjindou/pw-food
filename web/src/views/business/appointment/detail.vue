@@ -31,6 +31,11 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
+          <a-form-item label="预约入仓时间">
+            <a-date-picker v-decorator="[`appointmentWarehousingDate`]" placeholder="预约入仓时间" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
           <a-form-item label="货物类别">
             <a-input v-decorator="['goodTypeName']" placeholder="货物类别" :disabled="disabled" />
           </a-form-item>
@@ -158,9 +163,12 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "area", "warehouseName", "filingOrder",
-              "goodTypeName", "goodName", "goodSourceName", "sourceName",
+              "goodTypeName", "goodName", "goodSourceName", "sourceName", "appointmentWarehousingDate",
               "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "createDate",
               "filingState", "refuseReason");
+          if (data['appointmentWarehousingDate']) {
+            data['appointmentWarehousingDate'] = this.$moment(data['appointmentWarehousingDate']);
+          }
           this.form.setFieldsValue(data);
           let imgData = objUtils.getObjectByKey(row,"warehousedProve", "quarantineCertificate", "customsBill",
               "portInspectionCertificate", "portDisinfectionCertificate");

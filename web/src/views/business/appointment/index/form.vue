@@ -22,6 +22,11 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
+          <a-form-item label="预约入仓时间">
+          <a-date-picker v-decorator="[`appointmentWarehousingDate`,{rules}]" placeholder="预约入仓时间" :disabled="disabled" />
+          </a-form-item>
+        </a-col>
+        <a-col :span="12">
           <a-form-item label="货物类别">
             <a-select v-decorator="[`goodType`,{rules}]" placeholder="货物类别" :disabled="disabled">
               <a-select-option v-for="item in selectList.goodType" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
@@ -173,10 +178,13 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "area", "warehouse",
-              "goodType", "goodName", "goodSource", "sourceName",
+              "goodType", "goodName", "goodSource", "sourceName", "appointmentWarehousingDate",
               "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone");
           if (data['area']) {
             data['area'] = data['area'].split('/');
+          }
+          if (data['appointmentWarehousingDate']) {
+            data['appointmentWarehousingDate'] = this.$moment(data['appointmentWarehousingDate']);
           }
           this.form.setFieldsValue(data);
           let imgData = objUtils.getObjectByKey(row,"warehousedProve", "quarantineCertificate", "customsBill",
@@ -254,6 +262,9 @@ export default {
         if (error) return;
         if (data['area']) {
           data['area'] = data['area'].join("/");
+        }
+        if (data['appointmentWarehousingDate']) {
+          data['appointmentWarehousingDate'] = data['appointmentWarehousingDate'].format('YYYY-MM-DD');
         }
         if (this.fileList.warehousedProve.length) {
           data['warehousedProve'] = this.fileList.warehousedProve.map(e => e.response.name).join(',');
