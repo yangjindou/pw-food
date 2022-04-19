@@ -14,7 +14,9 @@
         <a-date-picker v-decorator="[`date`,{rules}]" placeholder="检测时间" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="检测人">
-        <a-input v-decorator="['user',{rules}]" placeholder="检测人" :disabled="disabled" />
+        <a-select v-decorator="['user',{rules}]" placeholder="检测人" :disabled="disabled">
+          <a-select-option v-for="item in selectList.user" :key="item.id" :value="item.name">{{item.name}}</a-select-option>
+        </a-select>
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -37,11 +39,25 @@ export default {
         message: '必填项',
       }],
       disabled: false,
+      selectList: {
+        user: [],
+      },
     }
   },
   mounted() {
+    this.getSelectList();
   },
   methods: {
+    getSelectList() {
+      let params = {
+        warehouseCreateUser: this.$store.state.user.userData['id']
+      };
+      this.$axios.get(`/warehouseUser/list`, {params}).then(res => {
+        if (res) {
+          res.data.forEach(item => this.selectList.user.push(item));
+        }
+      });
+    },
     open(state, row) {
       this.formState = state;
       this.setFormData(row);

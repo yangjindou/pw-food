@@ -5,7 +5,9 @@
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
       <a-form-item label="卸货人员">
-        <a-input v-decorator="['uninstallUser',{rules}]" placeholder="卸货人员" :disabled="disabled" />
+        <a-select v-decorator="['uninstallUser',{rules}]" :disabled="disabled" mode="tags" placeholder="卸货人员">
+          <a-select-option v-for="item in selectList.uninstallUser" :key="item.id" :value="item.name">{{item.name}}</a-select-option>
+        </a-select>
       </a-form-item>
     </a-form>
     <template slot="footer">
@@ -27,11 +29,25 @@ export default {
       rules,
       integerRules,
       disabled: false,
+      selectList: {
+        uninstallUser: [],
+      },
     }
   },
   mounted() {
+    this.getSelectList();
   },
   methods: {
+    getSelectList() {
+      let params = {
+        warehouseCreateUser: this.$store.state.user.userData['id']
+      };
+      this.$axios.get(`/warehouseUser/list`, {params}).then(res => {
+        if (res) {
+          res.data.forEach(item => this.selectList.uninstallUser.push(item));
+        }
+      });
+    },
     open(state, row) {
       this.formState = state;
       this.setFormData(row);
@@ -44,6 +60,9 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "uninstallUser");
+          if (data['uninstallUser']) {
+            data['uninstallUser'] = data['uninstallUser'].split('、');
+          }
           this.form.setFieldsValue(data);
         });
       }
@@ -51,6 +70,9 @@ export default {
     modalOk() {
       this.form.validateFields((error, data) => {
         if (error) return;
+        if (data['uninstallUser']) {
+          data['uninstallUser'] = data['uninstallUser'].join('、');
+        }
         this.$axios.put("/appointment", data).then(res => {
           if (res) {
             this.$message.success("操作成功");
