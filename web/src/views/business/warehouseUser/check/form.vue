@@ -8,7 +8,7 @@
         <a-input v-decorator="['pid']" />
       </a-form-item>
       <a-form-item label="检测结果">
-        <a-input v-decorator="['result',{rules}]" placeholder="检测结果" :disabled="disabled" />
+        <a-radio-group v-decorator="['result',{rules}]" :options="['阴性','阳性']" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="检测时间">
         <a-date-picker v-decorator="[`date`,{rules}]" placeholder="检测时间" :disabled="disabled" />
