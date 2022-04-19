@@ -20,7 +20,7 @@
       </a-form-item>
       <a-form-item label="消毒液配比">
         <a-select placeholder="消毒液配比" v-decorator="[`disinfectantRatio`,{rules}]" :disabled="disabled">
-          <a-select-option v-for="item in selectList.disinfectant" :key="item.ratio" :value="item.ratio">{{item.ratio}}</a-select-option>
+          <a-select-option v-for="item in selectList.disinfectant" :key="item.id" :value="item.id">{{item.ratio}}</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>
@@ -60,7 +60,10 @@ export default {
           res.data.forEach(item => this.selectList.warehouse.push(item));
         }
       });
-      this.$axios.get(`/disinfectant/list`).then(res => {
+      let params = {
+        createUser: this.$store.state.user.userData['id']
+      }
+      this.$axios.get(`/disinfectant/list`, {params}).then(res => {
         if (res) {
           res.data.forEach(item => this.selectList.disinfectant.push(item));
         }

@@ -3,9 +3,9 @@
 <mapper namespace="com.dou.server.mapper.DisinfectionRecordMapper">
 
     <select id="getList" resultType="com.dou.server.model.DisinfectionRecord">
-        SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,w.name warehouse_name,
-        t.warehouse,t.area,t.date,t.phone,t.disinfectant_ratio FROM t_disinfection_record t
+        SELECT t.*,w.name warehouse_name,d.ratio disinfectantRatioName FROM t_disinfection_record t
         left join t_warehouse w on w.id = t.warehouse
+        left join t_disinfectant d on d.id = t.disinfectant_ratio
         where 1 = 1
         <if test="createUser !=null">
             and t.create_user = #{createUser}

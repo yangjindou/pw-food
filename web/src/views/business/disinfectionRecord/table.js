@@ -8,7 +8,7 @@ let tableMixin = {
         {title: '消杀区域', dataIndex: 'area'},
         {title: '消杀时间', dataIndex: 'date'},
         {title: '电话号码', dataIndex: 'phone'},
-        {title: '消毒液配比', dataIndex: 'disinfectantRatio'},
+        {title: '消毒液配比', dataIndex: 'disinfectantRatioName'},
         {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],
     }

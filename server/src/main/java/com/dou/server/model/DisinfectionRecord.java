@@ -40,7 +40,11 @@ public class DisinfectionRecord extends BaseEntity implements Serializable {
     private String phone;
 
     @ApiModelProperty("消毒液配比")
-    private String disinfectantRatio;
+    private Integer disinfectantRatio;
+
+    @Transient
+    @ApiModelProperty("消毒液配比名称")
+    private String disinfectantRatioName;
 
     @Transient
     @ApiModelProperty("监管仓名称")
