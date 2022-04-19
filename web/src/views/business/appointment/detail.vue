@@ -51,11 +51,6 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="出仓证明">
-            <a-input v-decorator="['warehousedProve']" placeholder="出仓证明" :disabled="disabled" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
           <a-form-item label="原产国/产地">
             <a-input v-decorator="['originPlace']" placeholder="原产国/产地" :disabled="disabled" />
           </a-form-item>
@@ -88,6 +83,11 @@
       </a-row>
       <a-form-item label="驳回理由">
         <a-textarea class="textarea" v-decorator="['refuseReason']" :disabled="disabled" />
+      </a-form-item>
+      <a-form-item label="出仓证明">
+        <u-upload-list :file-list="fileList.warehousedProve" :allow-type="['jpg','jpeg','png']"
+                       @change="uploadChange(fileList.warehousedProve, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
       </a-form-item>
       <a-form-item label="检疫证明">
         <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
@@ -126,6 +126,7 @@ export default {
       formModal: false,
       disabled: false,
       fileList: {
+        warehousedProve: [],
         quarantineCertificate: [],
         customsBill: [],
         portInspectionCertificate: [],
@@ -149,6 +150,7 @@ export default {
     setFormData(row) {
       this.formModal = true;
       this.form.resetFields();
+      this.fileList.warehousedProve.splice(0, this.fileList.warehousedProve.length);
       this.fileList.quarantineCertificate.splice(0, this.fileList.quarantineCertificate.length);
       this.fileList.customsBill.splice(0, this.fileList.customsBill.length);
       this.fileList.portInspectionCertificate.splice(0, this.fileList.portInspectionCertificate.length);
@@ -156,11 +158,25 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "area", "warehouseName", "filingOrder",
-              "goodTypeName", "goodName", "goodSourceName", "sourceName", "warehousedProve",
+              "goodTypeName", "goodName", "goodSourceName", "sourceName",
               "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone", "createDate",
               "filingState", "refuseReason");
           this.form.setFieldsValue(data);
-          let imgData = objUtils.getObjectByKey(row,"quarantineCertificate", "customsBill", "portInspectionCertificate", "portDisinfectionCertificate");
+          let imgData = objUtils.getObjectByKey(row,"warehousedProve", "quarantineCertificate", "customsBill",
+              "portInspectionCertificate", "portDisinfectionCertificate");
+          if (imgData['warehousedProve']) {
+            imgData['warehousedProve'].split(',').forEach((e,index) => {
+              this.fileList.warehousedProve.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
           if (imgData['quarantineCertificate']) {
             imgData['quarantineCertificate'].split(',').forEach((e,index) => {
               this.fileList.quarantineCertificate.push({
@@ -215,52 +231,6 @@ export default {
           }
         });
       }
-    },
-    modalOk(type) {
-      this.form.validateFields((error, data) => {
-        if (error) return;
-        if (data['area']) {
-          data['area'] = data['area'].join("/");
-        }
-        if (!this.fileList.quarantineCertificate.length) {
-          this.$message.error('检疫证明未上传');
-          return;
-        }
-        if (!this.fileList.customsBill.length) {
-          this.$message.error('报关单未上传');
-          return;
-        }
-        if (!this.fileList.portInspectionCertificate.length) {
-          this.$message.error('港口核酸证明未上传');
-          return;
-        }
-        if (!this.fileList.portDisinfectionCertificate.length) {
-          this.$message.error('港口消杀证明未上传');
-          return;
-        }
-        data['quarantineCertificate'] = this.fileList.quarantineCertificate.map(e => e.response.name).join(',');
-        data['customsBill'] = this.fileList.customsBill.map(e => e.response.name).join(',');
-        data['portInspectionCertificate'] = this.fileList.portInspectionCertificate.map(e => e.response.name).join(',');
-        data['portDisinfectionCertificate'] = this.fileList.portDisinfectionCertificate.map(e => e.response.name).join(',');
-        data['filingState'] = type ? '待审核' : '保存';
-        if (this.formState === '新增') {
-          this.$axios.post("/appointment", data).then(res => {
-            if (res) {
-              this.$message.success("添加成功");
-              this.formModal = false;
-              this.$parent.fetch();
-            }
-          });
-        } else if (this.formState === '修改') {
-          this.$axios.put("/appointment", data).then(res => {
-            if (res) {
-              this.$message.success("修改成功");
-              this.formModal = false;
-              this.$parent.fetch();
-            }
-          });
-        }
-      });
     },
     modalCancel() {
       this.formModal = false;

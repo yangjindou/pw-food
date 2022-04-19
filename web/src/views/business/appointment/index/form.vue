@@ -46,11 +46,6 @@
           </a-form-item>
         </a-col>
         <a-col :span="12">
-          <a-form-item label="出仓证明">
-            <a-input v-decorator="['warehousedProve',{rules}]" placeholder="出仓证明" :disabled="disabled" />
-          </a-form-item>
-        </a-col>
-        <a-col :span="12">
           <a-form-item label="原产国/产地">
             <a-input v-decorator="['originPlace',{rules}]" placeholder="原产国/产地" :disabled="disabled" />
           </a-form-item>
@@ -81,6 +76,11 @@
           </a-form-item>
         </a-col>
       </a-row>
+      <a-form-item label="出仓证明">
+        <u-upload-list :file-list="fileList.warehousedProve" :allow-type="['jpg','jpeg','png']"
+                       @change="uploadChange(fileList.warehousedProve, $event)"
+                       :show-upload-list="true" :disabled="disabled" />
+      </a-form-item>
       <a-form-item label="检疫证明">
         <u-upload-list :file-list="fileList.quarantineCertificate" :allow-type="['jpg','jpeg','png']"
                        @change="uploadChange(fileList.quarantineCertificate, $event)"
@@ -131,6 +131,7 @@ export default {
         goodSource: [],
       },
       fileList: {
+        warehousedProve: [],
         quarantineCertificate: [],
         customsBill: [],
         portInspectionCertificate: [],
@@ -164,6 +165,7 @@ export default {
     setFormData(row) {
       this.formModal = true;
       this.form.resetFields();
+      this.fileList.warehousedProve.splice(0, this.fileList.warehousedProve.length);
       this.fileList.quarantineCertificate.splice(0, this.fileList.quarantineCertificate.length);
       this.fileList.customsBill.splice(0, this.fileList.customsBill.length);
       this.fileList.portInspectionCertificate.splice(0, this.fileList.portInspectionCertificate.length);
@@ -171,13 +173,27 @@ export default {
       if (row) {
         this.$nextTick(() => {
           let data = objUtils.getObjectByKey(row, "id", "area", "warehouse",
-              "goodType", "goodName", "goodSource", "sourceName", "warehousedProve",
+              "goodType", "goodName", "goodSource", "sourceName",
               "originPlace", "amount", "weight", "driver", "carNumber", "driverPhone");
           if (data['area']) {
             data['area'] = data['area'].split('/');
           }
           this.form.setFieldsValue(data);
-          let imgData = objUtils.getObjectByKey(row,"quarantineCertificate", "customsBill", "portInspectionCertificate", "portDisinfectionCertificate");
+          let imgData = objUtils.getObjectByKey(row,"warehousedProve", "quarantineCertificate", "customsBill",
+              "portInspectionCertificate", "portDisinfectionCertificate");
+          if (imgData['warehousedProve']) {
+            imgData['warehousedProve'].split(',').forEach((e,index) => {
+              this.fileList.warehousedProve.push({
+                uid: `-${index}`,
+                name: e,
+                status: 'done',
+                url: this.fileUrl + e,
+                response: {
+                  name: e
+                }
+              });
+            })
+          }
           if (imgData['quarantineCertificate']) {
             imgData['quarantineCertificate'].split(',').forEach((e,index) => {
               this.fileList.quarantineCertificate.push({
@@ -238,6 +254,9 @@ export default {
         if (error) return;
         if (data['area']) {
           data['area'] = data['area'].join("/");
+        }
+        if (this.fileList.warehousedProve.length) {
+          data['warehousedProve'] = this.fileList.warehousedProve.map(e => e.response.name).join(',');
         }
         if (!this.fileList.quarantineCertificate.length) {
           this.$message.error('检疫证明未上传');
