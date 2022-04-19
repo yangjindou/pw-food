@@ -32,7 +32,7 @@
         </a-col>
         <a-col :span="12">
           <a-form-item label="预约入仓时间">
-            <a-date-picker v-decorator="[`appointmentWarehousingDate`]" placeholder="预约入仓时间" :disabled="disabled" />
+            <a-date-picker v-decorator="[`appointmentWarehousingDate`]" :disabled="disabled" />
           </a-form-item>
         </a-col>
         <a-col :span="12">

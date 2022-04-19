@@ -58,13 +58,15 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
-              <a v-if="!row['emergency']" @click="emergency(row)">应急通知</a>
-              <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
-              <a @click="sampling(row)">采样</a>
-              <a @click="uninstall(row)">卸货</a>
-              <a @click="warehousing(row)">入仓</a>
-              <a @click="warehoused(row)">出仓</a>
-              <a v-if="row['filingState'] === '申请修改'" @click="applyUpdate(row)">处理修改</a>
+              <template v-if="!row['emergency']">
+                <a @click="emergency(row)">应急通知</a>
+                <a v-if="row['filingState'] === '待审核'" @click="audit(row)">审核</a>
+                <a @click="sampling(row)">采样</a>
+                <a @click="uninstall(row)">卸货</a>
+                <a @click="warehousing(row)">入仓</a>
+                <a @click="warehoused(row)">出仓</a>
+                <a v-if="row['filingState'] === '申请修改'" @click="applyUpdate(row)">处理修改</a>
+              </template>
             </div>
           </template>
         </a-table>

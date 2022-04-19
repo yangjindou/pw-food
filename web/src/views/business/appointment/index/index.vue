@@ -59,8 +59,10 @@
           <template slot="operation" slot-scope="row">
             <div class="operation-btn">
               <a @click="detail(row)">详情</a>
-              <a v-if="['保存','驳回'].includes(row['filingState'])" @click="formOpen('修改', row)">修改</a>
-              <a v-if="row['filingState'] ==='审核通过' && row['applyUpdateCount'] < 3" @click="applyUpdate(row)">申请修改</a>
+              <template v-if="!row['emergency']">
+                <a v-if="['保存','驳回'].includes(row['filingState'])" @click="formOpen('修改', row)">修改</a>
+                <a v-if="row['filingState'] ==='审核通过' && row['applyUpdateCount'] < 3" @click="applyUpdate(row)">申请修改</a>
+              </template>
             </div>
           </template>
         </a-table>
