@@ -38,25 +38,10 @@
 			}
 		}
 	}, {
-		"path": "pages/business/list/form",
+		"path": "pages/business/notice/form",
 		"style": {}
 	}, {
-		"path": "pages/business/list/list",
-		"style": {}
-	}, {
-		"path": "pages/business/list/community",
-		"style": {}
-	}, {
-		"path": "pages/business/list/street",
-		"style": {}
-	}, {
-		"path": "pages/business/list/admin",
-		"style": {}
-	}, {
-		"path": "pages/business/list/user",
-		"style": {}
-	}, {
-		"path": "pages/business/list/qrcode",
+		"path": "pages/business/notice/list",
 		"style": {}
 	}],
 	"globalStyle": {

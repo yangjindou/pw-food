@@ -55,7 +55,7 @@
 						icon: 'article',
 						name: '公告管理',
 						bgColor: '#FF2851',
-						url: '../passwordModify/passwordModify',
+						url: '../business/notice/list',
 					}, {
 						icon: 'article',
 						name: '监管仓管理',
@@ -93,12 +93,12 @@
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
-						name: '入仓上报',
+						name: '入仓管理',
 						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}, {
 						icon: 'article',
-						name: '出仓上报',
+						name: '出仓管理',
 						bgColor: '#FF2851',
 						url: '../passwordModify/passwordModify',
 					}],

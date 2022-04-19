@@ -7,9 +7,15 @@
 				<input type="text" :disabled="item.disabled" class="grace-form-input" v-model="item.value"
 					:name="item.name" :placeholder="item.placeholder" />
 			</view>
+			<!-- 密码 -->
 			<view v-if="item.type == 'password'" class="grace-form-body">
 				<input type="password" :disabled="item.disabled" class="grace-form-input" v-model="item.value"
 					:name="item.name" :placeholder="item.placeholder" />
+			</view>
+			<!-- 文本框 -->
+			<view v-if="item.type == 'textarea'" class="grace-form-body">
+				<textarea :disabled="item.disabled" class="grace-textarea" v-model="item.value"
+					:name="item.name" :placeholder="item.placeholder"/>
 			</view>
 			<!-- 地区 -->
 			<view v-if="item.type == 'area'" class="grace-form-body">
@@ -42,9 +48,9 @@
 				<ugDropbox :name="item.name" :dropboxGroup="item.dropboxGroup" @dropboxChange="dropboxChange"
 					:disabled="item.disabled">
 					<input type="text" :disabled="true" class="grace-form-input" v-model="item.value" :name="item.name"
-						:placeholder="item.placeholder" hidden/>
-					<input type="text" :disabled="true" class="grace-form-input" v-model="item.valueLabel" :name="item.name+'label'"
-						:placeholder="item.placeholder" />
+						:placeholder="item.placeholder" hidden />
+					<input type="text" :disabled="true" class="grace-form-input" v-model="item.valueLabel"
+						:name="item.name+'label'" :placeholder="item.placeholder" />
 					<text class="grace-icons icon-arrow-down" style="margin-left:5px;"></text>
 				</ugDropbox>
 			</view>
@@ -53,7 +59,7 @@
 				<input type="text" :disabled="true" class="grace-form-input" v-model="item.value" :name="item.name"
 					:placeholder="item.placeholder" hidden />
 				<ugSelectImg :disabled="item.disabled" @change="imgsChange" :name="item.name"
-				 :maxFileNumber="item.maxFileNumber ? item.maxFileNumber : 9" :urls="item.value"></ugSelectImg>
+					:maxFileNumber="item.maxFileNumber ? item.maxFileNumber : 9" :urls="item.value"></ugSelectImg>
 			</view>
 		</view>
 		<slot></slot>

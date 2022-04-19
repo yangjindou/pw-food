@@ -5,7 +5,7 @@
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
           <a-col :span="6" >
-            <a-form-item label="标题">
+            <a-form-item label="公告标题">
               <a-input v-decorator="[`title`]" placeholder="请输入" />
             </a-form-item>
           </a-col>

@@ -5,7 +5,7 @@
         <a-input v-decorator="['id']" placeholder="id" />
       </a-form-item>
       <a-form-item label="公告标题">
-        <a-input v-decorator="['title',{rules}]" placeholder="名称" />
+        <a-input v-decorator="['title',{rules}]" placeholder="公告标题" />
       </a-form-item>
       <a-form-item label="公告内容">
         <a-textarea class="textarea" v-decorator="['content',{rules}]" placeholder="公告内容" />
