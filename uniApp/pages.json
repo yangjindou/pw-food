@@ -61,6 +61,12 @@
 	}, {
 		"path": "pages/business/appointment/warehousing/list",
 		"style": {}
+	}, {
+		"path": "pages/business/appointment/warehoused/form",
+		"style": {}
+	}, {
+		"path": "pages/business/appointment/warehoused/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",
