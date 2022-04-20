@@ -15,5 +15,6 @@
         <if test="warehouseCreateUser !=null">
             and w.create_user = #{warehouseCreateUser}
         </if>
+        order by t.create_date
     </select>
 </mapper>
