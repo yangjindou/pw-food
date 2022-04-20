@@ -49,6 +49,12 @@
 	}, {
 		"path": "pages/business/device/list",
 		"style": {}
+	}, {
+		"path": "pages/business/wasteDisposal/form",
+		"style": {}
+	}, {
+		"path": "pages/business/wasteDisposal/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",

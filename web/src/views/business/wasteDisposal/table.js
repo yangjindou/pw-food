@@ -7,7 +7,6 @@ export default {
       {title: '物品数量', dataIndex: 'itemAmount'},
       {title: '存放地方', dataIndex: 'savePlace'},
       {title: '是否存放48小时', dataIndex: 'isSave48hour'},
-      {title: '备注', dataIndex: 'remark'},
       {title: '录入人', dataIndex: 'createUserName'},
       {title: '录入时间', dataIndex: 'createDate'},
       {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}

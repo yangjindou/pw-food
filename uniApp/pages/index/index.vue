@@ -75,7 +75,7 @@
 						icon: 'article',
 						name: '废物处理',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/wasteDisposal/list',
 					}, {
 						icon: 'article',
 						name: '消毒液管理',
