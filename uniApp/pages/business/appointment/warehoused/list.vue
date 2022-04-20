@@ -1,6 +1,6 @@
 <template>
 	<gracePage headerBG="#0088FE" :bounding="false">
-		<ugNav slot="gHeader" :isBack="true" title="入仓管理"></ugNav>
+		<ugNav slot="gHeader" :isBack="true" title="出仓管理"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
 			<view id="top" class="grace-body grace-bg-white">
 				<ugForm ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit" :submitbtn="['查询']" />
@@ -33,7 +33,7 @@
 		onLoad() {
 			this.basicParams['warehouseCreateUser'] = uni.getStorageSync('userData')['id'];
 			this.basicParams['showAuditfilingState'] = true;
-			this.basicParams['filterType'] = '入仓';
+			this.basicParams['filterType'] = '出仓';
 			this.getformColumns();
 			this.getList();
 		},
@@ -73,9 +73,10 @@
 				}
 			},
 			getformColumns() {
+				// const nowDate = this.$common.formatDate(new Date(), 'yyyy-MM-dd');
 				this.formColumns = [{
-					label: "入仓时间",
-					name: "warehousingDate",
+					label: "出仓时间",
+					name: "warehousedDate",
 					type: "rangDate",
 					value: ''
 				}];

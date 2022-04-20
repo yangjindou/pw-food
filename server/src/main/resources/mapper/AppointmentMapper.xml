@@ -45,7 +45,7 @@
         <if test="filterType != null and filterType == '出仓'">
             and t.warehoused_date is not null
         </if>
-        order by t.create_date
+        order by t.create_date desc
     </select>
 
     <select id="getMaxOder" resultType="java.lang.Integer">

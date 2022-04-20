@@ -1,19 +1,20 @@
 <template>
 	<gracePage headerBG="#0088FE" :bounding="false">
-		<ugNav slot="gHeader" :isBack="true" title="入仓管理"></ugNav>
+		<ugNav slot="gHeader" :isBack="true" title="消毒液管理"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
 			<view id="top" class="grace-body grace-bg-white">
-				<ugForm ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit" :submitbtn="['查询']" />
+				<ugForm v-if="false" ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit"
+					:submitbtn="['查询']" />
 			</view>
 			<ugCheckList :lists="listData" @change="selectIndexChange" :height="mainHeight">
 				<view slot="page">
 					<paging :total="total" :pageSize='pageSize' v-model="pageNum" @changes="pageChange"></paging>
 				</view>
 				<view class="grace-nowrap grace-flex-end list-btn">
-<!--					<text class="grace-blue grace-icons" @tap="action('删除')">删除</text>-->
+					<text class="grace-blue grace-icons" @tap="action('删除')">删除</text>
 					<text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
-<!--					<text class="grace-blue grace-icons icon-article" @tap="action('修改')">修改</text>-->
-<!--					<text class="grace-blue grace-icons icon-add" @tap="action('新增')">新增</text>-->
+					<text class="grace-blue grace-icons icon-article" @tap="action('修改')">修改</text>
+					<text class="grace-blue grace-icons icon-add" @tap="action('新增')">新增</text>
 				</view>
 			</ugCheckList>
 			<ugDialog ref="dialog" content="确定删除这些数据?" @ok="delOk" />
@@ -27,13 +28,10 @@
 		data() {
 			return {
 				formColumns: [],
-				formData: {}
 			}
 		},
 		onLoad() {
-			this.basicParams['warehouseCreateUser'] = uni.getStorageSync('userData')['id'];
-			this.basicParams['showAuditfilingState'] = true;
-			this.basicParams['filterType'] = '入仓';
+			this.basicParams['createUser'] = uni.getStorageSync('userData')['id'];
 			this.getformColumns();
 			this.getList();
 		},
@@ -74,9 +72,9 @@
 			},
 			getformColumns() {
 				this.formColumns = [{
-					label: "入仓时间",
-					name: "warehousingDate",
-					type: "rangDate",
+					label: "录入时间",
+					name: "createDate",
+					type: "date",
 					value: ''
 				}];
 			},

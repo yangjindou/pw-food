@@ -61,6 +61,18 @@
 	}, {
 		"path": "pages/business/appointment/warehousing/list",
 		"style": {}
+	}, {
+		"path": "pages/business/appointment/warehoused/form",
+		"style": {}
+	}, {
+		"path": "pages/business/appointment/warehoused/list",
+		"style": {}
+	}, {
+		"path": "pages/business/disinfectant/form",
+		"style": {}
+	}, {
+		"path": "pages/business/disinfectant/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",

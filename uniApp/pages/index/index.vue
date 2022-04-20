@@ -80,7 +80,7 @@
 						icon: 'article',
 						name: '消毒液管理',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/disinfectant/list',
 					}, {
 						icon: 'article',
 						name: '环境消杀记录',
