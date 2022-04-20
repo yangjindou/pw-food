@@ -30,6 +30,7 @@
 			}
 		},
 		onLoad() {
+			this.basicParams['warehouseCreateUser'] = uni.getStorageSync('userData')['id'];
 			this.getformColumns();
 			this.getList();
 		},

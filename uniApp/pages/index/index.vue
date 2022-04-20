@@ -95,12 +95,12 @@
 						icon: 'article',
 						name: '入仓管理',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/appointment/warehousing/list',
 					}, {
 						icon: 'article',
 						name: '出仓管理',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/appointment/warehoused/list',
 					}],
 					system: [{
 						icon: 'article',
