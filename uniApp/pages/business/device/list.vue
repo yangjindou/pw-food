@@ -1,6 +1,6 @@
 <template>
 	<gracePage headerBG="#0088FE" :bounding="false">
-		<ugNav slot="gHeader" :isBack="true" title="公告管理"></ugNav>
+		<ugNav slot="gHeader" :isBack="true" title="设备管理"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
 			<view id="top" class="grace-body grace-bg-white">
 				<ugForm ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit" :submitbtn="['查询']" />
@@ -39,19 +39,6 @@
 				this.pageNum = 1;
 				this.getList();
 			},
-			delOk() {
-				const ids = this.selectIndex.map(i => this.listData[i]["data"]['id']);
-				this.$http.delete(`/notice?ids=${ids.join(',')}`).then(res => {
-					if (res) {
-						this.$refs.dialog.hide();
-						this.$common.showToast('删除成功');
-						this.selectIndex = [];
-						setTimeout(() => {
-							this.getList();
-						}, 1500);
-					}
-				});
-			},
 			action(action) {
 				if (action == "删除") {
 					if (this.selectIndex.length == 0) {
@@ -83,9 +70,9 @@
 			},
 			getformColumns() {
 				this.formColumns = [ {
-					label: "公告标题",
-					name: "title",
-					type: "text",
+					label: "校验日期",
+					name: "inspectionDate",
+					type: "date",
 					value: ''
 				}];
 			},

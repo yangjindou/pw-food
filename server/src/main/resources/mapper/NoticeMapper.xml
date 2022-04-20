@@ -13,5 +13,6 @@
         <if test="createUser != null">
             and notice.create_user = #{createUser}
         </if>
+        order by notice.create_date
     </select>
 </mapper>

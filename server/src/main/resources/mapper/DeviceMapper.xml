@@ -14,5 +14,6 @@
         <if test="createUser !=null">
             and device.create_user = #{createUser}
         </if>
+        order by device.inspection_date
     </select>
 </mapper>

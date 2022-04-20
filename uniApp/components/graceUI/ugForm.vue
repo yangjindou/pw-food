@@ -193,7 +193,6 @@
 
 	.radio-group {
 		display: flex;
-		align-items: flex-end;
-		flex-direction: row-reverse;
+		justify-content: flex-end;
 	}
 </style>

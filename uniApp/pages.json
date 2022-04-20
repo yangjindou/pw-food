@@ -43,6 +43,12 @@
 	}, {
 		"path": "pages/business/notice/list",
 		"style": {}
+	}, {
+		"path": "pages/business/device/form",
+		"style": {}
+	}, {
+		"path": "pages/business/device/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",
