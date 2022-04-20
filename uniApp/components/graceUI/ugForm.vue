@@ -2,6 +2,13 @@
 	<form @submit="formSubmit" class="grace-form">
 		<view v-for="(item, index) in formColumns" :key="index" class="grace-form-item grace-border-b">
 			<text class="grace-form-label">{{item.label}}</text>
+			<!-- 时间段 -->
+			<view v-if="item.type == 'rangDate'" class="grace-form-body">
+				<input type="text" :disabled="true" class="grace-form-input" v-model="item.value"
+					@tap="showRangeDatePick(item.name)" :name="item.name" :placeholder="item.placeholder" />
+				<rangeDatePick :show="item.show" :value="item.value.split(' ~ ')" @change="rangeDateChange(item.name, $event)"
+					@cancel="rangeDateCancel(item.name)" :start="start" :end="end" />
+			</view>
 			<!-- 输入框 -->
 			<view v-if="item.type == 'text'" class="grace-form-body">
 				<input type="text" :disabled="item.disabled" class="grace-form-input" v-model="item.value"
@@ -14,8 +21,8 @@
 			</view>
 			<!-- 文本框 -->
 			<view v-if="item.type == 'textarea'" class="grace-form-body">
-				<textarea :disabled="item.disabled" class="grace-textarea" v-model="item.value"
-					:name="item.name" :placeholder="item.placeholder"/>
+				<textarea :disabled="item.disabled" class="grace-textarea" v-model="item.value" :name="item.name"
+					:placeholder="item.placeholder" />
 			</view>
 			<!-- 地区 -->
 			<view v-if="item.type == 'area'" class="grace-form-body">
@@ -71,6 +78,8 @@
 </template>
 <script>
 	import objUtils from '@/utils/objUtils.js';
+	import rangeDatePick from '@/components/pyh-rdtpicker/pyh-rdtpicker.vue';
+
 	var graceChecker = require("@/graceUI/jsTools/graceChecker.js");
 	export default {
 		props: {
@@ -87,6 +96,9 @@
 				default: true
 			},
 		},
+		components: {
+			rangeDatePick
+		},
 		data() {
 			return {
 				submitName: '',
@@ -97,6 +109,8 @@
 					cityName: '',
 					townName: '',
 				},
+				start: "2022-01-01",
+				end: "2200-12-01"
 			}
 		},
 		mounted(e) {
@@ -105,6 +119,28 @@
 			});
 		},
 		methods: {
+			rangeDateCancel(name) {
+				this.formColumns.forEach((item) => {
+					if (item.name == name) {
+						this.$set(item, 'show', false);
+					}
+				});
+			},
+			rangeDateChange(name, value) {
+				this.formColumns.forEach((item) => {
+					if (item.name == name) {
+						this.$set(item, 'value', value.join(' ~ '));
+						this.$set(item, 'show', false);
+					}
+				});
+			},
+			showRangeDatePick(name) {
+				this.formColumns.forEach((item) => {
+					if (item.name == name) {
+						this.$set(item, 'show', true);
+					}
+				});
+			},
 			changeColumns(obj) {
 				this.formColumns = objUtils.cloneObject(obj);
 			},

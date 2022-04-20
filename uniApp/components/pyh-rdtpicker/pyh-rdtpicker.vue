@@ -1,12 +1,12 @@
 <template>
 	<view class="rpickerBox">
-		<view :class="{'pickerMask':showPicker}" @click="maskClick" catchtouchmove="true">
+		<view :class="{'pickerMask':showPicker}" @click="maskClick"  @touchmove.stop.prevent="returnHandle">
 			<view class="r-dtpicker" :class="{'r-dtpicker-show':showPicker}">
-				<view class="rdtBtn" catchtouchmove="true" @tap.stop="returnHandle">
+				<view class="rdtBtn" @touchmove.stop.prevent="returnHandle" @tap.stop="returnHandle">
 					<view @click="pickerCancel">取消</view>
 					<view :style="{color:themeColor}" @click="pickerConfirm">确定</view>
 				</view>
-				<view class="rangeBox" catchtouchmove="true" @tap.stop="returnHandle">
+				<view class="rangeBox" @touchmove.stop.prevent="returnHandle" @tap.stop="returnHandle">
 					<input type="text" disabled placeholder="开始时间" :value="startDate" :style="{color:themeColor,'border-color':themeColor,opacity:dateType=='startDate'?1:.5}" @tap="changeDateType('startDate')">至<input type="text" disabled placeholder="结束时间" :style="{color:themeColor,'border-color':themeColor,opacity:dateType=='endDate'?1:.5}" :value="endDate" @tap="changeDateType('endDate')">
 				</view>
 				<picker-view indicator-style="height: 40px;" class="mpvue-picker-view" :value="pickerValue" @change="pickerChangeMul">
@@ -34,7 +34,7 @@
 			//粒度
 			fields:{
 			  type: String,
-			  default: 'month'
+			  default: 'day'
 			},
 			/**
 			 * picker允许选中的最小值
@@ -48,7 +48,7 @@
 			 */
 			end: {
 			  type: String,
-			  default: '2500-12-01'
+			  default: '2200-12-01'
 			},
 			/**
 			 * picker默认展示的值
@@ -92,6 +92,12 @@
 			},
 			show(isShow) {
 				this.showPicker = isShow;
+			},
+			start(){
+				this.init()
+			},
+			end(){
+				this.init()
 			}
 		},
 		computed: {
@@ -107,7 +113,13 @@
 				for(var i=1;i<=12;i++){
 					var v = i;
 					if(v<10)v="0"+v;
-					arr.push(v.toString())
+					if(this.start.length>4&&this.end.length>4&&(this.start.slice(0,4)==this.end.slice(0,4))){
+						if(parseInt(v)>=this.start.slice(5,7)&&parseInt(v)<=this.end.slice(5,7)){
+							arr.push(v.toString())
+						}
+					}else{
+						arr.push(v.toString())
+					}
 				}
 				return arr;
 			}
@@ -115,7 +127,7 @@
 		methods:{
 			returnHandle(){},
 			init(){
-				var that = this;
+				var that = this,pickerValue="";
 				if((this.fields=='year'&&this.start.length!=4)||(this.fields=='month'&&this.start.length!=7)||(this.fields=='day'&&this.start.length!=10)){
 					console.error("最小值格式与粒度格式不符");return;
 				}else if((this.fields=='year'&&this.end.length!=4)||(this.fields=='month'&&this.end.length!=7)||(this.fields=='day'&&this.end.length!=10)){
@@ -140,17 +152,18 @@
 						this.endDate=this.value[1];
 						this.dateType="endDate";
 						if(this.fields=='day')this.dayArr=this.getMonthDay(this.value[1].slice(0,4),this.value[1].slice(5,7));
-						this.pickerValue=this.getIndex(this.value[1]);
+						pickerValue=this.getIndex(this.value[1]);
 					}else{
 						this.dateType="startDate";
 						if(this.fields=='day')this.dayArr=this.getMonthDay(this.value[0].slice(0,4),this.value[0].slice(5,7));
-						this.pickerValue=this.getIndex(this.value[0]);
+						pickerValue=this.getIndex(this.value[0]);
 					}
 				}else{
 					this.startDate=start;
-					this.pickerValue=this.getIndex(start);
+					pickerValue=this.getIndex(start);
 					if(this.fields=='day')this.dayArr=this.getMonthDay(start.slice(0,4),start.slice(5,7));
 				}
+				if(pickerValue)setTimeout(function(){that.pickerValue=pickerValue},20)
 			},
 			maskClick(){
 				this.$emit("showchange",false);
@@ -183,12 +196,16 @@
 				}
 			},
 			pickerChangeMul(e){
-				var val = e.detail.value,dateTxt="";
+				var that=this,val = e.detail.value,dateTxt="";
 				if(this.fields=='day'&&(val[0]!=this.pickerValue[0]||val[1]!=this.pickerValue[1])){
 					this.dayArr=this.getMonthDay(this.yearArr[val[0]],this.monthArr[val[1]])
-					if(!this.dayArr[val[2]]){
-						val[2]=(val[2]-1)
+					function returnMax(){
+						if(!that.dayArr[val[2]]){
+							val[2]=(val[2]-1)
+							returnMax()
+						}
 					}
+					returnMax()
 				}
 				dateTxt=this.yearArr[val[0]]+'-'+this.monthArr[val[1]]+'-'+this.dayArr[val[2]];
 				this[this.dateType]=this.fields=='year'?dateTxt.slice(0,4):this.fields=='month'?dateTxt.slice(0,7):dateTxt;

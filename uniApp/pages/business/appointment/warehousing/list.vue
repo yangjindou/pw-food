@@ -27,6 +27,7 @@
 		data() {
 			return {
 				formColumns: [],
+				formData: {}
 			}
 		},
 		onLoad() {
@@ -70,11 +71,12 @@
 				}
 			},
 			getformColumns() {
+				const nowDate = this.$common.formatDate(new Date(), 'yyyy-MM-dd');
 				this.formColumns = [{
 					label: "入仓时间",
 					name: "warehousingDate",
-					type: "date",
-					value: ''
+					type: "rangDate",
+					value: `${nowDate} ~ ${nowDate}`
 				}];
 			},
 		},

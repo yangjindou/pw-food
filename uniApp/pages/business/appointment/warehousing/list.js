@@ -14,6 +14,12 @@ export default {
 	methods: {
 		...methods,
 		getList() {
+			if(this.formData['warehousingDate']) {
+				const warehousingDate = this.formData['warehousingDate'].split(' ~ ');
+				this.formData["warehousingDateStart"] = warehousingDate[0] + ' 00:00:00';
+				this.formData["warehousingDateEnd"] = warehousingDate[1] + ' 23:59:59';
+				delete this.formData["warehousingDate"];
+			}
 			let params = {
 				pageSize: this.pageSize,
 				pageNum: this.pageNum,
