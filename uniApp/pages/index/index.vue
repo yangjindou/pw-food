@@ -65,7 +65,7 @@
 						icon: 'article',
 						name: '监管仓人员',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/warehouseUser/list',
 					}, {
 						icon: 'article',
 						name: '设备管理',

@@ -85,6 +85,12 @@
 	}, {
 		"path": "pages/business/warehouse/list",
 		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/form",
+		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",
