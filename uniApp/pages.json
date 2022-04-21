@@ -73,6 +73,12 @@
 	}, {
 		"path": "pages/business/disinfectant/list",
 		"style": {}
+	}, {
+		"path": "pages/business/disinfectionRecord/form",
+		"style": {}
+	}, {
+		"path": "pages/business/disinfectionRecord/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",

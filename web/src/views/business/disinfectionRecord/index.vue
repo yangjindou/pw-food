@@ -64,6 +64,7 @@ export default {
     };
   },
   mounted() {
+    this.basicParams['createUser'] = this.$store.state.user.userData['id'];
     this.fetch();
   },
   methods: {

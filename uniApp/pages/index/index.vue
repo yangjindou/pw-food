@@ -85,7 +85,7 @@
 						icon: 'article',
 						name: '环境消杀记录',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/disinfectionRecord/list',
 					}, {
 						icon: 'article',
 						name: '预约管理',
