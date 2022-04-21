@@ -34,7 +34,7 @@
 			<!-- 日期 -->
 			<view v-if="item.type == 'date'" class="grace-form-body">
 				<ugDateTime @confirm="dateChange" :name="item.name" :data-name="item.name" :value="item.value"
-					:isTime="false">
+					:isTime="false" :disabled="item.disabled">
 					<input type="text" :disabled="true" class="grace-form-input" v-model="item.value" :name="item.name"
 						:placeholder="item.placeholder" />
 				</ugDateTime>

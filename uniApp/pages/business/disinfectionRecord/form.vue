@@ -59,7 +59,6 @@
 						});
 					}
 				}
-				console.log(this.formColumns);
 				this.$refs.form.changeColumns(this.formColumns);
 			},
 			setFormData() {

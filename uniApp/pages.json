@@ -79,6 +79,12 @@
 	}, {
 		"path": "pages/business/disinfectionRecord/list",
 		"style": {}
+	}, {
+		"path": "pages/business/warehouse/form",
+		"style": {}
+	}, {
+		"path": "pages/business/warehouse/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",
