@@ -4,7 +4,7 @@
 			<ugNav slot="gHeader" :isBack="true" title="注册"></ugNav>
 			<view class="grace-body" slot="gBody">
 				<ugForm ref="form" :columns="formColumns" @submit="formSubmit" :submitbtn="['注册']" />
-			</view>
+			</view>    1
 		</gracePage>
 	</view>
 </template>
