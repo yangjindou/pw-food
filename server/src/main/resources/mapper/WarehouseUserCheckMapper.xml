@@ -4,9 +4,10 @@
 
     <select id="getList" resultType="com.dou.server.model.WarehouseUserCheck">
         SELECT t.create_date,t.create_user,t.update_date,t.update_user,t.id,u.user_name create_user_name,
-        t.pid,t.result,t.date,t.user
+        t.pid,t.result,t.date,t.user,tu.name userName
         FROM t_warehouse_user_check t
         left join sys_user u on u.id = t.create_user
+        left join t_warehouse_user tu on tu.id = t.user
         where 1 = 1
         <if test="pid !=null">
             and t.pid = #{pid}

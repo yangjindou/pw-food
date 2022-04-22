@@ -36,9 +36,13 @@ public class WarehouseUserCheck extends BaseEntity implements Serializable {
     private Date date;
 
     @ApiModelProperty("检测人")
-    private String user;
+    private Integer user;
 
     @Transient
     @ApiModelProperty("操作人")
     private String createUserName;
+
+    @Transient
+    @ApiModelProperty("操作人名称")
+    private String userName;
 }

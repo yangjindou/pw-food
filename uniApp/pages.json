@@ -94,6 +94,12 @@
 	}, {
 		"path": "pages/business/warehouseUser/healthy",
 		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/check/form",
+		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/check/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",

@@ -3,7 +3,7 @@
 		<ugNav slot="gHeader" :isBack="true" title="公告管理"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
 			<view id="top" class="grace-body grace-bg-white">
-				<ugForm ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit" :submitbtn="['查询']" />
+				<ugForm ref="form" :columns="formColumns" @submit="formSubmit" :submitbtn="['查询']" />
 			</view>
 			<ugCheckList :lists="listData" @change="selectIndexChange" :height="mainHeight">
 				<view slot="page">

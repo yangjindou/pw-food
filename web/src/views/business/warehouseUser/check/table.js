@@ -4,9 +4,9 @@ let tableMixin = {
     return {
       ...data,
       columns: [
-        {title: '检测结果', dataIndex: 'result'},
         {title: '检测时间', dataIndex: 'date'},
-        {title: '检测人', dataIndex: 'user'},
+        {title: '检测结果', dataIndex: 'result'},
+        {title: '检测人', dataIndex: 'userName'},
         {title: '操作人', dataIndex: 'createUserName'},
         {title: '操作', width: 120, scopedSlots: {customRender: 'operation'}, fixed: 'right'}
       ],

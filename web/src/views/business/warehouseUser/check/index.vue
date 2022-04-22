@@ -61,7 +61,7 @@ export default {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
       searchParams: {},
       basicParams: {},
-      pid: undefined,
+      pid: -1,
       name: '',
     };
   },

@@ -3,8 +3,7 @@
 		<ugNav slot="gHeader" :isBack="true" title="消毒液管理"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
 			<view id="top" class="grace-body grace-bg-white">
-				<ugForm v-if="false" ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit"
-					:submitbtn="['查询']" />
+				<ugForm v-if="false" ref="form" :columns="formColumns" @submit="formSubmit" :submitbtn="['查询']" />
 			</view>
 			<ugCheckList :lists="listData" @change="selectIndexChange" :height="mainHeight">
 				<view slot="page">

@@ -7,15 +7,15 @@
       <a-form-item label="pid" hidden>
         <a-input v-decorator="['pid']" />
       </a-form-item>
-      <a-form-item label="检测结果">
-        <a-radio-group v-decorator="['result',{rules}]" :options="['阴性','阳性']" :disabled="disabled" />
-      </a-form-item>
       <a-form-item label="检测时间">
         <a-date-picker v-decorator="[`date`,{rules}]" placeholder="检测时间" :disabled="disabled" />
       </a-form-item>
+      <a-form-item label="检测结果">
+        <a-radio-group v-decorator="['result',{rules}]" :options="['阴性','阳性']" :disabled="disabled" />
+      </a-form-item>
       <a-form-item label="检测人">
         <a-select v-decorator="['user',{rules}]" placeholder="检测人" :disabled="disabled">
-          <a-select-option v-for="item in selectList.user" :key="item.id" :value="item.name">{{item.name}}</a-select-option>
+          <a-select-option v-for="item in selectList.user" :key="item.id" :value="item.id">{{item.name}}</a-select-option>
         </a-select>
       </a-form-item>
     </a-form>

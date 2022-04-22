@@ -35,7 +35,9 @@
 						});
 					}
 				}
-				this.$refs.form.changeColumns(this.formColumns);
+				this.$nextTick(() => {
+					this.$refs.form.changeColumns(this.formColumns);
+				});
 			},
 			getFormColumns() {
 				this.formColumns = [{
