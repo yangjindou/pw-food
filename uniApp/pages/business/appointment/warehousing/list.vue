@@ -10,10 +10,7 @@
 					<paging :total="total" :pageSize='pageSize' v-model="pageNum" @changes="pageChange"></paging>
 				</view>
 				<view class="grace-nowrap grace-flex-end list-btn">
-<!--					<text class="grace-blue grace-icons" @tap="action('删除')">删除</text>-->
 					<text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
-<!--					<text class="grace-blue grace-icons icon-article" @tap="action('修改')">修改</text>-->
-<!--					<text class="grace-blue grace-icons icon-add" @tap="action('新增')">新增</text>-->
 				</view>
 			</ugCheckList>
 			<ugDialog ref="dialog" content="确定删除这些数据?" @ok="delOk" />
