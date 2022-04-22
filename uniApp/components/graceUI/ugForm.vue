@@ -1,13 +1,15 @@
 <template>
 	<form @submit="formSubmit" class="grace-form">
-		<view v-for="(item, index) in formColumns" :key="index" class="grace-form-item grace-border-b">
-			<text class="grace-form-label">{{item.label}}</text>
+		<view v-for="(item, index) in formColumns" :key="index" class="grace-border-b"
+			:class="item.type == 'longRadio' ? '':'grace-form-item'">
+			<text :class="item.type == 'longRadio' ? 'ug-form-label':'grace-form-label'">{{item.label}}</text>
 			<!-- 时间段 -->
 			<view v-if="item.type == 'rangDate'" class="grace-form-body">
 				<input type="text" :disabled="true" class="grace-form-input" v-model="item.value"
 					@tap="showRangeDatePick(item.name)" :name="item.name" :placeholder="item.placeholder" />
-				<rangeDatePick :show="item.show" :value="item.value.split(' ~ ')" @change="rangeDateChange(item.name, $event)"
-					@cancel="rangeDateCancel(item.name)" :start="start" :end="end" />
+				<rangeDatePick :show="item.show" :value="item.value.split(' ~ ')"
+					@change="rangeDateChange(item.name, $event)" @cancel="rangeDateCancel(item.name)" :start="start"
+					:end="end" />
 			</view>
 			<!-- 输入框 -->
 			<view v-if="item.type == 'text'" class="grace-form-body">
@@ -41,7 +43,8 @@
 			</view>
 			<text v-if="item.type == 'date'" class="grace-icons icon-arrow-down" style="margin-left:5px;"></text>
 			<!-- 单选框 -->
-			<view v-if="item.type == 'radio'" class="grace-form-body" style="padding:20rpx 0;">
+			<view v-if="['radio', 'longRadio'].includes(item.type)"
+				:class="item.type == 'longRadio' ? '' : 'grace-form-body'" style="padding:20rpx 0;">
 				<radio-group class="radio-group" :name="item.name">
 					<label v-for="(radio, radioIndex) in item.radioGroup" :key="radioIndex" class="grace-check-item-v">
 						<radio :disabled="item.disabled" :checked="item.value == radio.value" :value="radio.value">
@@ -230,5 +233,9 @@
 	.radio-group {
 		display: flex;
 		justify-content: flex-end;
+	}
+	
+	.ug-form-label {
+		color: #888888;
 	}
 </style>

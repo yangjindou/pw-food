@@ -91,6 +91,9 @@
 	}, {
 		"path": "pages/business/warehouseUser/list",
 		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/healthy",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",

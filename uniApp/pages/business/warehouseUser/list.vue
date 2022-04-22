@@ -1,6 +1,6 @@
 <template>
 	<gracePage headerBG="#0088FE" :bounding="false">
-		<ugNav slot="gHeader" :isBack="true" title="监管仓管理"></ugNav>
+		<ugNav slot="gHeader" :isBack="true" title="监管仓用户管理"></ugNav>
 		<view slot="gBody" class="grace-flex-v1" id="gBody">
 			<view id="top" class="grace-body grace-bg-white">
 				<ugForm v-if="false" ref="form" submitName="查询" :columns="formColumns" @submit="formSubmit"
@@ -12,13 +12,12 @@
 				</view>
 				<view class="grace-nowrap grace-flex-end list-btn">
 					<text class="grace-blue grace-icons" @tap="showActionSheet">更多</text>
-          <text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
-          <text class="grace-blue grace-icons" @tap="action('修改')">修改</text>
-          <text class="grace-blue grace-icons" @tap="action('新增')">新增</text>
+					<text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
+					<text class="grace-blue grace-icons" @tap="action('修改')">修改</text>
+					<text class="grace-blue grace-icons" @tap="action('新增')">新增</text>
 				</view>
 			</ugCheckList>
-			<graceActionSheet title="请选择操作功能" @cancel="cancel" :items="actionSheetItems" ref="graceActionSheet"
-				@selected="selected"></graceActionSheet>
+			<graceActionSheet title="请选择操作功能" @selected="selected" :items="actionSheetItems" ref="graceActionSheet" />
 			<ugDialog ref="dialog" content="确定删除这些数据?" @ok="delOk" />
 		</view>
 	</gracePage>
@@ -30,7 +29,7 @@
 		data() {
 			return {
 				formColumns: [],
-				actionSheetItems: ['删除' ,'核酸检测', '日常健康记录', '隔离记录', '应急处理'] ,
+				actionSheetItems: ['删除', '核酸检测', '日常健康记录', '隔离记录', '应急处理'],
 			}
 		},
 		onLoad() {
@@ -40,11 +39,30 @@
 		},
 		methods: {
 			selected(e) {
-				uni.showToast({
-					title: "您选择了 : " + this.actionSheetItems[e],
-					icon: "none"
-				});
-				//this.$refs.graceActionSheet.close();
+				const actionSheet = this.actionSheetItems[e];
+				if (actionSheet == '删除') {
+					this.action('删除');
+					return;
+				}
+				if (this.selectIndex.length != 1) {
+					uni.showToast({
+						title: "请选择一条数据的数据",
+						icon: "none"
+					});
+					return;
+				}
+				if (actionSheet == '核酸检测') {
+
+				} else if (actionSheet == '日常健康记录') {
+					uni.setStorageSync("formData", this.listData[this.selectIndex[0]]["data"]);
+					uni.navigateTo({
+						url: './healthy?action=修改'
+					});
+				} else if (actionSheet == '隔离记录') {
+
+				} else if (actionSheet == '应急处理') {
+
+				}
 			},
 			cancel() {
 				uni.showToast({
