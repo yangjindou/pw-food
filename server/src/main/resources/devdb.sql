@@ -11,7 +11,7 @@
  Target Server Version : 100419
  File Encoding         : 65001
 
- Date: 19/04/2022 17:50:29
+ Date: 22/04/2022 16:40:34
 */
 
 SET NAMES utf8mb4;
@@ -216,7 +216,7 @@ CREATE TABLE `sys_user`  (
 INSERT INTO `sys_user` VALUES (1, '2022-03-30 11:35:02', NULL, '2022-04-01 08:47:38', 1, 'a', '系统管理员', 'ca2@!1cf@aa!23b5b#6f4@adc0560adg#6@2d!6664c5@3d4c35@df413d6*223a', 'M07KjwZBHfVWO93I', '系统管理员', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (2, '2022-03-30 11:35:02', NULL, '2022-04-01 08:47:38', 1, 'aa', '系统管理员', 'ca2@!1cf@aa!23b5b#6f4@adc0560adg#6@2d!6664c5@3d4c35@df413d6*223a', 'M07KjwZBHfVWO93I', '系统管理员', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (79, '2022-04-02 08:56:57', 1, '2022-04-18 13:16:49', 79, 'b', '监管仓管理员', '31d*cd!d6f30cb4d!1@12643ac531*4d6f1ccdc0#6#aaF5b0@4023cg5a@3c30f', 'VMvGsYedmGaMaLtL', '监管仓管理员', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `sys_user` VALUES (80, '2022-04-03 13:40:00', 1, '2022-04-18 18:10:08', 1, '测试2', '1', 'd#d0d0@22F3gc45c0*b5*111464613222b24!cd6cca##f3dbgcc#c2a6#!a13a3', 'kp2OBULU5jZcFUra', '监管仓管理员', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `sys_user` VALUES (80, '2022-04-03 13:40:00', 1, '2022-04-18 18:10:08', 1, 'bb', '1', 'ca2@!1cf@aa!23b5b#6f4@adc0560adg#6@2d!6664c5@3d4c35@df413d6*223a', 'M07KjwZBHfVWO93I', '监管仓管理员', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `sys_user` VALUES (83, '2022-04-18 11:34:48', NULL, '2022-04-18 18:10:28', 1, 'c', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', 0, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
 INSERT INTO `sys_user` VALUES (87, '2022-04-18 11:34:48', NULL, NULL, NULL, 'c1', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', NULL, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
 INSERT INTO `sys_user` VALUES (88, '2022-04-18 11:34:48', NULL, NULL, NULL, 'c2', '企业用户', '2*5Fd0!1bcbF3d@!#g*1df1ad!4*d!@61F@#aa3#5F3@616d43#1#fbga4a6b!d2', 'RhXFexHHDY1G3viL', '企业用户', NULL, '89', '11111111113', '4', '5', '6', '22', '[\"b5793ec7-ba32-45f6-9ca1-5657ccde4469.jpg\"]');
@@ -297,14 +297,15 @@ CREATE TABLE `t_device`  (
   `inspection_date` date NULL DEFAULT NULL COMMENT '校验日期',
   `is_required_save` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '检测废弃物是否按规定存放',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_device
 -- ----------------------------
-INSERT INTO `t_device` VALUES (108, '2022-04-04 19:48:21', 79, '2022-04-16 14:34:14', 79, '22', '是', '2022-04-05', '否');
+INSERT INTO `t_device` VALUES (108, '2022-04-04 19:48:21', 79, '2022-04-20 10:31:29', 79, '22', '是', '2022-04-09', '否');
 INSERT INTO `t_device` VALUES (111, '2022-04-04 20:50:17', 1, '2022-04-04 20:55:51', 1, '2', '否', '2022-04-04', '否');
 INSERT INTO `t_device` VALUES (112, '2022-04-04 20:57:14', 1, '2022-04-04 20:57:50', 1, '1', '是', '2022-04-23', '否');
+INSERT INTO `t_device` VALUES (113, '2022-04-20 10:23:36', 79, NULL, NULL, 'a', '是', '2022-04-20', '是');
 
 -- ----------------------------
 -- Table structure for t_disinfectant
@@ -323,14 +324,15 @@ CREATE TABLE `t_disinfectant`  (
   `concentration` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消毒液浓度',
   `assessment` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '消杀评估',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_disinfectant
 -- ----------------------------
 INSERT INTO `t_disinfectant` VALUES (110, '2022-04-12 16:22:36', 1, '2022-04-12 22:56:15', 1, '1', '比例比例', '2022-04-07', '2', '3', '4');
-INSERT INTO `t_disinfectant` VALUES (111, '2022-04-16 14:35:06', 79, '2022-04-19 13:17:35', 79, 'c', '测试比例', '2022-04-16', '1', '2', '3');
+INSERT INTO `t_disinfectant` VALUES (111, '2022-04-16 14:35:06', 79, '2022-04-20 17:08:58', 79, 'c', '测试比例', '2022-04-14', '1', '2', '3');
 INSERT INTO `t_disinfectant` VALUES (112, '2022-04-19 13:22:51', 79, NULL, NULL, '攻1', '2', '2022-04-19', '4', '5', '6');
+INSERT INTO `t_disinfectant` VALUES (113, '2022-04-20 17:09:09', 79, NULL, NULL, 'c', 'b', '2022-04-20', '1', '2', '3');
 
 -- ----------------------------
 -- Table structure for t_disinfection_record
@@ -348,13 +350,14 @@ CREATE TABLE `t_disinfection_record`  (
   `phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '电话号码',
   `disinfectant_ratio` int NULL DEFAULT NULL COMMENT '消毒液配比（t_disinfectant表的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 114 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_disinfection_record
 -- ----------------------------
 INSERT INTO `t_disinfection_record` VALUES (111, '2022-04-12 22:26:17', NULL, '2022-04-19 13:25:37', 79, 112, '233', '2022-04-15', '11', 111);
 INSERT INTO `t_disinfection_record` VALUES (112, '2022-04-12 22:55:50', 1, '2022-04-19 13:25:40', 79, 110, '1', '2022-04-12', '555', 112);
+INSERT INTO `t_disinfection_record` VALUES (113, '2022-04-21 10:25:17', 79, '2022-04-21 11:23:17', 79, 110, '1', '2022-04-21', '11111111112', 111);
 
 -- ----------------------------
 -- Table structure for t_notice
@@ -376,8 +379,6 @@ CREATE TABLE `t_notice`  (
 -- ----------------------------
 INSERT INTO `t_notice` VALUES (106, '2022-04-04 08:04:55', 1, NULL, NULL, '测试', '123123123');
 INSERT INTO `t_notice` VALUES (107, '2022-04-04 08:34:10', 1, '2022-04-04 08:34:18', 1, '33', '55\n444');
-INSERT INTO `t_notice` VALUES (108, '2022-04-04 20:50:11', 1, NULL, NULL, '1', '2');
-INSERT INTO `t_notice` VALUES (109, '2022-04-19 13:11:48', 79, NULL, NULL, '测试', '测试');
 
 -- ----------------------------
 -- Table structure for t_warehouse
@@ -405,14 +406,16 @@ CREATE TABLE `t_warehouse`  (
   `latitude` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '集中监管仓纬度',
   `state` int NULL DEFAULT NULL COMMENT '状态（正常、闭仓、废弃）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_warehouse
 -- ----------------------------
 INSERT INTO `t_warehouse` VALUES (110, '2022-04-12 22:56:50', 79, '2022-04-13 22:36:55', 1, '2', '4', '泉山监管仓', '1', '2', '3', '天津市/直辖区', '4', '2022-04-12', '4', '5', '11111111111', '1', '2', 90);
 INSERT INTO `t_warehouse` VALUES (111, '2022-04-13 22:37:19', 1, NULL, NULL, '1', '255', '睢宁监管仓', '1', '3', '5', '北京市/直辖区', '6', '2022-04-13', '7', '8', '9', '1', '2', 90);
-INSERT INTO `t_warehouse` VALUES (112, '2022-04-13 22:37:46', 79, NULL, NULL, '53', '6', '云龙监管仓', '33', '5', '4', '山西省/阳泉市/矿区', '5', '2022-04-13', '5', '6', '6', '7', '8', 91);
+INSERT INTO `t_warehouse` VALUES (112, '2022-04-13 22:37:46', 79, '2022-04-21 16:02:50', 79, '53', '6', '云龙监管仓', '33', '5', '4', '河北省/唐山市/路南区', '5', '2022-04-13', '5', '6', '6', '7', '8', 91);
+INSERT INTO `t_warehouse` VALUES (113, '2022-04-21 16:13:28', 79, NULL, NULL, '123213', '123123123', '444', '555', '22', '2', '北京/北京市/东城区', '4', '2022-04-21', '5', '65', '6', '7', '1', 92);
+INSERT INTO `t_warehouse` VALUES (114, '2022-04-22 10:48:29', 80, NULL, NULL, '111', '1', '测试', '1', '2', '3', '山西省/阳泉市', '4', '2022-04-22', '5', '6', '7', '1', '2', 90);
 
 -- ----------------------------
 -- Table structure for t_warehouse_user
@@ -444,12 +447,14 @@ CREATE TABLE `t_warehouse_user`  (
   `option9` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `option10` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 113 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 116 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_warehouse_user
 -- ----------------------------
-INSERT INTO `t_warehouse_user` VALUES (111, '2022-04-13 10:04:07', NULL, '2022-04-19 17:02:24', 79, '张三', '女', '3', '4', '5', 110, '是', '7', '2022-04-14', '是', '是', '否', '是', '否', '是', '是', '否', '是', '是');
+INSERT INTO `t_warehouse_user` VALUES (111, '2022-04-13 10:04:07', NULL, '2022-04-22 14:37:26', 79, '张三', '男', '423', '14', '445', 112, '是', '337', '2022-04-14', '是', '否', '否', '否', '否', '是', '是', '是', '是', '是');
+INSERT INTO `t_warehouse_user` VALUES (114, '2022-04-22 10:48:45', 80, NULL, NULL, '李四', '男', '1', '1', '1', 114, '是', '3', '2022-04-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `t_warehouse_user` VALUES (115, '2022-04-22 16:16:02', 79, NULL, NULL, '王五', '男', '11', '1231231231', '1', 110, '是', '2', '2022-04-22', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for t_warehouse_user_check
@@ -464,15 +469,15 @@ CREATE TABLE `t_warehouse_user_check`  (
   `pid` int NULL DEFAULT NULL COMMENT 't_warehouse_user的id',
   `result` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '检测结果',
   `date` date NULL DEFAULT NULL COMMENT '检测时间',
-  `user` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '检测人',
+  `user` int NULL DEFAULT NULL COMMENT '检测人',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 115 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_warehouse_user_check
 -- ----------------------------
-INSERT INTO `t_warehouse_user_check` VALUES (112, '2022-04-13 14:59:49', NULL, '2022-04-19 17:03:09', 79, 111, '阴性', '2022-04-13', '张三');
-INSERT INTO `t_warehouse_user_check` VALUES (113, '2022-04-13 15:09:06', 1, '2022-04-19 15:28:00', 79, 111, '阳性', '2022-04-13', '555');
+INSERT INTO `t_warehouse_user_check` VALUES (116, '2022-04-22 16:29:56', 80, NULL, NULL, 114, '阴性', '2022-04-22', 114);
+INSERT INTO `t_warehouse_user_check` VALUES (117, '2022-04-22 16:33:03', 79, '2022-04-22 16:33:25', 79, 111, '阳性', '2022-04-22', 115);
 
 -- ----------------------------
 -- Table structure for t_warehouse_user_emergency
@@ -533,12 +538,13 @@ CREATE TABLE `t_waste_disposal`  (
   `is_save48hour` varchar(5) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '是否存放48小时',
   `remark` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 117 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of t_waste_disposal
 -- ----------------------------
 INSERT INTO `t_waste_disposal` VALUES (115, '2022-04-05 12:29:46', 1, NULL, NULL, '1', '2', '3', '是', '55');
 INSERT INTO `t_waste_disposal` VALUES (116, '2022-04-16 14:34:40', 79, NULL, NULL, '2', '3', '4', '否', '55');
+INSERT INTO `t_waste_disposal` VALUES (117, '2022-04-20 11:06:14', 79, '2022-04-20 11:06:20', 79, '1', '2', '3', '是', '555');
 
 SET FOREIGN_KEY_CHECKS = 1;
