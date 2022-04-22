@@ -31,10 +31,13 @@
 		},
 		methods: {
 			async getSelectList() {
+        let params = {
+          createUser: uni.getStorageSync('userData')['id']
+        }
         for (let i = 0; i < this.formColumns.length; i++) {
           let e = this.formColumns[i];
           if (e.name == 'warehouse') {
-            await this.$http.get(`/warehouse/list`).then(res => {
+            await this.$http.get(`/warehouse/list`, {params}).then(res => {
               e.dropboxGroup = res.data.map(e => {
                 return {
                   value: e.id,

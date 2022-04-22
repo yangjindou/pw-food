@@ -34,7 +34,7 @@
 			}
 		},
 		onLoad() {
-			this.basicParams['createUser'] = uni.getStorageSync('userData')['id'];
+			this.basicParams['warehouseCreateUser'] = uni.getStorageSync('userData')['id'];
 			this.getformColumns();
 			this.getList();
 		},
