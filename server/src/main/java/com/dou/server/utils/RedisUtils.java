@@ -24,7 +24,7 @@ public class RedisUtils {
     public final static long NOT_EXPIRE = -1;
     /** 用户在redis中的前缀 **/
     public final static String USER_PREFIX = "user::";
-    public final static long USER_EXPIRE = 24 * 3600;
+    public final static long USER_EXPIRE = 3 * 24 * 3600;
 
     public void setUser(User user) {
         if (null != user) {
