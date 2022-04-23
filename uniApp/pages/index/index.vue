@@ -49,7 +49,7 @@
 						icon: 'article',
 						name: '预约管理',
 						bgColor: '#FF2851',
-						url: '../business/notice/list',
+						url: '../business/appointment/index/list',
 					}],
 					admin: [{
 						icon: 'article',

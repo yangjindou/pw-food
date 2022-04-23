@@ -56,6 +56,12 @@
 		"path": "pages/business/wasteDisposal/list",
 		"style": {}
 	}, {
+		"path": "pages/business/appointment/index/form",
+		"style": {}
+	}, {
+		"path": "pages/business/appointment/index/list",
+		"style": {}
+	}, {
 		"path": "pages/business/appointment/warehousing/form",
 		"style": {}
 	}, {
