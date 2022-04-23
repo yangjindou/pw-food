@@ -30,8 +30,7 @@
 			<view v-if="item.type == 'area'" class="grace-form-body">
 				<input @tap="openPicker(item.disabled)" type="text" :disabled="true" class="grace-form-input"
 					v-model="item.value" :name="item.name" :placeholder="item.placeholder" />
-				<lotus-address :name="item.name" v-on:choseVal="choseValue" :lotusAddressData="lotusAddressData">
-				</lotus-address>
+				<lotus-address :name="item.name" v-on:choseVal="choseValue" :lotusAddressData="lotusAddressData" />
 			</view>
 			<!-- 日期 -->
 			<view v-if="item.type == 'date'" class="grace-form-body">
@@ -41,7 +40,6 @@
 						:placeholder="item.placeholder" />
 				</ugDateTime>
 			</view>
-			<text v-if="item.type == 'date'" class="grace-icons icon-arrow-down" style="margin-left:5px;"></text>
 			<!-- 单选框 -->
 			<view v-if="['radio', 'longRadio'].includes(item.type)"
 				:class="item.type == 'longRadio' ? '' : 'grace-form-body'" style="padding:20rpx 0;">
@@ -61,7 +59,6 @@
 						:placeholder="item.placeholder" hidden />
 					<input type="text" :disabled="true" class="grace-form-input" v-model="item.valueLabel"
 						:name="item.name+'label'" :placeholder="item.placeholder" />
-					<text class="grace-icons icon-arrow-down" style="margin-left:5px;"></text>
 				</ugDropbox>
 			</view>
 			<!-- 上传图片 -->
@@ -69,8 +66,11 @@
 				<input type="text" :disabled="true" class="grace-form-input" v-model="item.value" :name="item.name"
 					:placeholder="item.placeholder" hidden />
 				<ugSelectImg :disabled="item.disabled" @change="imgsChange" :name="item.name"
-					:maxFileNumber="item.maxFileNumber ? item.maxFileNumber : 9" :urls="item.value"></ugSelectImg>
+					:maxFileNumber="item.maxFileNumber ? item.maxFileNumber : 9" :urls="item.value" />
 			</view>
+			<!-- 箭头 -->
+			<text v-if="['date', 'rangDate', 'dropbox'].includes(item.type)" class="grace-icons icon-arrow-down"
+				style="margin-left:5px;"></text>
 		</view>
 		<slot></slot>
 		<view v-if="showSubmit" class="form-btn">
@@ -234,7 +234,7 @@
 		display: flex;
 		justify-content: flex-end;
 	}
-	
+
 	.ug-form-label {
 		color: #888888;
 	}

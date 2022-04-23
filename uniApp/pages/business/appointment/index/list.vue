@@ -23,20 +23,51 @@
 </template>
 <script>
 	import listMixin from './list.js';
+	import apiUtils from '@/utils/apiUtils.js';
 	export default {
 		mixins: [listMixin],
 		data() {
 			return {
 				formColumns: [],
 				actionSheetItems: ['删除', '核酸检测', '日常健康记录', '隔离记录', '应急处理'],
+				formData: {},
 			}
 		},
 		onLoad() {
-      this.basicParams['createUser'] = uni.getStorageSync('userData')['id'];
+			this.basicParams['createUser'] = uni.getStorageSync('userData')['id'];
 			this.getformColumns();
+			this.getSelectList();
 			this.getList();
 		},
 		methods: {
+			async getSelectList() {
+				for (var i = 0; i < this.formColumns.length; i++) {
+					let e = this.formColumns[i];
+					if (e.name == 'goodType') {
+						await apiUtils.getDictData('goodType').then(res => {
+							e.dropboxGroup = res.data.map(e => {
+								return {
+									value: e.id,
+									label: e.name
+								};
+							});
+						});
+					}
+					if (e.name == 'goodSource') {
+						await apiUtils.getDictData('goodSource').then(res => {
+							e.dropboxGroup = res.data.map(e => {
+								return {
+									value: e.id,
+									label: e.name
+								};
+							});
+						});
+					}
+				}
+				this.$nextTick(() => {
+					this.$refs.form.changeColumns(this.formColumns);
+				});
+			},
 			selected(e) {
 				const actionSheet = this.actionSheetItems[e];
 				if (actionSheet == '删除') {
@@ -115,9 +146,26 @@
 			},
 			getformColumns() {
 				this.formColumns = [{
-					label: "录入时间",
-					name: "createDate",
-					type: "date",
+					label: "货物类别",
+					name: "goodType",
+					type: "dropbox",
+					dropboxGroup: [],
+					value: ''
+				}, {
+					label: "货物来源",
+					name: "goodSource",
+					type: "dropbox",
+					dropboxGroup: [],
+					value: ''
+				}, {
+					label: "车牌号",
+					name: "carNumber",
+					type: "text",
+					value: ''
+				}, {
+					label: "入仓时间",
+					name: "warehousingDate",
+					type: "rangDate",
 					value: ''
 				}];
 			},
