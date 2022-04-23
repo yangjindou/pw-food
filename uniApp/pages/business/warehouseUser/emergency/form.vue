@@ -57,7 +57,7 @@
 			formSubmit(formData) {
 				formData['pid'] = this.pid;
 				if (this.action == '新增') {
-					this.$http.post("/warehouseUser/isolate", formData).then(res => {
+					this.$http.post("/warehouseUser/emergency", formData).then(res => {
 						uni.setStorageSync("msg", "新增成功");
 						uni.navigateBack({
 							delta: 1
@@ -65,7 +65,7 @@
 					});
 				} else if (this.action == '修改') {
 					formData['id'] = this.id;
-					this.$http.put("/warehouseUser/isolate", formData).then(res => {
+					this.$http.put("/warehouseUser/emergency", formData).then(res => {
 						uni.setStorageSync("msg", "修改成功");
 						uni.navigateBack({
 							delta: 1
@@ -75,24 +75,15 @@
 			},
 			getFormColumns() {
 				this.formColumns = [{
-					label: "隔离时间",
+					label: "时间",
 					name: "date",
 					type: "date",
-					placeholder: "请选择隔离时间",
+					placeholder: "请选择时间",
 					value: '',
 					checkType: "notnull",
 					checkRule: "",
-					errorMsg: "请选择隔离时间"
+					errorMsg: "请选择时间"
 				}, {
-          label: "隔离地点",
-          name: "place",
-          type: "text",
-          placeholder: "请输入隔离地点",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请输入隔离地点"
-        },{
           label: "备注",
           name: "remark",
           type: "text",

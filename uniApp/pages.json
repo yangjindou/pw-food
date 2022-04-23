@@ -106,6 +106,12 @@
 	}, {
 		"path": "pages/business/warehouseUser/isolate/list",
 		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/emergency/form",
+		"style": {}
+	}, {
+		"path": "pages/business/warehouseUser/emergency/list",
+		"style": {}
 	}],
 	"globalStyle": {
 		"navigationStyle": "custom",
