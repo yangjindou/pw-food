@@ -2,7 +2,7 @@
   <a-modal v-model="formModal" title="公告详情" :footer="null"  :maskClosable="false">
     <div class="notice-title">{{formData['title']}}</div>
     <div class="notice-time">{{formData['createDate']}}</div>
-    <div class="notice-content">{{formData['content']}}</div>
+    <pre class="notice-content">{{formData['content']}}</pre>
   </a-modal>
 </template>
 

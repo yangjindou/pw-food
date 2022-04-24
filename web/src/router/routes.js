@@ -38,6 +38,10 @@ export default [{
     name: "notice",
     component: () => import('@/views/business/notice/index')
   }, {
+    path: "notice-user",
+    name: "notice-user",
+    component: () => import('@/views/business/notice/user')
+  }, {
     path: "device",
     name: "device",
     component: () => import('@/views/business/device/index')

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <u-breadcrumb :items="['公告管理','公告列表']" title="公告列表" />
+    <u-breadcrumb :items="['公告列表']" title="公告列表" back-btn/>
     <div class="search">
       <a-form class="search-form" :form="formSearch">
         <a-row :gutter="24">
@@ -26,8 +26,8 @@
     <div class="table">
       <div class="table-banner">
         <div class="table-btn">
-          <a-button type="primary" @click="add">新增</a-button>
-          <a-button type="danger" @click="del">删除</a-button>
+<!--          <a-button type="primary" @click="add">新增</a-button>-->
+<!--          <a-button type="danger" @click="del">删除</a-button>-->
         </div>
       </div>
       <div class="table-content">
@@ -36,25 +36,20 @@
                  :row-key="row => row['id']" :data-source="tableData"
                  :pagination="pagination" :loading="loading" @change="handleTableChange">
           <template slot="operation" slot-scope="row">
-            <div class="operation-btn">
-              <a @click="detail(row)">详情</a>
-              <a @click="update(row)">修改</a>
-            </div>
+            <a @click="detail(row)">详情</a>
           </template>
         </a-table>
       </div>
     </div>
-    <t-form ref="form" />
     <t-detail ref="detail" />
   </div>
 </template>
 
 <script>
-import tForm from "./form";
-import table from './table';
 import tDetail from "./detail";
+import table from './table';
 export default {
-  components: {tForm, tDetail},
+  components: {tDetail},
   data() {
     return {
       formSearch: this.$form.createForm(this, { name: 'search_user' }),
@@ -64,43 +59,11 @@ export default {
     };
   },
   mounted() {
-    this.basicParams['createUser'] = this.$store.state.user.userData['id'];
     this.fetch();
   },
   methods: {
     detail(item) {
       this.$refs.detail.open(item);
-    },
-    add() {
-      this.$refs.form.add();
-    },
-    update(row) {
-      this.$refs.form.update(row);
-    },
-    del() {
-      if (this.selectedRowKeys.length === 0) {
-        this.$message.error("请选择数据！");
-        return;
-      }
-      const _this = this;
-      this.$confirm({
-        title: '确定删除这些数据?',
-        okText: '确定',
-        okType: 'danger',
-        cancelText: '取消',
-        onOk() {
-          let params = {
-            ids: _this.selectedRowKeys.join(',')
-          };
-          _this.$axios.delete("/notice", {params}).then(res => {
-            if (res) {
-              _this.$message.success("删除成功");
-              _this.fetch();
-              _this.selectedRowKeys = [];
-            }
-          });
-        },
-      });
     },
     searchReset() {
       this.formSearch.resetFields();
@@ -138,12 +101,6 @@ export default {
       button {
         margin: 0 5px;
       }
-    }
-  }
-
-  .operation-btn {
-    & > * {
-      margin-right: 15px;
     }
   }
 }

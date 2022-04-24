@@ -5,7 +5,7 @@
 			<view class="grace-body" slot="gBody">
 				<view class="notice-title">{{formData['title']}}</view>
 				<view class="notice-time">{{formData['createDate']}}</view>
-				<view class="notice-content">{{formData['content']}}</view>
+				<view class="notice-content" v-html="content"></view>
 			</view>
 		</gracePage>
 	</view>
@@ -14,7 +14,8 @@
 	export default {
 		data() {
 			return {
-				formData: {}
+				formData: {},
+				content: '',
 			}
 		},
 		onLoad() {
@@ -22,6 +23,7 @@
 			if (formData) {
 				uni.removeStorageSync("formData");
 				this.formData = formData;
+				this.content = this.formData['content'].replace(/\n/g, '<br/>');
 			}
 		},
 		methods: {

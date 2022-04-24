@@ -3,12 +3,12 @@
     <div id="notice">
       <div class="notice-title">
         <div class="title-left">公告</div>
-        <div class="title-right">更多</div>
+        <div class="title-right" @click="notice">更多</div>
       </div>
       <div class="notice-list">
-        <div class="notice-list-item" v-for="(item, index) in noticeList" :key="index" @click="notice(item)">
+        <div class="notice-list-item" v-for="(item, index) in noticeList" :key="index">
           <template v-if="index < 10">
-            <div class="item-title">{{item['title'].length > 10 ? item['title'].substr(0,20) + "..." : item['title']}}</div>
+            <div class="item-title" @click="notice(item)">{{item['title'].length > 10 ? item['title'].substr(0,20) + "..." : item['title']}}</div>
             <div class="item-time">{{item['createDate']}}</div>
           </template>
         </div>
@@ -31,7 +31,11 @@ export default {
   },
   methods: {
     notice(item) {
-      this.$refs.form.open(item);
+      if(item.title) {
+        this.$refs.form.open(item);
+      } else {
+        this.$router.push({name: 'notice-user'})
+      }
     },
     getNotice() {
       this.$axios.get("/notice/list").then(res => {
