@@ -31,22 +31,39 @@
 		},
 		methods: {
 			async getSelectList() {
-        let params = {
-          createUser: uni.getStorageSync('userData')['id']
-        }
-        for (let i = 0; i < this.formColumns.length; i++) {
-          let e = this.formColumns[i];
-          if (e.name == 'warehouse') {
-            await this.$http.get(`/warehouse/list`, {params}).then(res => {
-              e.dropboxGroup = res.data.map(e => {
-                return {
-                  value: e.id,
-                  label: e.name
-                };
-              });
-            });
-          }
-        }
+				for (let i = 0; i < this.formColumns.length; i++) {
+					let e = this.formColumns[i];
+					if (e.name == 'warehouse') {
+					  await this.$http.get(`/warehouse/list?stateName=正常`).then(res => {
+					    e.dropboxGroup = res.data.map(e => {
+					      return {
+					        value: e.id,
+					        label: e.name
+					      };
+					    });
+					  });
+					}
+					if (e.name == 'goodType') {
+						await apiUtils.getDictData('goodType').then(res => {
+							e.dropboxGroup = res.data.map(e => {
+								return {
+									value: e.id,
+									label: e.name
+								};
+							});
+						});
+					}
+					if (e.name == 'goodSource') {
+						await apiUtils.getDictData('goodSource').then(res => {
+							e.dropboxGroup = res.data.map(e => {
+								return {
+									value: e.id,
+									label: e.name
+								};
+							});
+						});
+					}
+				}
         this.$nextTick(() => {
         	this.$refs.form.changeColumns(this.formColumns);
         });
@@ -72,6 +89,7 @@
 				}
 			},
 			formSubmit(formData) {
+				debugger
 				if (this.action == '新增') {
 					this.$http.post("/appointment", formData).then(res => {
 						uni.setStorageSync("msg", "新增成功");
@@ -91,98 +109,170 @@
 			},
 			getFormColumns() {
 				this.formColumns = [{
-					label: "姓名",
-					name: "name",
-					type: "text",
-					placeholder: "请输入姓名",
+					label: "上报的省",
+					name: "area",
+					type: "area",
+					placeholder: "请选择上报的省",
 					value: '',
 					checkType: "notnull",
 					checkRule: "",
-					errorMsg: "请输入姓名"
+					errorMsg: "请选择上报的省"
 				}, {
-          label: "性别",
-          name: "gender",
-          type: "radio",
-          radioGroup: [{
-            label: '男',
-            value: '男',
-          }, {
-            label: '女',
-            value: '女',
-          }],
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请选择性别"
-        }, {
-          label: "年龄",
-          name: "age",
-          type: "text",
-          placeholder: "请输入年龄",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请输入年龄"
-        }, {
-          label: "手机号",
-          name: "phone",
-          type: "text",
-          placeholder: "请输入手机号",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请输入手机号"
-        }, {
-          label: "工作种类",
-          name: "workType",
-          type: "text",
-          placeholder: "请输入工作种类",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请输入工作种类"
-        }, {
-          label: "监管仓",
+          label: "预约监管仓",
           name: "warehouse",
           type: "dropbox",
           dropboxGroup: [],
-          placeholder: "请选择监管仓",
+          placeholder: "请选择预约监管仓",
           value: '',
           checkType: "notnull",
           checkRule: "",
-          errorMsg: "请选择监管仓"
+          errorMsg: "请选择预约监管仓"
         }, {
-          label: "是否接种疫苗",
-          name: "isInoculate",
-          type: "radio",
-          radioGroup: [{
-            label: '是',
-            value: '是',
-          }, {
-            label: '否',
-            value: '否',
-          }],
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请选择是否接种疫苗"
-        }, {
-          label: "接种次数",
-          name: "inoculateCount",
-          type: "text",
-          placeholder: "请输入接种次数",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请输入接种次数"
-        }, {
-          label: "接种时间",
-          name: "inoculateDate",
+          label: "预约入仓时间",
+          name: "appointmentWarehousingDate",
           type: "date",
-          placeholder: "请选择接种时间",
+          placeholder: "请选择预约入仓时间",
           value: '',
           checkType: "notnull",
           checkRule: "",
-          errorMsg: "请选择接种时间"
+          errorMsg: "请选择预约入仓时间"
+        },{
+          label: "货物类别",
+          name: "goodType",
+          type: "dropbox",
+          dropboxGroup: [],
+          placeholder: "请选择货物类别",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请选择货物类别"
+        }, {
+          label: "货物名称",
+          name: "goodName",
+          type: "text",
+          placeholder: "请输入货物名称",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入货物名称"
+        },{
+          label: "货物来源",
+          name: "goodSource",
+          type: "dropbox",
+          dropboxGroup: [],
+          placeholder: "请选择货物来源",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请选择货物来源"
+        }, {
+          label: "来源名称",
+          name: "sourceName",
+          type: "text",
+          placeholder: "请输入来源名称",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入来源名称"
+        }, {
+          label: "原产国/产地",
+          name: "originPlace",
+          type: "text",
+          placeholder: "请输入原产国/产地",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入原产国/产地"
+        }, {
+          label: "件数",
+          name: "amount",
+          type: "text",
+          placeholder: "请输入件数",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入件数"
+        }, {
+          label: "重量（Kg）",
+          name: "weight",
+          type: "text",
+          placeholder: "请输入重量（Kg）",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入重量（Kg）"
+        }, {
+          label: "承运司机",
+          name: "driver",
+          type: "text",
+          placeholder: "请输入承运司机",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入承运司机"
+        }, {
+          label: "车牌号",
+          name: "carNumber",
+          type: "text",
+          placeholder: "请输入车牌号",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入车牌号"
+        }, {
+          label: "司机电话",
+          name: "driverPhone",
+          type: "text",
+          placeholder: "请输入司机电话",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请输入司机电话"
+        }, {
+          label: "出仓证明",
+          name: "warehousedProve",
+          type: "img",
+          placeholder: "请上传出仓证明",
+          value: '',
+          checkType: "",
+          checkRule: "",
+          errorMsg: ""
+        }, {
+          label: "检疫证明",
+          name: "quarantineCertificate",
+          type: "img",
+          placeholder: "请上传检疫证明",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请上传检疫证明"
+        }, {
+          label: "报关单",
+          name: "customsBill",
+          type: "img",
+          placeholder: "请上传报关单",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请上传报关单"
+        }, {
+          label: "港口核酸证明",
+          name: "portInspectionCertificate",
+          type: "img",
+          placeholder: "请上传港口核酸证明",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请上传港口核酸证明"
+        }, {
+          label: "港口消杀证明",
+          name: "portDisinfectionCertificate",
+          type: "img",
+          placeholder: "请上传港口消杀证明",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请上传港口消杀证明"
         }]
 			}
 		}

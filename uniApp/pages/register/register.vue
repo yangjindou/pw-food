@@ -76,7 +76,7 @@
 					value: '',
 					checkType: "phoneno",
 					checkRule: "",
-					errorMsg: "请输入联系电话"
+					errorMsg: "请输入正确的联系电话"
 				}, {
 					label: "企业名称",
 					name: "enterpriseName",

@@ -13,7 +13,7 @@ module.exports = {
 		dataBeCheck = JSON.stringify(dataBeCheck);
 		var data = JSON.parse(dataBeCheck);
 		for(var i = 0; i < rule.length; i++){
-			if (!rule[i].checkType){return true;}
+			if (!rule[i].checkType){continue;}
 			if (!rule[i].name) {return true;}
 			if (!rule[i].errorMsg) {return true;}
 			if (!data[rule[i].name] || data[rule[i].name] == '') {this.error = rule[i].errorMsg; return false;}

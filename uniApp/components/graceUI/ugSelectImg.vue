@@ -64,7 +64,7 @@
 			if (!this.urls) {
 				return;
 			}
-			this.files = this.urls.splice(',');
+			this.files = this.urls.split(',');
 			this.files.some(item => this.fileUrls.push(this.uri + item));
 		},
 		methods: {
