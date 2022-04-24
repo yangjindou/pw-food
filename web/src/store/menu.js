@@ -15,10 +15,6 @@ export default {
         name: '首页'
       }],
       user: [{
-        key: 'notice-user',
-        icon: 'pie-chart',
-        name: '公告'
-      }, {
         key: 'appointment',
         icon: 'pie-chart',
         name: '预约管理'
