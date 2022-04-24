@@ -12,11 +12,11 @@
 				<view class="grace-nowrap grace-flex-end list-btn">
 					<text class="grace-blue grace-icons" @tap="showActionSheet">更多</text>
 					<text class="grace-blue grace-icons" @tap="action('详情')">详情</text>
-					<text class="grace-blue grace-icons" @tap="action('修改')">修改</text>
 					<text class="grace-blue grace-icons" @tap="action('新增')">新增</text>
 				</view>
 			</ugCheckList>
-			<graceActionSheet title="请选择操作功能" @selected="selected" :items="actionSheetItems" ref="graceActionSheet" />
+			<graceActionSheet height="300rpx" title="请选择操作功能" @selected="selected" :items="actionSheetItems"
+				ref="graceActionSheet" />
 			<ugDialog ref="dialog" content="确定删除这些数据?" @ok="delOk" />
 		</view>
 	</gracePage>
@@ -29,7 +29,7 @@
 		data() {
 			return {
 				formColumns: [],
-				actionSheetItems: ['删除', '核酸检测', '日常健康记录', '隔离记录', '应急处理'],
+				actionSheetItems: ['删除', '申请修改', '修改'],
 				formData: {},
 			}
 		},
@@ -82,10 +82,8 @@
 					return;
 				}
 				const formData = this.listData[this.selectIndex[0]]["data"];
-				if (actionSheet == '核酸检测') {
-					uni.navigateTo({
-						url: './check/list?id=' + formData['id']
-					});
+				if (actionSheet == '修改') {
+					this.action('修改');
 				} else if (actionSheet == '日常健康记录') {
 					uni.setStorageSync("formData", formData);
 					uni.navigateTo({
@@ -126,7 +124,7 @@
 					}
 					this.$refs.dialog.open();
 					return;
-				} else if (['修改', '详情'].includes(action)) {
+				} else if (action == "修改") {
 					if (this.selectIndex.length != 1) {
 						uni.showToast({
 							title: `请选择一条${action}的数据`,
@@ -137,6 +135,18 @@
 					uni.setStorageSync("formData", this.listData[this.selectIndex[0]]["data"]);
 					uni.navigateTo({
 						url: './form?action=' + action
+					});
+				} else if (action == "详情") {
+					if (this.selectIndex.length != 1) {
+						uni.showToast({
+							title: `请选择一条${action}的数据`,
+							icon: "none"
+						});
+						return;
+					}
+					uni.setStorageSync("formData", this.listData[this.selectIndex[0]]["data"]);
+					uni.navigateTo({
+						url: '../detail?action=' + action
 					});
 				} else {
 					uni.navigateTo({

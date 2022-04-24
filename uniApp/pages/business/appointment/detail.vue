@@ -1,7 +1,7 @@
 <template>
 	<view class="page">
 		<gracePage headerBG="#0088FE" :bounding="false">
-			<ugNav slot="gHeader" :isBack="true" :title="action" />
+			<ugNav slot="gHeader" :isBack="true" title="详情" />
 			<view class="grace-body" slot="gBody">
 				<ugForm ref="form" :showSubmit="showSubmit" :columns="formColumns" @submit="formSubmit"
 					:submitbtn="['保存','保存并提交']" />
@@ -32,42 +32,6 @@
 		},
 		methods: {
 			async getSelectList() {
-				for (let i = 0; i < this.formColumns.length; i++) {
-					let e = this.formColumns[i];
-					if (e.name == 'warehouse') {
-						await this.$http.get(`/warehouse/list?stateName=正常`).then(res => {
-							e.dropboxGroup = res.data.map(e => {
-								return {
-									value: e.id,
-									label: e.name
-								};
-							});
-						});
-					}
-					if (e.name == 'goodType') {
-						await apiUtils.getDictData('goodType').then(res => {
-							e.dropboxGroup = res.data.map(e => {
-								return {
-									value: e.id,
-									label: e.name
-								};
-							});
-						});
-					}
-					if (e.name == 'goodSource') {
-						await apiUtils.getDictData('goodSource').then(res => {
-							e.dropboxGroup = res.data.map(e => {
-								return {
-									value: e.id,
-									label: e.name
-								};
-							});
-						});
-					}
-				}
-				this.$nextTick(() => {
-					this.$refs.form.changeColumns(this.formColumns);
-				});
 			},
 			setFormData() {
 				const formData = uni.getStorageSync("formData");
@@ -110,19 +74,45 @@
 			},
 			getFormColumns() {
 				this.formColumns = [{
-					label: "上报的省",
-					name: "area",
-					type: "area",
-					placeholder: "请选择上报的省",
-					value: '',
-					checkType: "notnull",
-					checkRule: "",
-					errorMsg: "请选择上报的省"
-				}, {
+          label: "备案单号",
+          name: "filingOrder",
+          type: "text",
+          placeholder: "",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: ""
+        },{
+          label: "备案状态",
+          name: "filingState",
+          type: "text",
+          placeholder: "",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: ""
+        },{
+          label: "备案时间",
+          name: "createDate",
+          type: "text",
+          placeholder: "",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: ""
+        },{
+          label: "上报的省",
+          name: "area",
+          type: "area",
+          placeholder: "请选择上报的省",
+          value: '',
+          checkType: "notnull",
+          checkRule: "",
+          errorMsg: "请选择上报的省"
+        }, {
 					label: "预约监管仓",
-					name: "warehouse",
-					type: "dropbox",
-					dropboxGroup: [],
+					name: "warehouseName",
+					type: "text",
 					placeholder: "请选择预约监管仓",
 					value: '',
 					checkType: "notnull",
@@ -139,9 +129,8 @@
 					errorMsg: "请选择预约入仓时间"
 				}, {
 					label: "货物类别",
-					name: "goodType",
-					type: "dropbox",
-					dropboxGroup: [],
+					name: "goodTypeName",
+					type: "text",
 					placeholder: "请选择货物类别",
 					value: '',
 					checkType: "notnull",
@@ -158,9 +147,8 @@
 					errorMsg: "请输入货物名称"
 				}, {
 					label: "货物来源",
-					name: "goodSource",
-					type: "dropbox",
-					dropboxGroup: [],
+					name: "goodSourceName",
+					type: "text",
 					placeholder: "请选择货物来源",
 					value: '',
 					checkType: "notnull",
@@ -190,18 +178,18 @@
 					type: "text",
 					placeholder: "请输入件数",
 					value: '',
-					checkType: "numbers",
-					checkRule: "1,11",
-					errorMsg: "请输入正确的件数"
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入件数"
 				}, {
 					label: "重量（Kg）",
 					name: "weight",
 					type: "text",
 					placeholder: "请输入重量（Kg）",
 					value: '',
-					checkType: "numbers",
-					checkRule: "1,11",
-					errorMsg: "请输入正确的重量（Kg）"
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入重量（Kg）"
 				}, {
 					label: "承运司机",
 					name: "driver",
