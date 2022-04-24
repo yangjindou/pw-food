@@ -22,93 +22,36 @@
 					</view>
 				</view>
 			</view>
-		</view>
-		<view slot="gFooter">
-			<view class="text-center">技术支持：XXX 维护电话：XXX</view>
+			<view class="index-list grace-margin-top">
+				<view class="grace-title">
+					<view class="grace-title-border"></view>
+					<text class="grace-title-text grace-blue">公告</text>
+					<!-- <text class="grace-text-small grace-gray">grace.hcoder.net</text> -->
+				</view>
+				<view class="grace-list">
+					<view class="grace-list-items" v-for="(item, index) in noticeList" :key="index">
+						<view class="grace-list-body grace-border-b" v-if="index < 10">
+							<view class="grace-list-title">
+								<text class="grace-list-title-text">{{item['title'].length > 10 ? item['title'].substr(0,16) + "..." : item['title']}}</text>
+								<text class="grace-list-title-time">{{item['createDate']}}</text>
+							</view>
+						</view>
+					</view>
+				</view>
+			</view>
+			<view class="text-center grace-margin-top">技术支持：XXX 维护电话：XXX</view>
 		</view>
 	</gracePage>
 </template>
 <script>
+	import menuData from './menu.js';
 	export default {
 		data() {
 			return {
 				menuArr: [],
 				userData: {},
-				menuData: {
-					all: [{
-						icon: 'article',
-						name: '修改密码',
-						bgColor: '#FF2851',
-						url: '../passwordModify/passwordModify',
-					}, {
-						icon: 'article',
-						name: '退出',
-						bgColor: '#FF2851',
-					}],
-					user: [{
-						icon: 'article',
-						name: '预约管理',
-						bgColor: '#FF2851',
-						url: '../business/appointment/index/list',
-					}],
-					admin: [{
-						icon: 'article',
-						name: '公告管理',
-						bgColor: '#FF2851',
-						url: '../business/notice/list',
-					}, {
-						icon: 'article',
-						name: '监管仓管理',
-						bgColor: '#FF2851',
-						url: '../business/warehouse/list',
-					}, {
-						icon: 'article',
-						name: '监管仓人员',
-						bgColor: '#FF2851',
-						url: '../business/warehouseUser/list',
-					}, {
-						icon: 'article',
-						name: '设备管理',
-						bgColor: '#FF2851',
-						url: '../business/device/list',
-					}, {
-						icon: 'article',
-						name: '废物处理',
-						bgColor: '#FF2851',
-						url: '../business/wasteDisposal/list',
-					}, {
-						icon: 'article',
-						name: '消毒液管理',
-						bgColor: '#FF2851',
-						url: '../business/disinfectant/list',
-					}, {
-						icon: 'article',
-						name: '环境消杀记录',
-						bgColor: '#FF2851',
-						url: '../business/disinfectionRecord/list',
-					}, {
-						icon: 'article',
-						name: '预约管理',
-						bgColor: '#FF2851',
-						url: '../business/notice/list',
-					}, {
-						icon: 'article',
-						name: '入仓管理',
-						bgColor: '#FF2851',
-						url: '../business/appointment/warehousing/list',
-					}, {
-						icon: 'article',
-						name: '出仓管理',
-						bgColor: '#FF2851',
-						url: '../business/appointment/warehoused/list',
-					}],
-					system: [{
-						icon: 'article',
-						name: '用户管理',
-						bgColor: '#FF2851',
-						url: '../user/list',
-					}]
-				}
+				menuData,
+				noticeList: [],
 			}
 		},
 		onLoad() {
@@ -122,7 +65,17 @@
 			this.userData = userData;
 			this.getMenu();
 		},
+		onShow() {
+			this.getNotice();
+		},
 		methods: {
+			getNotice() {
+				this.$http.get("/notice/list").then(res => {
+					if (res && res.data && res.data.length) {
+						this.noticeList = res.data;
+					}
+				});
+			},
 			getMenu() {
 				const role = this.userData['role'];
 				let menuRoleData = [];
@@ -153,10 +106,33 @@
 	}
 </script>
 <style lang="less" scoped>
+	.index-list {
+		padding: 0 20rpx;
+		background-color: #FFFFFF;
+
+		.grace-list {
+			background-color: #FFFFFF;
+
+			.grace-list-body {
+				margin-left: 0;
+
+				.grace-list-title {
+					align-items: center;
+				}
+
+				.grace-list-title-time {
+					margin-left: 20rpx;
+					color: #7e7e7e;
+					font-size: 12px;
+				}
+			}
+		}
+	}
+
 	.index-top {
 		display: flex;
-		background-color: #FFFFFF;
 		padding: 20rpx 40rpx;
+		background-color: #FFFFFF;
 		align-items: center;
 
 		.text-box {
