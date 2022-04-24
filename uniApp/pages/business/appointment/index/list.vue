@@ -75,13 +75,14 @@
 					return;
 				}
 				if (this.selectIndex.length != 1) {
-					uni.showToast({
-						title: "请选择一条数据的数据",
-						icon: "none"
-					});
+					this.$common.showToast('请选择一条数据的数据');
 					return;
 				}
 				const formData = this.listData[this.selectIndex[0]]["data"];
+				if (formData['emergency']) {
+					this.$common.showToast('该数据被应急通知，无法操作！');
+					return;
+				}
 				if (actionSheet == '修改') {
 					this.action('修改');
 				} else if (actionSheet == '日常健康记录') {
