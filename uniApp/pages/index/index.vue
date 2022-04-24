@@ -26,7 +26,7 @@
 				<view class="grace-title">
 					<view class="grace-title-border"></view>
 					<text class="grace-title-text grace-blue">公告</text>
-					<!-- <text class="grace-text-small grace-gray">grace.hcoder.net</text> -->
+					<text class="grace-text-small grace-gray">更多</text>
 				</view>
 				<view class="grace-list">
 					<view class="grace-list-items" v-for="(item, index) in noticeList" :key="index">
@@ -72,7 +72,7 @@
 			notice(item) {
 				uni.setStorageSync("formData", item);
 				uni.navigateTo({
-					url: './notice?action=详情'
+					url: '../business/notice/detail'
 				});
 			},
 			getNotice() {

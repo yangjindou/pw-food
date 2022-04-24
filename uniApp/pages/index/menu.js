@@ -11,6 +11,11 @@ export default {
 	}],
 	user: [{
 		icon: 'article',
+		name: '公告',
+		bgColor: '#FF2851',
+		url: '../business/notice/user',
+	},{
+		icon: 'article',
 		name: '预约管理',
 		bgColor: '#FF2851',
 		url: '../business/appointment/index/list',

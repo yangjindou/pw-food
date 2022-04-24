@@ -6,13 +6,6 @@
 				"disableScroll": true
 			}
 		}
-	},{
-		"path": "pages/index/notice",
-		"style": {
-			"mp-weixin": {
-				"disableScroll": true
-			}
-		}
 	}, {
 		"path": "pages/login/login",
 		"style": {
@@ -50,6 +43,20 @@
 	}, {
 		"path": "pages/business/notice/list",
 		"style": {}
+	},{
+		"path": "pages/business/notice/user",
+		"style": {
+			"mp-weixin": {
+				"disableScroll": true
+			}
+		}
+	},{
+		"path": "pages/business/notice/detail",
+		"style": {
+			"mp-weixin": {
+				"disableScroll": true
+			}
+		}
 	}, {
 		"path": "pages/business/device/form",
 		"style": {}
