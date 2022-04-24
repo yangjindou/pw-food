@@ -31,7 +31,7 @@
 				<view class="grace-list">
 					<view class="grace-list-items" v-for="(item, index) in noticeList" :key="index">
 						<view class="grace-list-body grace-border-b" v-if="index < 10">
-							<view class="grace-list-title">
+							<view class="grace-list-title" @tap="notice(item)">
 								<text class="grace-list-title-text">{{item['title'].length > 10 ? item['title'].substr(0,16) + "..." : item['title']}}</text>
 								<text class="grace-list-title-time">{{item['createDate']}}</text>
 							</view>
@@ -69,6 +69,12 @@
 			this.getNotice();
 		},
 		methods: {
+			notice(item) {
+				uni.setStorageSync("formData", item);
+				uni.navigateTo({
+					url: './notice?action=详情'
+				});
+			},
 			getNotice() {
 				this.$http.get("/notice/list").then(res => {
 					if (res && res.data && res.data.length) {

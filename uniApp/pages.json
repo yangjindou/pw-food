@@ -6,6 +6,13 @@
 				"disableScroll": true
 			}
 		}
+	},{
+		"path": "pages/index/notice",
+		"style": {
+			"mp-weixin": {
+				"disableScroll": true
+			}
+		}
 	}, {
 		"path": "pages/login/login",
 		"style": {
