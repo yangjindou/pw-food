@@ -17,7 +17,7 @@
 			</ugCheckList>
 			<graceActionSheet height="600rpx" title="请选择操作功能" @selected="selected" :items="actionSheetItems"
 				ref="graceActionSheet" />
-			<ugDialog ref="dialog" content="确定删除这些数据?" @ok="delOk" />
+			<ugDialog ref="dialog" content="确定应急通知?" @ok="delOk" />
 		</view>
 	</gracePage>
 </template>
@@ -89,19 +89,8 @@
 					uni.navigateTo({
 						url: './applyUpdate?action=修改'
 					});
-				} else if (actionSheet == '申请修改') {
-					if (formData['filingState'] != '审核通过') {
-						this.$common.showToast('该数据未审核通过！');
-						return;
-					}
-					if (formData['applyUpdateCount'] && formData['applyUpdateCount'] >= 3) {
-						this.$common.showToast('已超过修改次数，无法修改！');
-						return;
-					}
-					uni.setStorageSync("formData", formData);
-					uni.navigateTo({
-						url: './applyUpdate?action=修改'
-					});
+				} else if (actionSheet == '应急通知') {
+					this.$refs.dialog.open();
 				}
 			},
 			showActionSheet() {

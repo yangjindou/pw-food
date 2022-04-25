@@ -61,11 +61,14 @@ export default {
 			});
 		},
 		delOk() {
-			const ids = this.selectIndex.map(i => this.listData[i]["data"]['id']);
-			this.$http.delete(`/appointment?ids=${ids.join(',')}`).then(res => {
+			let params = {
+				emergency: true,
+				id: this.listData[this.selectIndex[0]]["data"]['id']
+			};
+			this.$http.put(`/appointment`, params).then(res => {
 				if (res) {
 					this.$refs.dialog.hide();
-					this.$common.showToast('删除成功');
+					this.$common.showToast('操作成功');
 					this.selectIndex = [];
 					setTimeout(() => {
 						this.getList();
