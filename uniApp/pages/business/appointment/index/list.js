@@ -42,7 +42,7 @@ export default {
 						[`货物来源：${item["goodSourceName"]}`],
 						[`车牌号：${item["carNumber"]}`],
 					];
-					let title = item["filingOrder"];
+					let title = item["filingOrder"] + "";
 					if (item['emergency']) {
 						title = `<span style='color: red'>${title}</span>`;
 						columns = columns.map(o => o.map(e =>

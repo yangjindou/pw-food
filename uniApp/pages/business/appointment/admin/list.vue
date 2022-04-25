@@ -15,7 +15,7 @@
 					<text class="grace-blue grace-icons" @tap="action('审核')">审核</text>
 				</view>
 			</ugCheckList>
-			<graceActionSheet title="请选择操作功能" @selected="selected" :items="actionSheetItems"
+			<graceActionSheet height="600rpx" title="请选择操作功能" @selected="selected" :items="actionSheetItems"
 				ref="graceActionSheet" />
 			<ugDialog ref="dialog" content="确定删除这些数据?" @ok="delOk" />
 		</view>
@@ -29,7 +29,7 @@
 		data() {
 			return {
 				formColumns: [],
-				actionSheetItems: ['入仓', '出仓', '采样', '卸货', '应急通知'],
+				actionSheetItems: ['入仓', '出仓', '采样', '卸货', '应急通知', '处理修改'],
 				formData: {},
 			}
 		},
@@ -71,10 +71,6 @@
 			},
 			selected(e) {
 				const actionSheet = this.actionSheetItems[e];
-				if (actionSheet == '删除') {
-					this.action('删除');
-					return;
-				}
 				if (this.selectIndex.length != 1) {
 					this.$common.showToast('请选择一条数据的数据');
 					return;
@@ -84,12 +80,15 @@
 					this.$common.showToast('该数据被应急通知，无法操作！');
 					return;
 				}
-				if (actionSheet == '修改') {
-					if(!['保存','驳回'].includes(formData['filingState'])) {
-						this.$common.showToast(`该数据已经${formData['filingState']}，无法修改！`);
+				if (actionSheet == '处理修改') {
+					if (formData['filingState'] !== '申请修改') {
+						this.$common.showToast(`未申请修改！`);
 						return;
 					}
-					this.action('修改');
+					uni.setStorageSync("formData", formData);
+					uni.navigateTo({
+						url: './applyUpdate?action=修改'
+					});
 				} else if (actionSheet == '申请修改') {
 					if (formData['filingState'] != '审核通过') {
 						this.$common.showToast('该数据未审核通过！');
@@ -114,43 +113,17 @@
 				this.getList();
 			},
 			action(action) {
-				if (action == "删除") {
-					if (this.selectIndex.length == 0) {
-						uni.showToast({
-							title: "请选择需要删除的数据",
-							icon: "none"
-						});
-						return;
-					}
-					this.$refs.dialog.open();
-					return;
-				} else if (action == "修改") {
-					if (this.selectIndex.length != 1) {
-						uni.showToast({
-							title: `请选择一条${action}的数据`,
-							icon: "none"
-						});
-						return;
-					}
-					uni.setStorageSync("formData", this.listData[this.selectIndex[0]]["data"]);
-					uni.navigateTo({
-						url: './form?action=' + action
+				if (this.selectIndex.length != 1) {
+					uni.showToast({
+						title: `请选择一条数据`,
+						icon: "none"
 					});
-				} else if (action == "详情") {
-					if (this.selectIndex.length != 1) {
-						uni.showToast({
-							title: `请选择一条${action}的数据`,
-							icon: "none"
-						});
-						return;
-					}
+					return;
+				}
+				if (action == "详情") {
 					uni.setStorageSync("formData", this.listData[this.selectIndex[0]]["data"]);
 					uni.navigateTo({
 						url: '../detail?action=' + action
-					});
-				} else {
-					uni.navigateTo({
-						url: './form?action=' + action
 					});
 				}
 			},
