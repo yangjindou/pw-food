@@ -84,27 +84,25 @@
 					return;
 				}
 				if (actionSheet == '修改') {
+					if(!['保存','驳回'].includes(formData['filingState'])) {
+						this.$common.showToast(`该数据已经${formData['filingState']}，无法修改！`);
+						return;
+					}
 					this.action('修改');
-				} else if (actionSheet == '日常健康记录') {
+				} else if (actionSheet == '申请修改') {
+					if (formData['filingState'] != '审核通过') {
+						this.$common.showToast('该数据未审核通过！');
+						return;
+					}
+					if (formData['applyUpdateCount'] && formData['applyUpdateCount'] >= 3) {
+						this.$common.showToast('已超过修改次数，无法修改！');
+						return;
+					}
 					uni.setStorageSync("formData", formData);
 					uni.navigateTo({
-						url: './healthy?action=修改'
-					});
-				} else if (actionSheet == '隔离记录') {
-					uni.navigateTo({
-						url: './isolate/list?id=' + formData['id']
-					});
-				} else if (actionSheet == '应急处理') {
-					uni.navigateTo({
-						url: './emergency/list?id=' + formData['id']
+						url: './applyUpdate?action=修改'
 					});
 				}
-			},
-			cancel() {
-				uni.showToast({
-					title: "您点击了取消",
-					icon: "none"
-				});
 			},
 			showActionSheet() {
 				this.$refs.graceActionSheet.show();

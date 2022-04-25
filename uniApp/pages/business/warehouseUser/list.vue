@@ -70,12 +70,6 @@
 					});
 				}
 			},
-			cancel() {
-				uni.showToast({
-					title: "您点击了取消",
-					icon: "none"
-				});
-			},
 			showActionSheet() {
 				this.$refs.graceActionSheet.show();
 			},

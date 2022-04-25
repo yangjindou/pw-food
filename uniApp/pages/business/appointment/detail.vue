@@ -31,8 +31,7 @@
 			}
 		},
 		methods: {
-			async getSelectList() {
-			},
+			async getSelectList() {},
 			setFormData() {
 				const formData = uni.getStorageSync("formData");
 				const disabled = this.action == "详情";
@@ -74,42 +73,51 @@
 			},
 			getFormColumns() {
 				this.formColumns = [{
-          label: "备案单号",
-          name: "filingOrder",
-          type: "text",
-          placeholder: "",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: ""
-        },{
-          label: "备案状态",
-          name: "filingState",
-          type: "text",
-          placeholder: "",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: ""
-        },{
-          label: "备案时间",
-          name: "createDate",
-          type: "text",
-          placeholder: "",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: ""
-        },{
-          label: "上报的省",
-          name: "area",
-          type: "area",
-          placeholder: "请选择上报的省",
-          value: '',
-          checkType: "notnull",
-          checkRule: "",
-          errorMsg: "请选择上报的省"
-        }, {
+					label: "备案单号",
+					name: "filingOrder",
+					type: "text",
+					placeholder: "",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: ""
+				}, {
+					label: "备案状态",
+					name: "filingState",
+					type: "text",
+					placeholder: "",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: ""
+				}, {
+					label: "备案时间",
+					name: "createDate",
+					type: "text",
+					placeholder: "",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: ""
+				}, {
+					label: "驳回理由",
+					name: "refuseReason",
+					type: "text",
+					placeholder: "",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: ""
+				}, {
+					label: "上报的省",
+					name: "area",
+					type: "area",
+					placeholder: "请选择上报的省",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请选择上报的省"
+				}, {
 					label: "预约监管仓",
 					name: "warehouseName",
 					type: "text",

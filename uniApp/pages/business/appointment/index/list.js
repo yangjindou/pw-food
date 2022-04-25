@@ -14,7 +14,7 @@ export default {
 	methods: {
 		...methods,
 		getList() {
-			if(this.formData['warehousingDate']) {
+			if (this.formData['warehousingDate']) {
 				const warehousingDate = this.formData['warehousingDate'].split(' ~ ');
 				this.formData["warehousingDateStart"] = warehousingDate[0] + ' 00:00:00';
 				this.formData["warehousingDateEnd"] = warehousingDate[1] + ' 23:59:59';
@@ -33,18 +33,25 @@ export default {
 				this.total = res.data.total;
 				const listData = [];
 				data.some((item) => {
+					let columns = [
+						[`备案状态：${item["filingState"]}`],
+						[`预约监管仓：${item["warehouseName"]}`],
+						[`入仓时间：${item["warehousingDate"]}`],
+						[`货物类别：${item["goodTypeName"]}`],
+						[`货物名称：${item["goodName"]}`],
+						[`货物来源：${item["goodSourceName"]}`],
+						[`车牌号：${item["carNumber"]}`],
+					];
+					let title = item["filingOrder"];
+					if (item['emergency']) {
+						title = `<span style='color: red'>${title}</span>`;
+						columns = columns.map(o => o.map(e =>
+							`<span style='color: red'>${e}</span>`));
+					}
 					listData.push({
 						checked: false,
-						title: item["filingOrder"],
-						columns: [
-							[`备案状态：${item["filingState"]}`],
-							[`预约监管仓：${item["warehouseName"]}`],
-							[`入仓时间：${item["warehousingDate"]}`],
-							[`货物类别：${item["goodTypeName"]}`],
-							[`货物名称：${item["goodName"]}`],
-							[`货物来源：${item["goodSourceName"]}`],
-							[`车牌号：${item["carNumber"]}`],
-						],
+						title,
+						columns,
 						data: item
 					});
 				})
