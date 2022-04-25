@@ -82,6 +82,9 @@
 		"path": "pages/business/appointment/index/applyUpdate",
 		"style": {}
 	}, {
+		"path": "pages/business/appointment/admin/list",
+		"style": {}
+	}, {
 		"path": "pages/business/appointment/warehousing/form",
 		"style": {}
 	}, {
