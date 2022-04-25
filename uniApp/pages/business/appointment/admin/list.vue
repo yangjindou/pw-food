@@ -109,10 +109,24 @@
 					});
 					return;
 				}
+				const formData = this.listData[this.selectIndex[0]]["data"];
 				if (action == "详情") {
-					uni.setStorageSync("formData", this.listData[this.selectIndex[0]]["data"]);
+					uni.setStorageSync("formData", formData);
 					uni.navigateTo({
 						url: '../detail?action=' + action
+					});
+				} else if (action == "审核") {
+					if (formData['emergency']) {
+						this.$common.showToast('该数据被应急通知，无法操作！');
+						return;
+					}
+					if(formData['filingState'] != '待审核') {
+						this.$common.showToast(`该数据已${formData['filingState']}，无法操作！`);
+						return;
+					}
+					uni.setStorageSync("formData", formData);
+					uni.navigateTo({
+						url: './audit?action=修改'
 					});
 				}
 			},
