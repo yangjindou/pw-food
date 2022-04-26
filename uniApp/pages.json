@@ -91,6 +91,12 @@
 		"path": "pages/business/appointment/admin/audit",
 		"style": {}
 	}, {
+		"path": "pages/business/appointment/admin/sampling",
+		"style": {}
+	}, {
+		"path": "pages/business/appointment/admin/uninstall",
+		"style": {}
+	}, {
 		"path": "pages/business/appointment/warehousing/form",
 		"style": {}
 	}, {

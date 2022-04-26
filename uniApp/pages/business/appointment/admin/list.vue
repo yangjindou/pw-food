@@ -91,6 +91,16 @@
 					});
 				} else if (actionSheet == '应急通知') {
 					this.$refs.dialog.open();
+				} else if (actionSheet == '采样') {
+					uni.setStorageSync("formData", formData);
+					uni.navigateTo({
+						url: './sampling?action=修改'
+					});
+				} else if (actionSheet == '卸货') {
+					uni.setStorageSync("formData", formData);
+					uni.navigateTo({
+						url: './uninstall?action=修改'
+					});
 				}
 			},
 			showActionSheet() {
@@ -120,7 +130,7 @@
 						this.$common.showToast('该数据被应急通知，无法操作！');
 						return;
 					}
-					if(formData['filingState'] != '待审核') {
+					if (formData['filingState'] != '待审核') {
 						this.$common.showToast(`该数据已${formData['filingState']}，无法操作！`);
 						return;
 					}

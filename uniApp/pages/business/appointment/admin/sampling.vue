@@ -1,9 +1,9 @@
 <template>
 	<view class="page">
 		<gracePage headerBG="#0088FE" :bounding="false">
-			<ugNav slot="gHeader" :isBack="true" title="审核" />
+			<ugNav slot="gHeader" :isBack="true" title="采样" />
 			<view class="grace-body" slot="gBody">
-				<ugForm class="grace-padding-top" ref="form" :showSubmit="showSubmit" :columns="formColumns"
+				<ugForm ref="form" :showSubmit="showSubmit" :columns="formColumns"
 					@submit="formSubmit" />
 			</view>
 		</gracePage>
@@ -58,10 +58,6 @@
 			},
 			formSubmit(formData) {
 				formData['id'] = this.id;
-				if(formData['filingState'] === '驳回' && !formData['refuseReason']) {
-					this.$common.showToast(`请填写驳回理由`);
-					return;
-				}
 				this.$http.put("/appointment", formData).then(res => {
 					uni.setStorageSync("msg", "操作成功");
 					uni.navigateBack({
@@ -70,26 +66,38 @@
 				});
 			},
 			getFormColumns() {
-				this.formColumns = [ {
-					label: "审核",
-					name: "filingState",
-					type: "radio",
-					radioGroup: [{
-						label: '审核通过',
-						value: '审核通过',
-					}, {
-						label: '驳回',
-						value: '驳回',
-					}],
+				this.formColumns = [{
+					label: "采样货物名称",
+					name: "samplingGoodName",
+					type: "text",
+					placeholder: "请输入采样货物名称",
 					value: '',
 					checkType: "notnull",
 					checkRule: "",
-					errorMsg: "请选择审核"
-				},{
-					label: "驳回理由",
-					name: "refuseReason",
+					errorMsg: "请输入采样货物名称"
+				}, {
+					label: "采样数量",
+					name: "samplingAmount",
 					type: "text",
-					placeholder: "审核驳回需要填写驳回理由",
+					placeholder: "请输入采样数量",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入正确的采样数量"
+				}, {
+					label: "采样检测人",
+					name: "samplingUser",
+					type: "text",
+					placeholder: "请输入采样检测人",
+					value: '',
+					checkType: "notnull",
+					checkRule: "",
+					errorMsg: "请输入采样检测人"
+				}, {
+					label: "备注",
+					name: "samplingRemark",
+					type: "text",
+					placeholder: "请输入备注",
 					value: '',
 					checkType: "",
 					checkRule: "",

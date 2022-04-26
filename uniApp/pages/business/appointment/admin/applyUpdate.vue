@@ -67,7 +67,7 @@
 					formData['filingState'] = '审核通过';
 				}
 				this.$http.put("/appointment", formData).then(res => {
-					uni.setStorageSync("msg", "修改成功");
+					uni.setStorageSync("msg", "操作成功");
 					uni.navigateBack({
 						delta: 1
 					});
