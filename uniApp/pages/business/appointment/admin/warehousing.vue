@@ -1,10 +1,9 @@
 <template>
 	<view class="page">
 		<gracePage headerBG="#0088FE" :bounding="false">
-			<ugNav slot="gHeader" :isBack="true" title="采样" />
+			<ugNav slot="gHeader" :isBack="true" title="入仓" />
 			<view class="grace-body" slot="gBody">
-				<ugForm ref="form" :showSubmit="showSubmit" :columns="formColumns"
-					@submit="formSubmit" />
+				<ugForm ref="form" :showSubmit="showSubmit" :columns="formColumns" @submit="formSubmit" />
 			</view>
 		</gracePage>
 	</view>
@@ -32,7 +31,27 @@
 			}
 		},
 		methods: {
-			async getSelectList() {},
+			async getSelectList() {
+				// let params = {
+				// 	warehouseCreateUser: uni.getStorageSync('userData')['id']
+				// };
+				// for (let i = 0; i < this.formColumns.length; i++) {
+				// 	let e = this.formColumns[i];
+				// 	if (e.name == 'uninstallUser') {
+				// 		await this.$http.get(`/warehouseUser/list`, {params}).then(res => {
+				// 			e.dropboxGroup = res.data.map(e => {
+				// 				return {
+				// 					value: e.id,
+				// 					label: e.name
+				// 				};
+				// 			});
+				// 		});
+				// 	}
+				// }
+				// this.$nextTick(() => {
+				// 	this.$refs.form.changeColumns(this.formColumns);
+				// });
+			},
 			setFormData() {
 				const formData = uni.getStorageSync("formData");
 				const disabled = this.action == "详情";
@@ -67,41 +86,41 @@
 			},
 			getFormColumns() {
 				this.formColumns = [{
-					label: "采样货物名称",
-					name: "samplingGoodName",
+					label: "禽类（Kg）",
+					name: "warehousingWeightPoultry",
 					type: "text",
-					placeholder: "请输入采样货物名称",
-					value: '',
-					checkType: "notnull",
-					checkRule: "",
-					errorMsg: "请输入采样货物名称"
-				}, {
-					label: "采样数量",
-					name: "samplingAmount",
-					type: "text",
-					placeholder: "请输入采样数量",
+					placeholder: "请输入禽类",
 					value: '',
 					checkType: "numbers",
 					checkRule: "1,11",
-					errorMsg: "请输入正确的采样数量"
-				}, {
-					label: "采样检测人",
-					name: "samplingUser",
+					errorMsg: "请输入禽类"
+				},{
+					label: "畜类（Kg）",
+					name: "warehousingWeightLivestock",
 					type: "text",
-					placeholder: "请输入采样检测人",
+					placeholder: "请输入畜类",
 					value: '',
-					checkType: "notnull",
-					checkRule: "",
-					errorMsg: "请输入采样检测人"
-				}, {
-					label: "备注",
-					name: "samplingRemark",
+					checkType: "numbers",
+					checkRule: "1,11",
+					errorMsg: "请输入畜类"
+				},{
+					label: "水产品（Kg）",
+					name: "warehousingWeightAquatic",
 					type: "text",
-					placeholder: "请输入备注",
+					placeholder: "请输入水产品",
 					value: '',
-					checkType: "",
-					checkRule: "",
-					errorMsg: ""
+					checkType: "numbers",
+					checkRule: "1,11",
+					errorMsg: "请输入水产品"
+				},{
+					label: "其他（Kg）",
+					name: "warehousingWeightOther",
+					type: "text",
+					placeholder: "请输入其他",
+					value: '',
+					checkType: "numbers",
+					checkRule: "1,11",
+					errorMsg: "请输入其他"
 				}]
 			}
 		}

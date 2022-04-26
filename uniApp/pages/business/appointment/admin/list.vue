@@ -101,6 +101,16 @@
 					uni.navigateTo({
 						url: './uninstall?action=修改'
 					});
+				} else if (actionSheet == '入仓') {
+					uni.setStorageSync("formData", formData);
+					uni.navigateTo({
+						url: './warehousing?action=修改'
+					});
+				} else if (actionSheet == '出仓') {
+					uni.setStorageSync("formData", formData);
+					uni.navigateTo({
+						url: './warehoused?action=修改'
+					});
 				}
 			},
 			showActionSheet() {

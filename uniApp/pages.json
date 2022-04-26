@@ -97,6 +97,12 @@
 		"path": "pages/business/appointment/admin/uninstall",
 		"style": {}
 	}, {
+		"path": "pages/business/appointment/admin/warehousing",
+		"style": {}
+	}, {
+		"path": "pages/business/appointment/admin/warehoused",
+		"style": {}
+	}, {
 		"path": "pages/business/appointment/warehousing/form",
 		"style": {}
 	}, {
