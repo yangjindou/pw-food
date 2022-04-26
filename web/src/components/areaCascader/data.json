@@ -2,12 +2,12 @@
   {
     "id": "11",
     "parent_id": 0,
-    "name": "北京市",
+    "name": "北京",
     "children": [
       {
         "id": "1101",
         "parent_id": 11,
-        "name": "市辖区",
+        "name": "北京市",
         "children": [
           {
             "id": "110101",
@@ -96,12 +96,12 @@
   {
     "id": "12",
     "parent_id": 0,
-    "name": "天津市",
+    "name": "天津",
     "children": [
       {
         "id": "1201",
         "parent_id": 12,
-        "name": "市辖区",
+        "name": "天津市",
         "children": [
           {
             "id": "120101",
@@ -4067,12 +4067,12 @@
   {
     "id": "31",
     "parent_id": 0,
-    "name": "上海市",
+    "name": "上海",
     "children": [
       {
         "id": "3101",
         "parent_id": 31,
-        "name": "市辖区",
+        "name": "上海市",
         "children": [
           {
             "id": "310101",
