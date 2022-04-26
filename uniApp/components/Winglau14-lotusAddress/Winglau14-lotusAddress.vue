@@ -67,6 +67,13 @@
 			chosedVal() {
 				this.type = 1;
 				const provinceCode = this.getTarId(this.provinceName);
+				if(!provinceCode) {
+					uni.showToast({
+						title: '请选择数据！',
+						icon: 'none'
+					})
+					return;
+				}
 				const cityCode = this.getTarId(this.cityName);
 				const townCode = this.getTarId(this.townName);
 				this.visible = false;

@@ -149,14 +149,18 @@
 			//回传已选的省市区的值
 			choseValue(res, name) {
 				this.lotusAddressData.visible = res.visible;
-				//res.isChose = 1省市区已选 res.isChose = 0;未选
-				if (res.isChose) {
-					this.formColumns.forEach((item) => {
-						if (item.name == name) {
-							item.value = `${res.province}/${res.city}/${res.town}`;
-						}
-					});
+				let area = [res.province];
+				if (res.city) {
+					area.push(res.city);
 				}
+				if (res.town) {
+					area.push(res.town);
+				}
+				this.formColumns.forEach((item) => {
+					if (item.name == name) {
+						item.value = area.join('/');
+					}
+				});
 			},
 			openPicker(tf) {
 				if (!tf) {
