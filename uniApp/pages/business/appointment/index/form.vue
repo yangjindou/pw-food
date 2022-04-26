@@ -91,6 +91,7 @@
 			},
 			formSubmit(formData, type) {
 				formData['filingState'] = type === '保存并提交' ? '待审核' : '保存';
+        formData['refuseReason'] = '';
 				if (this.action == '新增') {
 					this.$http.post("/appointment", formData).then(res => {
 						uni.setStorageSync("msg", "新增成功");
