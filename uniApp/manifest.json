@@ -78,7 +78,7 @@
     },
     "h5" : {
         "router" : {
-            "base" : "/h5"
+            "base" : "/foodh5"
         },
         "title" : "",
         "sdkConfigs" : {

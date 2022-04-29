@@ -6,6 +6,7 @@
     <groupId>com.dou</groupId>
     <artifactId>server</artifactId>
     <version>1.0</version>
+    <packaging>war</packaging>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -130,6 +131,7 @@
     </dependencies>
 
     <build>
+        <finalName>foodServer</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
